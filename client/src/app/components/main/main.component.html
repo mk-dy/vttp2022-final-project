@@ -1,0 +1,59 @@
+<p>Test</p>
+
+<form [formGroup]="searchForm">
+    <input type="text" formControlName="query">
+    <button type="button" (click)="performSearch()">Search</button>
+</form>
+
+<div class="grid" *ngFor="let p of productList;">
+    <div class="col-6 align-items-center justify-content-center text-center">
+        {{ p.name }}
+    </div>
+    <!-- <div class="col align-items-center">
+
+    </div> -->
+</div>
+
+<div class="card">
+    <div class="flex flex-wrap-reverse md:flex-wrap card-container" style="max-width: 500px">
+        <div class="flex align-items-center justify-content-center bg-purple-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100px">1</div>
+        <div class="flex align-items-center justify-content-center bg-purple-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100px">2</div>
+        <div class="flex align-items-center justify-content-center bg-purple-500 font-bold text-white m-2 border-round" style="min-width: 200px; min-height: 100px">3</div>
+    </div>
+</div>
+
+
+<!-- <mat-card class="example-card" *ngFor="let p of productList;">
+
+    <img mat-card-image src="{{ p.imgLink }}" style="width:20%; height: 20%;">
+    <mat-card-content>
+        <mat-card-title>{{ p.name }}</mat-card-title>
+        <p>
+            {{ p.descr }}
+        </p>
+    </mat-card-content>
+
+  </mat-card> -->
+
+
+
+<!-- <table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of productList;">
+            <td>{{ p.name }}</td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.descr }}</td>
+            <td>
+                <img src="{{ p.imgLink }}" style="width: 40%; height: 40%">
+            </td>
+        </tr>
+    </tbody>
+</table> -->

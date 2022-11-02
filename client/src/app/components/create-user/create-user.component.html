@@ -1,0 +1,23 @@
+<h1>Create an Account</h1>
+
+<form [formGroup]="userForm" (ngSubmit)="processForm()">
+    
+
+    <label for="">First Name</label>
+    <input type="text" name="" id="" formControlName="firstName">
+    
+    <label for="">Last Name</label>
+    <input type="text" name="" id="" formControlName="lastName">
+
+    <label for="">Email</label>
+    <input type="email" name="" id="" formControlName="email">
+    
+    <label for="">Contact Number</label>
+    <input type="text" name="" id="" formControlName="mobile">
+    
+    <label for="">Password</label>
+    <input type="password" name="" id="" formControlName="password">
+
+    <button type="submit">Create Account</button>
+
+</form>

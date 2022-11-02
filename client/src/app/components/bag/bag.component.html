@@ -1,0 +1,197 @@
+<!-- <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Image Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let f of fabricList;">
+            <td>{{ f.name }}</td>
+            <td>
+                <img src="{{ f.imgLink }}" width="20vw">
+
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+
+
+<!-- showcase the product name -->
+<!-- showcase the product descr -->
+
+
+<!-- would be better to provide images upon selection 
+    so that it is easier for the custoemrs to visualize
+-->
+
+<!-- <div class="card">
+    <div class="card-container">
+        <div class="flex">
+            <div class="flex-initial flex align-items-center justify-content-center font-bold text-white m-2 px-5 py-3 border-round">
+                <img src="{{ chalkbag.imgLink }}" width="">
+            </div>
+            <div class="flex-initial flex align-items-center justify-content-center bg-blue-500 font-bold text-white m-2 px-5 py-3 border-round">Prime and PrimeFlex</div>
+        </div>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="col-6">
+        <img src="{{ chalkbag.imgLink }}" width="">
+    </div>
+    <div class="col-6">
+        <h1>{{ chalkbag.name }}</h1>
+        <p>{{ chalkbag.descr }}</p>
+        <p>{{ chalkbag.price | currency: 'SGD' }}</p>
+    </div>
+</div> -->
+
+
+    <form [formGroup]="productForm" (ngSubmit)="processForm()">
+    
+        <p>Do you want your chalk bag to have a boot?</p>
+        <mat-radio-group formControlName="bootType">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+        
+        <p>Do you wish to size it up to XL? (+$15)</p>
+        <mat-radio-group formControlName="upsize">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+    
+        <p>Do you wish to add 2 hoops and 1 waist strap (+$3.50)?</p>
+        <mat-radio-group formControlName="hoopStraps">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+        <!-- <select>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select> -->
+        
+        <p>Do you wish to add keychain holders? (+$1 each)</p>
+        <mat-radio-group formControlName="keychainHolders">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
+        </mat-radio-group>
+        <!-- <select>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select> -->
+        
+        <p></p>
+        <mat-form-field *ngIf="productForm.controls['keychainHolders'].value==='yes'">
+            <br>
+            <p>How many additional keychain holders would you like to have?</p>
+            <input type="number" formControlName="keychainNum" matInput min="1">
+        </mat-form-field>
+    
+        <!-- <div *ngIf="productForm.controls['keychainHolders'].value==='yes'">
+    `       <p>If you have selected "Yes" for the addition of keychain holders, how many would you like to have?</p>
+            <input type="number" formControlName="keychainNumber">
+        </div> -->
+        
+        <p></p>
+        <mat-form-field>
+            <mat-label>Select a design for the EXTERIOR of the chalk bag: </mat-label>
+            <mat-select formControlName="exteriorDesign">
+              <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                <img width="20" height="20" [src]="f.imgLink">
+                {{f.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <p></p>
+        <mat-form-field *ngIf="productForm.controls['bootType'].value==='no'">
+            <mat-label>Select a design for the BASE of the chalk bag: </mat-label>
+            <mat-select formControlName="baseDesign">
+              <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                <img width="20" height="20" [src]="f.imgLink">
+                {{f.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <p></p>
+        <mat-form-field *ngIf="productForm.controls['bootType'].value==='yes'">
+            <mat-label>Select a design for the BOOT of the chalk bag: </mat-label>
+            <mat-select formControlName="bootDesign">
+              <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                <img width="20" height="20" [src]="f.imgLink">
+                {{f.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <p>Select a design for the EXTERIOR of the chalk bag: </p>
+        <select formControlName="exteriorDesign">
+            <option value="black">Black</option>
+            <option value="natural">Natural</option>
+            <option value="grey">Grey</option>
+            <option value="sky">Sky</option>
+            <option value="navy">Navy</option>
+            <option value="green">Green</option>
+            <option value="olive">Olive</option>
+            <option value="bloom">Bloom</option>
+            <option value="flora">Flora</option>
+            <option value="toile">Toile</option>
+            <option value="outback">Outback</option>
+            <option value="tropical">Tropical</option>
+            <option value="palm">Palm</option>
+            <option value="ornament">Ornament</option>
+            <option value="cabin">Cabin</option>
+            <option value="produce">Produce</option>
+            <option value="monstera">Monstera</option>
+            <option value="barteri">Barteri</option>
+            <option value="organic">Organic</option>
+            <option value="maki">Maki</option>
+            <option value="sushi">Sushi</option>
+            <option value="sail">sail</option>
+            <option value="personalFabric">I am using my personal fabric!</option>
+        </select> -->
+        <!-- <p>Select a design for the BASE of the chalk bag</p>
+        <select formControlName="baseDesign">
+            <option value="black">Black</option>
+            <option value="natural">Natural</option>
+            <option value="grey">Grey</option>
+            <option value="sky">Sky</option>
+            <option value="navy">Navy</option>
+            <option value="green">Green</option>
+            <option value="olive">Olive</option>
+            <option value="bloom">Bloom</option>
+            <option value="flora">Flora</option>
+            <option value="toile">Toile</option>
+            <option value="outback">Outback</option>
+            <option value="tropical">Tropical</option>
+            <option value="palm">Palm</option>
+            <option value="ornament">Ornament</option>
+            <option value="cabin">Cabin</option>
+            <option value="produce">Produce</option>
+            <option value="monstera">Monstera</option>
+            <option value="barteri">Barteri</option>
+            <option value="organic">Organic</option>
+            <option value="maki">Maki</option>
+            <option value="sushi">Sushi</option>
+            <option value="sail">sail</option>
+            <option value="personalFabric">I am using my personal fabric!</option>
+        </select> -->
+        
+        <p>Quantity</p>
+        <input type="number" formControlName="quantity">
+    
+        <!-- create an event that updates the price when  -->
+        
+        <p>Remarks (Optional)</p>
+        <textarea id="" cols="30" rows="5" formControlName="remarks"></textarea>
+        <br>
+        <button type="submit" [disabled]="productForm.invalid">Add to Cart</button>
+        <!-- <button type="submit">Add to Cart</button> -->
+    
+    </form>
+
+
+

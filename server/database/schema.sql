@@ -9,16 +9,23 @@ CREATE TABLE user (
     user_id VARCHAR(8) NOT NULL,
     user_first_name VARCHAR(128) NOT NULL,
     user_last_name VARCHAR(128) NOT NULL,
-    user_mobile INT NOT NULL,
     user_email VARCHAR(128) NOT NULL,
+    user_mobile VARCHAR(8) NOT NULL,
     user_password VARCHAR(256) NOT NULL,
 
     PRIMARY KEY(user_id)
 );
 
+INSERT INTO user (user_id, user_first_name, user_last_name, user_email, user_mobile, user_password)
+VALUES 
+	('sdsd','sdsd','sdsd','sdsd','sdsd','sdsd');
+
+SELECT * FROM user;
+
 -- PRODUCT --
 CREATE TABLE product (
     prod_id VARCHAR(9) NOT NULL,
+    prod_access VARCHAR(128),
     prod_name VARCHAR(128),
     prod_desc VARCHAR(512),
     prod_price DECIMAL(8,2),
@@ -27,10 +34,10 @@ CREATE TABLE product (
     PRIMARY KEY(prod_id)
 );
 
-INSERT INTO product (prod_id, prod_name, prod_desc, prod_price, prod_img_link) 
+INSERT INTO product (prod_id, prod_access, prod_name, prod_desc, prod_price, prod_img_link) 
 VALUES 
-('CHLKBAG01', 'Chalk Bag', 'Each standard chalk bag comes with one brush holder and one keychain holder ($60). You may choose between the chalk bag that comes with or without the boot.', 60.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Chalk_Bag/Chalk%20Bag%20%28Main%20Page%29.jpg'),
-('CHLKBKT02', 'Chalk Bucket', 'Each standard chalk bucket (half base) comes with a velcro-closure top, front-buckle closure, one brush holder and one front pocket ($65). You may choose between the chalk bag that comes with the half-base or whole base.', 65.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Chalk_Bucket/Chalk%20Buclet%20%28Main%20page%29.jpg');
+('CHLKBAG01', 'chalk-bag', 'Chalk Bag', 'Each standard chalk bag comes with one brush holder and one keychain holder ($60). You may choose between the chalk bag that comes with or without the boot.', 60.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bag/Chalk%20Bag%20%28Main%20Page%29.jpg'),
+('CHLKBKT02', 'chalk-bucket', 'Chalk Bucket', 'Each standard chalk bucket (half base) comes with a velcro-closure top, front-buckle closure, one brush holder and one front pocket ($65). You may choose between the chalk bag that comes with the half-base or whole base.', 65.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Buclet%20%28Main%20page%29.jpg');
     
 SELECT * FROM product WHERE prod_name LIKE CONCAT('%','Chalk Bag','%');
 SELECT * FROM product WHERE prod_id = 'CHLKBAG01';
@@ -46,29 +53,29 @@ CREATE TABLE fabric (
 
 INSERT INTO fabric (name, img_link)
 VALUES
-	('Barteri','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Barteri.png'),
-	('Black','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Black.png'),
-	('Bloom','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Bloom.png'),
-	('Flora','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Flora.png'),
-	('Green','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Green.png'),
-	('Grey','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Grey.png'),
-	('Maki','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Maki.png'),
-	('Monstera','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Monstera.png'),
-	('Natural','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Natural.png'),
-	('Navy','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Navy.png'),
-	('Olive','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Olive.png'),
-	('Organic','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Organic.png'),
-	('Ornament','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Ornament.png'),
-	('Outback','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Outback.png'),
-	('Palm','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Palm.png'),
-	('Pink','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Pink.png'),
-	('Produce','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Produce.png'),
-	('Sail','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Sail.png'),
-	('Sky','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Sky.png'),
-	('Sushi','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Sushi.png'),
-	('Teahouse','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Teahouse.png'),
-	('Toile','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Toile.png'),
-	('Tropical','https://mattstorage.sgp1.digitaloceanspaces.com/csf-final-project/Fabrics/Tropical.png');
+	('Barteri','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Barteri.png'),
+	('Black','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Black.png'),
+	('Bloom','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Bloom.png'),
+	('Flora','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Flora.png'),
+	('Green','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Green.png'),
+	('Grey','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Grey.png'),
+	('Maki','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Maki.png'),
+	('Monstera','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Monstera.png'),
+	('Natural','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Natural.png'),
+	('Navy','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Navy.png'),
+	('Olive','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Olive.png'),
+	('Organic','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Organic.png'),
+	('Ornament','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Ornament.png'),
+	('Outback','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Outback.png'),
+	('Palm','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Palm.png'),
+	('Pink','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Pink.png'),
+	('Produce','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Produce.png'),
+	('Sail','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Sail.png'),
+	('Sky','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Sky.png'),
+	('Sushi','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Sushi.png'),
+	('Teahouse','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Teahouse.png'),
+	('Toile','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Toile.png'),
+	('Tropical','https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Fabrics/Tropical.png');
 
 SELECT * FROM fabric;
 
@@ -90,16 +97,14 @@ CREATE TABLE final_product (
     -- CHALK BAG END -- 
     
     -- CHALK BUCKET START --
-    base_type TINYINT(1),
-    front_side_closure TINYINT(1),
-    brush_holder_num INT,
-    brush_holder_place VARCHAR(128),
+    base_type VARCHAR(8),
+    front_side_closure VARCHAR(8),
+    magnetic_closure TINYINT(1),
     d_ring_webbing TINYINT(1), 
     front_pocket_design VARCHAR(32),
 	front_pocket_back_design VARCHAR(32),
     back_design VARCHAR(32),
     base_design VARCHAR(32),
-    magnetic_closure TINYINT(1),
     -- CHALK BUCKET END --
     
     quantity INT NOT NULL,
@@ -113,7 +118,16 @@ CREATE TABLE final_product (
 );
 
 -- CART -- 
+CREATE TABLE cart (
+    id INT NOT NULL AUTO_INCREMENT,
+    final_prod_id INT NOT NULL,
+    user_id VARCHAR(8) NOT NULL,
 
+    PRIMARY KEY (fav_id),
+    FOREIGN KEY (final_prod_id) REFERENCES user (user_id),
+    FOREIGN KEY (user_id) REFERENCES user (user_id)
+
+);
 
 -- FAVOURITES --
 CREATE TABLE favourites (
@@ -140,6 +154,8 @@ CREATE TABLE cust_order (
     PRIMARY KEY (order_id)
 
 );
+
+
 
 
 

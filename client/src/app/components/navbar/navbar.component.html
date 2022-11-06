@@ -12,13 +12,33 @@
     </a>
 
     <span class="example-spacer"></span>
-    <button type="button" mat-icon-button (click)="onUser()">
+
+    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
       <mat-icon>person_outline</mat-icon>
     </button>
+    <mat-menu #menu="matMenu" >
+      <span>
+        <button mat-menu-item>
+          <mat-icon>inventory_2</mat-icon>
+          <span>My Orders</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </span>
+      
+    </mat-menu>
+
+
     <button type="button" mat-icon-button (click)="onFavourites()">
       <mat-icon>favorite_border</mat-icon>
     </button>
     <button type="button" mat-icon-button (click)="onCart()">
-      <mat-icon>shopping_bag</mat-icon>
+      <mat-icon class="material-icons-outlined">shopping_bag</mat-icon>
     </button>
   </mat-toolbar>

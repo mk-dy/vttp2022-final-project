@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class Product {
     
     private String id;
+    private String access;
     private String name;
     private String descr;
     private BigDecimal price;
@@ -41,7 +42,12 @@ public class Product {
     public void setImgLink(String imgLink) {
         this.imgLink = imgLink;
     }
-
+    public String getAccess() {
+        return access;
+    }
+    public void setAccess(String access) {
+        this.access = access;
+    }
     
 
 }

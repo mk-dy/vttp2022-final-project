@@ -27,6 +27,7 @@ public class SearchRepository {
         while (rs.next()) {
             Product product = new Product();
             product.setId(rs.getString("prod_id"));
+            product.setAccess(rs.getString("prod_access"));
             product.setName(rs.getString("prod_name"));
             product.setDescr(rs.getString("prod_desc"));
             product.setPrice(rs.getBigDecimal("prod_price"));
@@ -50,6 +51,7 @@ public class SearchRepository {
         while (rs.next()) {
             Product product = new Product();
             product.setId(rs.getString("prod_id"));
+            product.setAccess(rs.getString("prod_access"));
             product.setName(rs.getString("prod_name"));
             product.setDescr(rs.getString("prod_desc"));
             product.setPrice(rs.getBigDecimal("prod_price"));
@@ -80,6 +82,7 @@ public class SearchRepository {
         Product chalkBag = new Product();
         rs.next();
         chalkBag.setId(rs.getString("prod_id"));
+        chalkBag.setAccess(rs.getString("prod_access"));
         chalkBag.setName(rs.getString("prod_name"));
         chalkBag.setDescr(rs.getString("prod_desc"));
         chalkBag.setPrice(rs.getBigDecimal("prod_price"));
@@ -89,11 +92,12 @@ public class SearchRepository {
     }
 
     public Product getChalkbucket() {
-        final SqlRowSet rs = template.queryForRowSet(SQL_SELECT_CHALKBAG);
+        final SqlRowSet rs = template.queryForRowSet(SQL_SELECT_CHALKBUCKET);
 
         Product chalkBucket = new Product();
         rs.next();
         chalkBucket.setId(rs.getString("prod_id"));
+        chalkBucket.setAccess(rs.getString("prod_access"));
         chalkBucket.setName(rs.getString("prod_name"));
         chalkBucket.setDescr(rs.getString("prod_desc"));
         chalkBucket.setPrice(rs.getBigDecimal("prod_price"));

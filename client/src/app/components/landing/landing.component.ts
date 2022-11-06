@@ -15,7 +15,7 @@ export class LandingComponent implements OnInit {
   }
 
   onShop() {
-    this.router.navigate(['/product/chalkbag'])
+    this.router.navigate(['/shop'])
   }
 
   onLogin() {

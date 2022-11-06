@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Fabric, Product } from '../../models';
@@ -9,18 +9,21 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './bag.component.html',
   styleUrls: ['./bag.component.css']
 })
-export class BagComponent implements OnInit {
+export class BagComponent implements OnInit, OnDestroy {
 
   productForm!: FormGroup
   sub$!: Subscription
   chalkbag!: Product
   fabricList!: Fabric[]
+  totalPrice!: number
   
   // if 
 
   constructor(private fb: FormBuilder, private productSvc: ProductService) { }
 
   ngOnInit(): void {
+    // this.productSvc.getFabricTest()
+    console.info('>>>> fabric test check ends here')
     this.callGetChalkbag()
     this.productSvc.getFabric().then(result =>
       this.fabricList = result as Fabric[])
@@ -31,6 +34,10 @@ export class BagComponent implements OnInit {
     //   .subscribe(data=> {
     //     this.changeValidators()
     //   })
+  }
+
+  ngOnDestroy(): void {
+      this.sub$.unsubscribe()
   }
 
   createForm(): FormGroup {
@@ -76,12 +83,28 @@ export class BagComponent implements OnInit {
     }
     this.productForm = this.createForm()
     console.info('>>>> check data again: ', data)
+    console.info(">>> START check total price: ", this.totalPrice)
+    // if criteria met, add $
+    if (data.upsize === 'yes') {
+      this.totalPrice += 15.00 
+    }
+    if (data.hoopStraps === 'yes') {
+      this.totalPrice += 3.50 
+    }
+    if (data.keychainHolders === 'yes') {
+      this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
+    }
+    this.totalPrice = (data.quantity * this.totalPrice) 
+    console.info(">>> END check total price: ", this.totalPrice)
+    // need to reset totalPrice after processForm()
+    this.callGetChalkbag()
   }
 
   callGetChalkbag() {
     this.productSvc.getChalkbag()
     this.sub$ = this.productSvc.onShowChalkbag.subscribe( data => {
       this.chalkbag = data
+      this.totalPrice = this.chalkbag.price
     })
   }
 

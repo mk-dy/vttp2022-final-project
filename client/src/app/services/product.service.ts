@@ -8,6 +8,7 @@ export class ProductService {
 
     onShowProducts = new Subject<Product[]>()
     onShowChalkbag = new Subject<Product>()
+    onShowChalkbucket = new Subject<Product>()
     onGetFabric = new Subject<Fabric[]>()
     product!: Product
 
@@ -28,12 +29,28 @@ export class ProductService {
         ).then(result => 
             this.onShowChalkbag.next(result as Product))
     
-        }
+    }
+
+    getChalkbucket() {
+
+        return firstValueFrom(
+            this.http.get('/product/chalkbucket')
+        ).then(result => 
+            this.onShowChalkbucket.next(result as Product))
+    
+    }
 
     getFabric() {
         return firstValueFrom(
             this.http.get('/fabric')
         )
+    }
+
+    getFabricTest() {
+        return firstValueFrom(
+            this.http.get('/fabricTest')
+        ).then(result =>
+            console.info('>>>> check fabrictest: ', result))
     }
 
 

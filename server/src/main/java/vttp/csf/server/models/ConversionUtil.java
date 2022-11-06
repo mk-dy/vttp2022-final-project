@@ -16,6 +16,7 @@ public class ConversionUtil {
         for (Product product: prodList) {
             JsonObject jsonObj = Json.createObjectBuilder()
                     .add("id",product.getId())
+                    .add("access",product.getAccess())
                     .add("name",product.getName())
                     .add("descr", product.getDescr())
                     .add("price", product.getPrice())
@@ -50,6 +51,7 @@ public class ConversionUtil {
     public static JsonObject toJson(Product product) {
         JsonObject jsonObj = Json.createObjectBuilder()
                     .add("id",product.getId())
+                    .add("access",product.getAccess())
                     .add("name",product.getName())
                     .add("descr", product.getDescr())
                     .add("price", product.getPrice())

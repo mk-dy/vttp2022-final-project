@@ -17,7 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { UserService } from './services/user.service';
@@ -31,6 +33,9 @@ import { BagComponent } from './components/bag/bag.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CreationStatusComponent } from './components/create-user/creation-status.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const appRoutes: Routes = [
   { path: '', component: LandingComponent },
@@ -39,9 +44,10 @@ const appRoutes: Routes = [
   { path: 'shop', component: MainComponent },
   { path: 'search', component: SearchResultComponent },
   { path: 'cart', component: CartComponent},
+  { path: 'orders', component: OrdersComponent},
   { path: 'product', component: ProductComponent},
-  { path: 'product/chalkbag', component: BagComponent},
-  { path: 'product/chalkbucket', component: BucketComponent},
+  { path: 'product/chalk-bag', component: BagComponent},
+  { path: 'product/chalk-bucket', component: BucketComponent},
   { path: 'favourites', component: FavouritesComponent},
   { path: '**', redirectTo: '/', pathMatch : 'full'}
 ]
@@ -62,7 +68,10 @@ const appRoutes: Routes = [
     BagComponent,
     FavouritesComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    CreationStatusComponent,
+    OrdersComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +89,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     MatCardModule,
     MatSelectModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatExpansionModule,
+    MatGridListModule
   ],
   providers: [UserService, SearchService, ProductService],
   bootstrap: [AppComponent]

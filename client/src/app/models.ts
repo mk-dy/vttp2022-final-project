@@ -15,6 +15,7 @@ export interface User {
 // this will be used on the main page, also create this table in mysql
 export interface Product {
     id: string
+    access: string
     name: string
     descr: string
     price: number
@@ -25,6 +26,10 @@ export interface Fabric {
     id: string
     name: string
     imgLink: string
+}
+
+export interface CreationMsg {
+    message: string
 }
 
 /*

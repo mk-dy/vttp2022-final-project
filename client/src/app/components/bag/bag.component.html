@@ -16,7 +16,7 @@
         <form [formGroup]="productForm" (ngSubmit)="processForm()">
     
             <p>Do you want your chalk bag to have a boot?</p>
-            <mat-radio-group formControlName="bootType">
+            <mat-radio-group formControlName="withBoot">
                 <mat-radio-button value="yes">Yes</mat-radio-button>
                 <mat-radio-button value="no">No</mat-radio-button>
             </mat-radio-group>
@@ -71,9 +71,9 @@
             </mat-form-field>
     
             <p></p>
-            <mat-form-field *ngIf="productForm.controls['bootType'].value==='no'" style="width:30vw">
+            <mat-form-field *ngIf="productForm.controls['withBoot'].value==='no'" style="width:30vw">
                 <mat-label>Select a design for the BASE of the chalk bag: </mat-label>
-                <mat-select formControlName="baseDesign">
+                <mat-select formControlName="baseBagDesign">
                   <mat-option *ngFor="let f of fabricList" [value]="f.name">
                     <img width="20" height="20" [src]="f.imgLink">
                     {{f.name}}
@@ -82,7 +82,7 @@
             </mat-form-field>
     
             <p></p>
-            <mat-form-field *ngIf="productForm.controls['bootType'].value==='yes'" style="width:30vw">
+            <mat-form-field *ngIf="productForm.controls['withBoot'].value==='yes'" style="width:30vw">
                 <mat-label>Select a design for the BOOT of the chalk bag: </mat-label>
                 <mat-select formControlName="bootDesign">
                   <mat-option *ngFor="let f of fabricList" [value]="f.name">

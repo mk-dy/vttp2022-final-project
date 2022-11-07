@@ -26,6 +26,7 @@ export class MainComponent implements OnInit {
       this.productList = data
     })
     this.searchForm = this.createForm()
+
   }
 
   createForm(): FormGroup {

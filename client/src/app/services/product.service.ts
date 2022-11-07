@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firstValueFrom, Subject } from "rxjs";
 import { Fabric, Product, User } from "../models";
@@ -51,6 +51,18 @@ export class ProductService {
             this.http.get('/fabricTest')
         ).then(result =>
             console.info('>>>> check fabrictest: ', result))
+    }
+
+    addToCart(data: any) {
+
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+        
+        return firstValueFrom(
+            this.http.post('/cart', data, { headers })
+        )
+
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vttp.csf.server.models.Fabric;
+import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.models.Product;
 import vttp.csf.server.repository.SearchRepository;
 
@@ -41,6 +42,6 @@ public class SearchService {
         return searchRepo.getFabric();
     }
 
-
+    
 
 }

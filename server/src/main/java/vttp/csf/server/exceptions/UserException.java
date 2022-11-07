@@ -2,13 +2,13 @@ package vttp.csf.server.exceptions;
 
 public class UserException extends Exception {
     
-    private String reason;
+    private String msg;
 
-    public UserException(String reason) {
-        this.reason = reason;
+    public UserException(String message) {
+        super(message);
     }
 
-    public String getReason() {
-        return reason;
+    public String getMsg() {
+        return msg;
     }
 }

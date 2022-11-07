@@ -60,4 +60,106 @@ public class ConversionUtil {
         return jsonObj;
     }
 
+    // public static FinalProduct replaceNull(FinalProduct product) {
+    //     // if product properties contain null, replace with ""
+    //     if (product.getUserId().equals(null)) {
+    //         product.setUserId("");
+    //     }
+    //     if (product.getExteriorDesign().equals(null)) {
+    //         product.setExteriorDesign("");
+    //     }
+    //     if (product.getWithBoot().equals(null)) {
+    //         product.setWithBoot("");
+    //     }
+    //     if (product.getHoopStraps().equals(null)) {
+    //         product.setHoopStraps("");
+    //     }
+    //     if (product.getKeychainHolders().equals(null)) {
+    //         product.setKeychainHolders("");
+    //     }
+    //     if (product.getUpsize().equals(null)) {
+    //         product.setUpsize("");
+    //     }
+    //     if (product.getBaseType().equals(null)) {
+    //         product.setBaseType("");
+    //     }
+    //     if (product.getFrontSideClosure().equals(null)) {
+    //         product.setFrontSideClosure("");
+    //     }
+    //     if (product.getMagneticClosure().equals(null)) {
+    //         product.setMagneticClosure("");
+    //     }
+    //     if (product.getdRingWebbing().equals(null)) {
+    //         product.setdRingWebbing("");
+    //     }
+    //     if (product.getFrontPocketDesign().equals(null)) {
+    //         product.setFrontPocketDesign("");
+    //     }
+    //     if (product.getFrontPocketBackDesign().equals(null)) {
+    //         product.setFrontPocketBackDesign("");
+    //     }
+    //     if (product.getBackDesign().equals(null)) {
+    //         product.setBackDesign("");
+    //     }
+    //     if (product.getBaseBucketDesign().equals(null)) {
+    //         product.setBaseBucketDesign("");
+    //     }
+    //     return product;
+        
+    // }
+
+    public static FinalProduct replaceNull(FinalProduct product) {
+        // if product properties contain null, replace with ""
+        if (product.getUserId() == null) {
+            product.setUserId("");
+        }
+        if (product.getExteriorDesign()== null) {
+            product.setExteriorDesign("");
+        }
+        if (product.getBaseBagDesign()== null) {
+            product.setBaseBagDesign("");
+        }
+        if (product.getBootDesign()== null) {
+            product.setBootDesign("");
+        }
+        if (product.getWithBoot()== null) {
+            product.setWithBoot("");
+        }
+        if (product.getHoopStraps()== null) {
+            product.setHoopStraps("");
+        }
+        if (product.getKeychainHolders()== null) {
+            product.setKeychainHolders("");
+        }
+        if (product.getUpsize()== null) {
+            product.setUpsize("");
+        }
+        if (product.getBaseType()== null) {
+            product.setBaseType("");
+        }
+        if (product.getFrontSideClosure()== null) {
+            product.setFrontSideClosure("");
+        }
+        if (product.getMagneticClosure()== null) {
+            product.setMagneticClosure("");
+        }
+        if (product.getdRingWebbing()== null) {
+            product.setdRingWebbing("");
+        }
+        if (product.getFrontPocketDesign()== null) {
+            product.setFrontPocketDesign("");
+        }
+        if (product.getFrontPocketBackDesign()== null) {
+            product.setFrontPocketBackDesign("");
+        }
+        if (product.getBackDesign()== null) {
+            product.setBackDesign("");
+        }
+        if (product.getBaseBucketDesign()== null) {
+            product.setBaseBucketDesign("");
+        }
+        return product;
+        
+    }
+
 }

@@ -13,7 +13,7 @@
             </p>
             
         </div>
-        <form [formGroup]="productForm" (ngSubmit)="processForm()">
+        <form [formGroup]="productForm" #formDirective="ngForm" (ngSubmit)="processForm(formDirective)">
     
             <p>Do you want your chalk bucket to be of HALF-BASE or WHOLE-BASE?</p>
             <mat-radio-group formControlName="baseType">
@@ -22,7 +22,7 @@
             </mat-radio-group>
             
             <p>Do you wish to have a FRONT-BUCKLE CLOSURE or a SIDE-BUCKLE CLOSURE? (+$2)</p>
-            <mat-radio-group formControlName="frontOrSideClosure">
+            <mat-radio-group formControlName="frontSideClosure">
                 <mat-radio-button value="front">Front-Buckle Closure</mat-radio-button>
                 <mat-radio-button value="side">Side-Buckle Closure</mat-radio-button>
             </mat-radio-group>
@@ -97,7 +97,7 @@
             <p></p>
             <mat-form-field *ngIf="productForm.controls['baseType'].value==='whole'" style="width:30vw">
                 <mat-label>Select a design for the BASE of the chalk bucket: </mat-label>
-                <mat-select formControlName="baseDesign">
+                <mat-select formControlName="baseBucketDesign">
                   <mat-option *ngFor="let f of fabricList" [value]="f.name">
                     <img width="20" height="20" [src]="f.imgLink">
                     {{f.name}}

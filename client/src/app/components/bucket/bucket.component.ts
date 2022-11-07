@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Product, Fabric } from 'src/app/models';
 import { ProductService } from 'src/app/services/product.service';
@@ -38,7 +38,7 @@ export class BucketComponent implements OnInit {
   createForm(): FormGroup {
     return this.fb.group({
       baseType: this.fb.control<string>('', Validators.required), // half or whole
-      frontOrSideClosure: this.fb.control<string>('', Validators.required), // front or side
+      frontSideClosure: this.fb.control<string>('', Validators.required), // front or side
       // numOfBrushHolder: this.fb.control<number>(1, [ Validators.min(1), Validators.max(3) ]), // minimum one 
       // brushHolderLocation: this.fb.control<string>('', Validators.required),
       magneticClosure: this.fb.control<string>('', Validators.required), // yes or no
@@ -49,18 +49,21 @@ export class BucketComponent implements OnInit {
       quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
       remarks: this.fb.control<string>(''),
       // ONLY FOR FULL BASE
-      baseDesign: this.fb.control<string>('', Validators.required),
+      baseBucketDesign: this.fb.control<string>('', Validators.required), // custom validator for this
       
     })
   }
 
-  processForm() {
+  processForm(formDirective: FormGroupDirective) {
     const data = this.productForm.value
     console.info('>>>> check data: ', data)
     if (data.keychainHolders === 'no' || data.keychainNum === null) {
       data.keychainNum = 0
     }
-    this.productForm = this.createForm()
+    // this.productForm = this.createForm()
+    formDirective.resetForm();
+    this.productForm.reset()
+    data['prodId'] = 'CHLKBKT02'
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $
@@ -75,7 +78,10 @@ export class BucketComponent implements OnInit {
     }
     this.totalPrice = (data.quantity * this.totalPrice) 
     console.info(">>> END check total price: ", this.totalPrice)
+    data['price'] = this.totalPrice
 
+    this.productSvc.addToCart(data)
+    
     // need to reset totalPrice after processForm()
     this.callGetChalkbucket()
   }

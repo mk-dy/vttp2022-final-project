@@ -42,14 +42,14 @@ export class BagComponent implements OnInit, OnDestroy {
 
   createForm(): FormGroup {
     const myFormGroup = this.fb.group({
-        bootType: this.fb.control<string>('', Validators.required), // yes or no
+        withBoot: this.fb.control<string>('', Validators.required), // yes or no
         upsize: this.fb.control<string>('', Validators.required), // yes or no
         hoopStraps: this.fb.control<string>('', Validators.required), // yes or no
         keychainHolders: this.fb.control<string>('', Validators.required), 
         // keychainNum shows up when keychainHolders is yes
-        keychainNum: this.fb.control<number | null>(1),
+        keychainNum: this.fb.control<number | null>(1), // custom validator for this
         exteriorDesign: this.fb.control<string>('', Validators.required),
-        baseDesign: this.fb.control<string>('', Validators.required), // for no boot
+        baseBagDesign: this.fb.control<string>('', Validators.required), // for no boot
         bootDesign: this.fb.control<string>('', Validators.required), // for with boot
         quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
         remarks: this.fb.control<string>('')
@@ -82,6 +82,7 @@ export class BagComponent implements OnInit, OnDestroy {
       data.keychainNum = 0
     }
     this.productForm = this.createForm()
+    data['prodId'] = 'CHLKBAG01'
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $
@@ -96,6 +97,10 @@ export class BagComponent implements OnInit, OnDestroy {
     }
     this.totalPrice = (data.quantity * this.totalPrice) 
     console.info(">>> END check total price: ", this.totalPrice)
+    data['price'] = this.totalPrice
+
+    this.productSvc.addToCart(data)
+
     // need to reset totalPrice after processForm()
     this.callGetChalkbag()
   }

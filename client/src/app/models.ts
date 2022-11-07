@@ -33,21 +33,6 @@ export interface CreationMsg {
 }
 
 /*
-what do i need?
-
-PRODUCT
-=========
-product id
-product name
-product description
-price
-
-
-
-CUSTOMISATION (see if i want to package it together with the product page)
-=============
-material
-
 
 FAVOURITES?
 ============

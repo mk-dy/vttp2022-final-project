@@ -31,4 +31,8 @@ export class NavbarComponent implements OnInit {
     this.route.navigate(['/cart'])
   }
 
+  onOrders() {
+    this.route.navigate(['/orders'])
+  }
+
 }

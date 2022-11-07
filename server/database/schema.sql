@@ -18,9 +18,10 @@ CREATE TABLE user (
 
 INSERT INTO user (user_id, user_first_name, user_last_name, user_email, user_mobile, user_password)
 VALUES 
-	('sdsd','sdsd','sdsd','sdsd','sdsd','sdsd');
+	('12345678','test','test','test@gmail.com','12345678','123123');
 
 SELECT * FROM user;
+
 
 -- PRODUCT --
 CREATE TABLE product (
@@ -83,28 +84,28 @@ SELECT * FROM fabric;
 CREATE TABLE final_product (
 	id INT NOT NULL AUTO_INCREMENT,
     prod_id VARCHAR(9) NOT NULL,
-    user_id VARCHAR(8) NOT NULL,
+    user_id VARCHAR(8),
     
     -- CHALK BAG START --
-    boot_type TINYINT(1),
-    upsize TINYINT(1),
-    hoop_waist_strap TINYINT(1),
-    keychain_holders TINYINT(1),
+    with_boot VARCHAR(3),
+    upsize VARCHAR(3),
+    hoop_waist_strap VARCHAR(3),
+    keychain_holders VARCHAR(3),
     keychain_num INT,
     ext_design VARCHAR(32),
-    base_design VARCHAR(32),
+    base_bag_design VARCHAR(32),
     boot_design VARCHAR(32),
     -- CHALK BAG END -- 
     
     -- CHALK BUCKET START --
     base_type VARCHAR(8),
     front_side_closure VARCHAR(8),
-    magnetic_closure TINYINT(1),
-    d_ring_webbing TINYINT(1), 
+    magnetic_closure VARCHAR(3),
+    d_ring_webbing VARCHAR(3), 
     front_pocket_design VARCHAR(32),
 	front_pocket_back_design VARCHAR(32),
     back_design VARCHAR(32),
-    base_design VARCHAR(32),
+    base_bucket_design VARCHAR(32),
     -- CHALK BUCKET END --
     
     quantity INT NOT NULL,
@@ -116,6 +117,9 @@ CREATE TABLE final_product (
     FOREIGN KEY (user_id) REFERENCES user (user_id)
 
 );
+
+SELECT * FROM final_product;
+
 
 -- CART -- 
 CREATE TABLE cart (
@@ -154,149 +158,5 @@ CREATE TABLE cust_order (
     PRIMARY KEY (order_id)
 
 );
-
-
-
-
-
-
-
--- should product table be just about the four products mentioned? --
--- i.e. chalk bag with boot, chalk bag without boot, chalk bucket (half base), chalk bucket (full base) --
--- prod_id, prod_name? --
-
-
--- PRODUCT --
--- CREATE TABLE product (
---     prod_id VARCHAR(8) NOT NULL,
---     prod_name VARCHAR(128),
---     prod_desc VARCHAR(128),
---     prod_type ENUM(
---         'bagBoot',
---         'bagNoBoot',
---         'bucketHalfBase',
---         'bucketWholeBase'
---     ),
---     front_closure TINYINT(1),
---     -- brush holders and location --
---     magnet_closure TINYINT(1),
---     add_back_pocket TINYINT(1),
---     front_pocket_design ENUM(
---         'black',
---         'natural',
---         'grey',
---         'sky',
---         'navy',
---         'green',
---         'olive',
---         'bloom',
---         'flora',
---         'toile',
---         'outback',
---         'tropical',
---         'palm',
---         'ornament',
---         'cabin',
---         'produce',
---         'monstera',
---         'barteri',
---         'organic',
---         'maki',
---         'sushi',
---         'sail'
---     ),
---     front_behind_pocket_Design ENUM(
---         'black',
---         'natural',
---         'grey',
---         'sky',
---         'navy',
---         'green',
---         'olive',
---         'bloom',
---         'flora',
---         'toile',
---         'outback',
---         'tropical',
---         'palm',
---         'ornament',
---         'cabin',
---         'produce',
---         'monstera',
---         'barteri',
---         'organic',
---         'maki',
---         'sushi',
---         'sail'
---     ),
---     back_design ENUM(
---         'black',
---         'natural',
---         'grey',
---         'sky',
---         'navy',
---         'green',
---         'olive',
---         'bloom',
---         'flora',
---         'toile',
---         'outback',
---         'tropical',
---         'palm',
---         'ornament',
---         'cabin',
---         'produce',
---         'monstera',
---         'barteri',
---         'organic',
---         'maki',
---         'sushi',
---         'sail'
---     ),
---     quantity INT,
---     price INT,
---     comments VARCHAR(256),
-    
---     PRIMARY KEY(prod_id)
--- );
-
-
-
-
-
-
-
-
-
-
-
--- what do i need?
-
--- PRODUCT
--- =========
--- product id
--- product name
--- product description
--- price
--- size????
-
-
--- CUSTOMISATION (see if i want to package it together with the product page)
--- =============
--- material
-
-
--- FAVOURITES?
--- ============
--- include delete button
-
--- CART
--- =======
--- promo code
--- payment options
--- name
--- delivery address
--- billing address (form array, if checkbox is ticked for "If billing address differs from delivery address")
-
 
 

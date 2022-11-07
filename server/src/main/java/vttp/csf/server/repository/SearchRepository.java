@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import static vttp.csf.server.repository.Queries.*;
 
 import vttp.csf.server.models.Fabric;
+import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.models.Product;
 
 @Repository
@@ -105,4 +106,7 @@ public class SearchRepository {
         
         return chalkBucket;
     }
+
+    
+    
 }

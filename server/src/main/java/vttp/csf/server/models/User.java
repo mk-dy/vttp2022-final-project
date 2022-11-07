@@ -8,6 +8,12 @@ public class User {
     private String email;
     private String mobile;
     private String password;
+
+
+    private String[] authorities;
+    private boolean isActive;
+    private boolean isNotLocked;
+    
     
     public String getId() {
         return id;
@@ -46,4 +52,24 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String[] getAuthorities() {
+        return authorities;
+    }
+    public void setAuthorities(String[] authorities) {
+        this.authorities = authorities;
+    }
+    public boolean isActive() {
+        return isActive;
+    }
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+    public boolean isNotLocked() {
+        return isNotLocked;
+    }
+    public void setNotLocked(boolean isNotLocked) {
+        this.isNotLocked = isNotLocked;
+    }
+    
 }

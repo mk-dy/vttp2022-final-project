@@ -44,7 +44,7 @@ const appRoutes: Routes = [
   { path: 'shop', component: MainComponent },
   { path: 'search', component: SearchResultComponent },
   { path: 'cart', component: CartComponent},
-  { path: 'orders', component: OrdersComponent},
+  { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
   { path: 'product', component: ProductComponent},
   { path: 'product/chalk-bag', component: BagComponent},
   { path: 'product/chalk-bucket', component: BucketComponent},

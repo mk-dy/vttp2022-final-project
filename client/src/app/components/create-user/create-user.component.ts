@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { CreationMsg, User } from '../../models';
 
@@ -17,7 +18,7 @@ export class CreateUserComponent implements OnInit {
   creationMsg!: string
   sub$!: Subscription
 
-  constructor(private fb: FormBuilder, private userSvc: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authSvc: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.userForm = this.createForm()
@@ -38,7 +39,7 @@ export class CreateUserComponent implements OnInit {
     const data = this.userForm.value as User
     console.info('>>> check user: ', data)
     // send the user details over using service
-    this.userSvc.createUser(data).then(response => {
+    this.authSvc.createUser(data).then(response => {
       const result = response as CreationMsg
       this.creationMsg = result.message
       console.info(">>>> CHECK SUCCESS message", this.creationMsg)

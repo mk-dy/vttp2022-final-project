@@ -1,6 +1,6 @@
 <div style="display: flex; align-items: flex-start; justify-content: space-between;margin-top: 10vh;">
     <div class="left-container">
-
+        <img src="{{ chalkbag.imgLink }}" style="width:30vw">
     </div>
     <div class="right-container w-f">
         <div>
@@ -13,7 +13,7 @@
             </p>
             
         </div>
-        <form [formGroup]="productForm" (ngSubmit)="processForm()">
+        <form [formGroup]="productForm" #formDirective="ngForm" (ngSubmit)="processForm(formDirective)">
     
             <p>Do you want your chalk bag to have a boot?</p>
             <mat-radio-group formControlName="withBoot">

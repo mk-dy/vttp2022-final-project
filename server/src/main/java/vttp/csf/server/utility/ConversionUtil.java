@@ -1,4 +1,4 @@
-package vttp.csf.server.models;
+package vttp.csf.server.utility;
 
 import java.util.List;
 
@@ -6,6 +6,9 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import vttp.csf.server.models.Fabric;
+import vttp.csf.server.models.FinalProduct;
+import vttp.csf.server.models.Product;
 
 public class ConversionUtil {
     
@@ -22,6 +25,45 @@ public class ConversionUtil {
                     .add("price", product.getPrice())
                     .add("imgLink", product.getImgLink())
                     .build();
+
+            arrBuilder.add(jsonObj);
+        }
+        JsonArray arr = arrBuilder.build();
+
+        return arr;
+    }
+    
+    public static JsonArray finalProdtoJsonArr(List<FinalProduct> prodList) {
+        
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        for (FinalProduct product: prodList) {
+            JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("id",product.getId())
+                    .add("prodId",product.getProdId())
+                    .add("userId",product.getUserId())
+                    .add("baseBagDesign",product.getBaseBagDesign())
+                    .add("bootDesign",product.getBootDesign())
+                    .add("exteriorDesign",product.getExteriorDesign())
+                    .add("withBoot",product.getWithBoot())
+                    .add("hoopStraps",product.getHoopStraps())
+                    .add("keychainHolders",product.getKeychainHolders())
+                    .add("baseType",product.getBaseType())
+                    .add("frontSideClosure",product.getFrontSideClosure())
+                    .add("magneticClosure",product.getMagneticClosure())
+                    .add("dRingWebbing",product.getdRingWebbing())
+                    .add("frontPocketDesign",product.getFrontPocketDesign())
+                    .add("frontPocketBackDesign",product.getFrontPocketBackDesign())
+                    .add("backDesign",product.getBackDesign())
+                    .add("baseBucketDesign",product.getBaseBucketDesign())
+                    .add("quantity",product.getQuantity())
+                    .add("remarks",product.getRemarks())
+                    .add("price",product.getPrice())
+                    .add("imgLink",product.getImgLink())
+                    .build();
+
+
+
 
             arrBuilder.add(jsonObj);
         }
@@ -157,6 +199,9 @@ public class ConversionUtil {
         }
         if (product.getBaseBucketDesign()== null) {
             product.setBaseBucketDesign("");
+        }
+        if (product.getRemarks()== null) {
+            product.setRemarks("");
         }
         return product;
         

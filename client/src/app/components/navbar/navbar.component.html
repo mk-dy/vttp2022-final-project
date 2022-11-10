@@ -18,6 +18,17 @@
     </button>
     <mat-menu #menu="matMenu" >
       <span>
+        <div style="text-align:center">
+          <a [routerLink]="['/login']">Sign In</a>
+           | 
+          <a [routerLink]="['/signup']">Register</a>
+        </div>
+        
+        <!-- <button mat-menu-item (click)="onLogin()">
+          <mat-icon>login</mat-icon>
+          <span>Sign In</span>
+        </button> -->
+        
         <button mat-menu-item (click)="onOrders()">
           <mat-icon>inventory_2</mat-icon>
           <span>My Orders</span>
@@ -26,9 +37,9 @@
           <mat-icon>voicemail</mat-icon>
           <span>Check voice mail</span>
         </button>
-        <button mat-menu-item>
-          <mat-icon>notifications_off</mat-icon>
-          <span>Disable alerts</span>
+        <button mat-menu-item (click)="onSignOut()">
+          <mat-icon>logout</mat-icon>
+          <span>Sign Out</span>
         </button>
       </span>
       

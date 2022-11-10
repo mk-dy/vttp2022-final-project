@@ -111,6 +111,7 @@ CREATE TABLE final_product (
     quantity INT NOT NULL,
     remarks VARCHAR(512),
     price DECIMAL(10,2) NOT NULL,
+    imgLink VARCHAR(512),
     
     PRIMARY KEY (id),
     FOREIGN KEY (prod_id) REFERENCES product (prod_id),

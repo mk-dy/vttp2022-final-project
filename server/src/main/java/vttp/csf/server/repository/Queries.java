@@ -16,7 +16,7 @@ public interface Queries {
 
     // insert final prod
     public static final String SQL_INSERT_FINAL_PRODUCT = 
-    "INSERT INTO final_product (prod_id, user_id, with_boot, upsize, hoop_waist_strap, keychain_holders, keychain_num, ext_design, base_bag_design, boot_design, base_type, front_side_closure, magnetic_closure, d_ring_webbing, front_pocket_design, front_pocket_back_design, back_design, base_bucket_design, quantity, remarks, price ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
+    "INSERT INTO final_product (prod_id, user_id, with_boot, upsize, hoop_waist_strap, keychain_holders, keychain_num, ext_design, base_bag_design, boot_design, base_type, front_side_closure, magnetic_closure, d_ring_webbing, front_pocket_design, front_pocket_back_design, back_design, base_bucket_design, quantity, remarks, price, imgLink ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"; 
     
     // get all final product by user_id
     public static final String SQL_GET_FINAL_PRODUCT_BY_USER_ID = 

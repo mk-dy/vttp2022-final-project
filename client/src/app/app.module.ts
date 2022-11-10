@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -20,6 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
+
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { UserService } from './services/user.service';
@@ -36,21 +39,17 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CreationStatusComponent } from './components/create-user/creation-status.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { PaymentService } from './services/payment.service';
+import { PaymentCancelComponent } from './components/payment-cancel/payment-cancel.component';
+import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
+import { CheckoutService } from './services/checkout.service';
+import { AuthService } from './services/auth.service';
+import { TokenStorageService } from './services/token-storage.service';
+import { authInterceptorProviders } from './auth.interceptor';
 
-const appRoutes: Routes = [
-  { path: '', component: LandingComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: CreateUserComponent},
-  { path: 'shop', component: MainComponent },
-  { path: 'search', component: SearchResultComponent },
-  { path: 'cart', component: CartComponent},
-  { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
-  { path: 'product', component: ProductComponent},
-  { path: 'product/chalk-bag', component: BagComponent},
-  { path: 'product/chalk-bucket', component: BucketComponent},
-  { path: 'favourites', component: FavouritesComponent},
-  { path: '**', redirectTo: '/', pathMatch : 'full'}
-]
+
+
 
 // to change product/chalkbucket into product/{productId}
 // or create another path e.g. favourites/{userId}
@@ -71,13 +70,17 @@ const appRoutes: Routes = [
     NavbarComponent,
     CreationStatusComponent,
     OrdersComponent,
-    FooterComponent
+    FooterComponent,
+    CheckoutComponent,
+    PaymentCancelComponent,
+    PaymentSuccessComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes),
+    // RouterModule.forRoot(appRoutes, {useHash: true}),
+    AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -91,9 +94,22 @@ const appRoutes: Routes = [
     MatSelectModule,
     FlexLayoutModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatExpansionModule,
+    MatListModule,
+    MatCarouselModule.forRoot()
+    
   ],
-  providers: [UserService, SearchService, ProductService],
+  providers: [
+    UserService, 
+    SearchService, 
+    ProductService, 
+    PaymentService, 
+    CheckoutService, 
+    AuthService,
+    TokenStorageService,
+    authInterceptorProviders // our interceptor
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

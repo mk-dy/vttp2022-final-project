@@ -31,6 +31,7 @@ public class FinalProduct {
     private int quantity;
     private String remarks;
     private BigDecimal price;
+    private String imgLink;
     
     public String getId() {
         return id;
@@ -165,6 +166,13 @@ public class FinalProduct {
         this.price = price;
     }
     
+    public String getImgLink() {
+        return imgLink;
+    }
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
+    }
+
     @Override
     public String toString() {
         return "FinalProduct [id=" + id + ", prodId=" + prodId + ", userId=" + userId + ", baseBagDesign="
@@ -174,10 +182,7 @@ public class FinalProduct {
                 + frontSideClosure + ", magneticClosure=" + magneticClosure + ", dRingWebbing=" + dRingWebbing
                 + ", frontPocketDesign=" + frontPocketDesign + ", frontPocketBackDesign=" + frontPocketBackDesign
                 + ", backDesign=" + backDesign + ", baseBucketDesign=" + baseBucketDesign + ", quantity=" + quantity
-                + ", remarks=" + remarks + ", price=" + price + "]";
+                + ", remarks=" + remarks + ", price=" + price + ", imgLink=" + imgLink + "]";
     }
 
-   
-
-     
 }

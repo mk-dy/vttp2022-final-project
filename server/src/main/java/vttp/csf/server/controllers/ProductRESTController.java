@@ -26,10 +26,10 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import vttp.csf.server.models.ConversionUtil;
 import vttp.csf.server.models.Fabric;
 import vttp.csf.server.models.Product;
 import vttp.csf.server.services.SearchService;
+import vttp.csf.server.utility.ConversionUtil;
 
 @RestController
 public class ProductRESTController {

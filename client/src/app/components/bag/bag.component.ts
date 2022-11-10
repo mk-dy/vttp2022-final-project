@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { distinctUntilChanged, Subscription } from 'rxjs';
 import { Fabric, Product } from '../../models';
 import { ProductService } from '../../services/product.service';
 
@@ -27,13 +27,22 @@ export class BagComponent implements OnInit, OnDestroy {
     this.callGetChalkbag()
     this.productSvc.getFabric().then(result =>
       this.fabricList = result as Fabric[])
-      console.info('>>>> fabriclist check: ', this.fabricList)
     this.productForm = this.createForm()
 
-    // this.productForm.get("bootType").valueChanges
-    //   .subscribe(data=> {
-    //     this.changeValidators()
-    //   })
+    // this.productForm.controls['withBoot'].valueChanges.subscribe(val => {
+    //   if (this.productForm.controls['withBoot'].value == 'yes') { // for setting validations
+    //     this.productForm.controls['withBoot'].setValidators(Validators.required);
+    //     this.productForm.controls['baseBagDesign'].clearValidators();
+    //     this.productForm.controls['withBoot'].updateValueAndValidity();
+    //     console.info(">>>>>>invalid? base" + this.productForm.controls['baseBagDesign'].invalid)
+    //   } else {
+    //     this.productForm.controls['baseBagDesign'].setValidators(Validators.required);
+    //     this.productForm.controls['withBoot'].clearValidators();
+    //     this.productForm.controls['withBoot'].updateValueAndValidity();
+    //       console.info(">>>>>>invalid? boot" + this.productForm.controls['withBoot'].invalid)
+    //   }
+    // })
+    
   }
 
   ngOnDestroy(): void {
@@ -49,8 +58,8 @@ export class BagComponent implements OnInit, OnDestroy {
         // keychainNum shows up when keychainHolders is yes
         keychainNum: this.fb.control<number | null>(1), // custom validator for this
         exteriorDesign: this.fb.control<string>('', Validators.required),
-        baseBagDesign: this.fb.control<string>('', Validators.required), // for no boot
-        bootDesign: this.fb.control<string>('', Validators.required), // for with boot
+        baseBagDesign: this.fb.control<string>('', Validators.required), // if WITHOUT BOOT // issue with validity here
+        bootDesign: this.fb.control<string>('', Validators.required), // if WITH BOOT // issue with validity here
         quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
         remarks: this.fb.control<string>('')
       })
@@ -75,14 +84,16 @@ export class BagComponent implements OnInit, OnDestroy {
     // })
   }
 
-  processForm() {
+  processForm(formDirective: FormGroupDirective) {
     const data = this.productForm.value
     console.info('>>>> check data: ', data)
     if (data.keychainHolders === 'no' || data.keychainNum === null) {
       data.keychainNum = 0
     }
+    formDirective.resetForm();
     this.productForm = this.createForm()
     data['prodId'] = 'CHLKBAG01'
+    data['imgLink'] = this.chalkbag.imgLink
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $

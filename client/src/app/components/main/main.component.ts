@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Product } from '../../models';
+import { Fabric, Product } from '../../models';
 import { ProductService } from '../../services/product.service';
 import { SearchService } from '../../services/search.service';
 
@@ -17,6 +17,7 @@ export class MainComponent implements OnInit {
   productList!: Product[]
   sub$!: Subscription
   searchForm!: FormGroup
+  fabricList!: Fabric[]
 
   constructor(private fb: FormBuilder, private searchSvc: SearchService, private productSvc: ProductService, private router: Router) { }
 
@@ -26,7 +27,6 @@ export class MainComponent implements OnInit {
       this.productList = data
     })
     this.searchForm = this.createForm()
-
   }
 
   createForm(): FormGroup {

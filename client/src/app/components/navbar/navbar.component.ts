@@ -7,8 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  panelOpenState = false;
   
   constructor(private route: Router) { }
 
@@ -33,6 +31,20 @@ export class NavbarComponent implements OnInit {
 
   onOrders() {
     this.route.navigate(['/orders'])
+  }
+
+  onLogin() {
+    this.route.navigate(['/login'])
+  }
+
+  async onSignOut() {
+    window.sessionStorage.clear();
+    await this.route.navigate(['/'])
+    this.reloadPage()
+  }
+
+  reloadPage() {
+    window.location.reload()
   }
 
 }

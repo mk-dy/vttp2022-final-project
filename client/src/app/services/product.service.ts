@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { firstValueFrom, Subject } from "rxjs";
-import { Fabric, Product, User } from "../models";
+import { Fabric, FinalProduct, Product, User } from "../models";
 
 @Injectable()
 export class ProductService {
@@ -10,6 +10,8 @@ export class ProductService {
     onShowChalkbag = new Subject<Product>()
     onShowChalkbucket = new Subject<Product>()
     onGetFabric = new Subject<Fabric[]>()
+    onGetFinalProductList = new Subject<FinalProduct[]>()
+    onGetCartItems = new Subject<FinalProduct[]>()
     product!: Product
 
     constructor(private http: HttpClient) {}
@@ -63,6 +65,14 @@ export class ProductService {
             this.http.post('/cart', data, { headers })
         )
 
+    }
+
+    getCart() {
+        return firstValueFrom(
+            this.http.get('/cart')
+        ).then(result => {
+            this.onGetCartItems.next(result as FinalProduct[])
+        })
     }
 
 

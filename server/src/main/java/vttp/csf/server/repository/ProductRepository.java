@@ -39,7 +39,8 @@ public class ProductRepository {
                 finalProduct.getBaseBucketDesign(),
                 finalProduct.getQuantity(),
                 finalProduct.getRemarks(),
-                finalProduct.getPrice());
+                finalProduct.getPrice(),
+                finalProduct.getImgLink());
 
         return count == 1;
     }
@@ -52,7 +53,7 @@ public class ProductRepository {
             FinalProduct product = new FinalProduct();
             product.setId(rs.getString("id"));
             product.setProdId(rs.getString("prod_id"));
-            product.setUserId(userId);
+            product.setUserId(rs.getString("user_id"));
             product.setWithBoot(rs.getString("with_boot"));
             product.setUpsize(rs.getString("upsize"));
             product.setHoopStraps(rs.getString("hoop_waist_strap"));
@@ -70,8 +71,9 @@ public class ProductRepository {
             product.setBackDesign(rs.getString("back_design"));
             product.setBaseBucketDesign(rs.getString("base_bucket_design"));
             product.setQuantity(rs.getInt("quantity"));
-            // product.setRemarks(rs.getString("remarks"));
+            product.setRemarks(rs.getString("remarks"));
             product.setPrice(rs.getBigDecimal("price"));
+            product.setImgLink(rs.getString("imgLink"));
             
             productList.add(product);
         }

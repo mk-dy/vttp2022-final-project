@@ -60,10 +60,11 @@ export class BucketComponent implements OnInit {
     if (data.keychainHolders === 'no' || data.keychainNum === null) {
       data.keychainNum = 0
     }
-    // this.productForm = this.createForm()
     formDirective.resetForm();
-    this.productForm.reset()
+    // this.productForm.reset()
+    this.productForm = this.createForm()
     data['prodId'] = 'CHLKBKT02'
+    data['imgLink'] = this.chalkbucket.imgLink
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $

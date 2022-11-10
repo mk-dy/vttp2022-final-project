@@ -1,0 +1,206 @@
+<div>
+    <form [formGroup]="checkoutForm">
+        <div>
+            <!-- <div class="example-action-buttons">
+                <button mat-button (click)="accordion.openAll()">Expand All</button>
+                <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+            </div> -->
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    Shipping
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    Type your name and age
+                    <mat-icon>account_circle</mat-icon>
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+            
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            
+                <mat-form-field appearance="fill">
+                    <mat-label>Postal Code</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+                
+                <label id="example-radio-group-label">Select your delivery method:</label>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" value="mail">
+                        Normal non-tracked local mailing (+$2)
+                    </mat-radio-button>
+                    <mat-radio-button class="example-radio-button" value="collect">
+                        Meetup at (S)653288 (free of charge)
+                    </mat-radio-button>
+                </mat-radio-group>
+    
+                </mat-expansion-panel>
+    
+                <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                    Billing
+                    </mat-panel-title>
+                    <!-- <mat-panel-description>
+                    Type the country name
+                    <mat-icon>map</mat-icon>
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+            
+                
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 1</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Address Line 2</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            
+                <mat-form-field appearance="fill">
+                    <mat-label>Postal Code</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+    
+                </mat-expansion-panel>
+    
+    
+            
+                <!-- <form>
+                    <input type="text" placeholder="Credit Card #" name="cardNumber">
+                    <input type="text" placeholder="Expiration Month" name="expMonth">
+                    <input type="text" placeholder="Expiration Year" name="expYear">
+                    <input type="text" placeholder="CVC" name="cvc">
+                    <button (click)="chargeCreditCard()">Submit</button>
+                </form> -->
+    
+                <!-- <button mat-raised-button color="primary" (click)="pay()">
+                    Buy it for $999
+                  </button> -->
+    
+    
+            
+            </mat-accordion>
+    
+            <!-- Shipping Address -->
+            <div formGroupName="shippingAddress">
+                <h3>Shipping Address</h3>
+    
+                <div class="row">
+                    <div class="col-md-2"> <label>Street</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="street" type="text">
+    
+                            <div *ngIf="shippingAddressStreet?.invalid && (shippingAddressStreet?.dirty || shippingAddressStreet?.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="shippingAddressStreet?.errors?.['required'] || shippingAddressStreet?.errors?.['noWhitespace']">
+                                    Street is required
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col-md-2"> <label>Postal Code</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="postalCode" type="text">
+    
+                            <div *ngIf="shippingAddressPostalCode?.invalid && (shippingAddressPostalCode?.dirty || shippingAddressPostalCode?.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="shippingAddressPostalCode?.errors?.['required'] || shippingAddressPostalCode?.errors?.['noWhitespace']">
+                                    Postal code is required
+                                </div>
+                                <div *ngIf="shippingAddressPostalCode?.errors?.['minlength']">
+                                    Postal code must be at least 6 digits long
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            
+          
+            </div>
+
+            <!-- copy shipping address to billing address -->
+            <div class="input-space">
+                <label class="au-checkbox">
+                    <input type="checkbox" (change)="copyShipAddToBillAdd($event)">
+                    <span class="au-checkmark"></span>My shipping information is the same as my billing information
+                </label>
+            </div>
+
+            <!-- Billing Address -->
+            <div formGroupName="billingAddress">
+                <h3>Billing Address</h3>
+    
+                <div class="row">
+                    <div class="col-md-2"> <label>Street</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="street" type="text">
+    
+                            <div *ngIf="billingAddressStreet?.invalid && (billingAddressStreet?.dirty || billingAddressStreet?.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="billingAddressStreet?.errors?.['required'] || billingAddressStreet?.errors?.['noWhitespace']">
+                                    Street is required
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"> <label>Postal Code</label></div>
+                    <div class="col-md-9">
+                        <div class="input-space">
+                            <input formControlName="postalCode" type="text">
+    
+                            <div *ngIf="billingAddressPostalCode?.invalid && (billingAddressPostalCode?.dirty || billingAddressPostalCode?.touched)" class="alert alert-danger mt-1">
+                                <div *ngIf="billingAddressPostalCode?.errors?.['required'] || billingAddressPostalCode?.errors?.['noWhitespace']">
+                                    Postal code is required
+                                </div>
+                                <div *ngIf="billingAddressPostalCode?.errors?.['minlength']">
+                                    Postal code must be at least 6 digits long
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            
+          
+            </div>
+
+            <div>
+
+                <h3>Credit or Debit Card</h3>
+
+                <div id="card-element">
+                    <!-- a Stripe element will be inserted here -->
+                </div>
+                   
+                <!-- Used to display form errors -->
+                <div id="card-errors" class="displayError.textContent!=='': 'alert alert-danger mt-1'">
+                    
+                </div>
+            </div>
+        
+        </div>
+    </form>
+        
+            
+
+    
+</div>

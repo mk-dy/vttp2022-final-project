@@ -39,7 +39,7 @@ public class UserService {
         
 
         if (!userRepo.createUser(user)) {
-            throw new UserException("Unable to create user.");
+            throw new UserException("Unable to create user, please try again later.");
         }
 
     }

@@ -19,28 +19,18 @@ export class AuthService {
     return this.http.post(`${AUTH_API}/login`, data, httpOptions);
   }
 
-//   register(username: string, email: string, password: string): Observable<any> {
-//     return this.http.post(AUTH_API + 'signup', {
-//       username,
-//       email,
-//       password
-//     }, httpOptions);
-//   }
-
   createUser(user: User) {
 
     const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
     
-    // return firstValueFrom(
-    //     this.http.post('/signup', user)
-    // ).then(result => {
-    //     this.onCreateAcc.next(result as string)
-    // })
     return firstValueFrom(
         this.http.post(`${AUTH_API}/signup`, user, { headers })
     )
+  }
 
-}
+  isLoggedIn() {
+    return !!sessionStorage.getItem('auth-token')
+  }
 }

@@ -7,7 +7,7 @@
     </span> 
     <!-- place the isaac logo here -->
     <!-- <img src="/assets/images/isaac-logo-2.svg" (click)="onRouteLanding()" width="70vw"> -->
-    <a href ng-click="onRouteLanding()">
+    <a href ng-click="onIcon()">
         <img src="/assets/images/isaac-logo-2.svg" width="70vw">
     </a>
 
@@ -33,11 +33,7 @@
           <mat-icon>inventory_2</mat-icon>
           <span>My Orders</span>
         </button>
-        <button mat-menu-item disabled>
-          <mat-icon>voicemail</mat-icon>
-          <span>Check voice mail</span>
-        </button>
-        <button mat-menu-item (click)="onSignOut()">
+        <button mat-menu-item (click)="onSignOut()" disabled="{{token}} === null">
           <mat-icon>logout</mat-icon>
           <span>Sign Out</span>
         </button>

@@ -8,13 +8,22 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   
+  token!: string | null
+
   constructor(private route: Router) { }
 
   ngOnInit(): void {
+    this.token = this.getToken()
+    console.info('token in nav',this.token)
   }
 
-  onRouteLanding() {
-    this.route.navigate(['/']);
+  onIcon() {
+    if (this.token !== null) {
+      this.route.navigate(['/shop']);
+    } 
+    if (this.token === null) {
+      this.route.navigate(['/']);
+    } 
   }
 
   onUser() {
@@ -45,6 +54,10 @@ export class NavbarComponent implements OnInit {
 
   reloadPage() {
     window.location.reload()
+  }
+
+  getToken(): string | null {
+    return window.sessionStorage.getItem("auth-token");
   }
 
 }

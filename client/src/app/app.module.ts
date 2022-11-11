@@ -96,8 +96,7 @@ import { authInterceptorProviders } from './auth.interceptor';
     MatExpansionModule,
     MatGridListModule,
     MatExpansionModule,
-    MatListModule,
-    MatCarouselModule.forRoot()
+    MatListModule
     
   ],
   providers: [

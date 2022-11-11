@@ -23,12 +23,13 @@ import { PaymentSuccessComponent } from './components/payment-success/payment-su
 import { LandingComponent } from './components/landing/landing.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductComponent } from './components/product/product.component';
+import { AuthenticationGuard } from './auth.guard';
 
 const appRoutes: Routes = [
     { path: '', component: LandingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: CreateUserComponent},
-    { path: 'shop', component: MainComponent },
+    { path: 'shop', component: MainComponent, canActivate:[AuthenticationGuard] },
     { path: 'search', component: SearchResultComponent },
     { path: 'cart', component: CartComponent},
     { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
   ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes,{useHash: true})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

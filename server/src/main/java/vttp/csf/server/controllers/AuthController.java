@@ -80,7 +80,7 @@ public class AuthController {
             
         } catch (UserException e) {
             System.out.println(">>>>> cannot create user");
-            jsonObj = Json.createObjectBuilder().add("message","ERROR! %s".formatted(e.getMsg())).build();
+            jsonObj = Json.createObjectBuilder().add("message","ERROR! %s".formatted(e.getMessage())).build();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObj.toString());
             // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR! %s".formatted(e.getReason()));
             

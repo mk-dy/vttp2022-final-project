@@ -10,13 +10,24 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 })
 export class LandingComponent implements OnInit {
 
+  token!: string | null
+
   constructor(private router: Router, private tokenStorageSvc: TokenStorageService) { }
 
   ngOnInit(): void {
+    this.token = this.getToken()
+    console.info(this.token)
   }
 
   onShop() {
-    this.router.navigate(['/login'])
+    if (this.token === null) {
+      this.router.navigate(['/login'])
+    }
+    if (this.token !== null) {
+      this.router.navigate(['/shop'])
+    }
+
+    // this.router.navigate(['/login'])
   }
 
   getToken(): string | null {

@@ -18,6 +18,8 @@ export class CartComponent implements OnInit {
   userId!: string 
 
   cartItems: CartItem[] = [];
+  cartItemsById: CartItem[] = [];
+  
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
@@ -31,10 +33,10 @@ export class CartComponent implements OnInit {
     // this.sub$ = this.productSvc.onGetCartItems.subscribe(data => {
     //   this.productList = data
     // })
-    this.productSvc.getCart(this.userId).then(result => {
-      this.productList = result as FinalProduct[]
-    })
-    console.info(">>>> productList: ", this.productList)
+    // this.productSvc.getCart(this.userId).then(result => {
+    //   this.productList = result as FinalProduct[]
+    // })
+    // console.info(">>>> productList: ", this.productList)
 
     this.listCartDetails()
     
@@ -47,8 +49,20 @@ export class CartComponent implements OnInit {
 
   listCartDetails() {
 
+    // need to show the cart of only the user who is logged in
+
+
     // get a handle to the cart items
     this.cartItems = this.cartSvc.cartItems;
+    for (let item of this.cartItems) {
+      if (this.userId === item.userId) {
+          console.info('>>>ITEM',item)
+          this.cartItemsById.push(item)
+          
+      }
+    }
+    this.cartItems = this.cartItemsById
+    console.info('CHECKCHECKCHECK: ' + this.cartItems)
 
     // subscribe to the cart totalPrice
     this.cartSvc.totalPrice.subscribe(

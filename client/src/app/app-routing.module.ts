@@ -12,7 +12,6 @@ import { BagComponent } from './components/bag/bag.component';
 import { FavouritesComponent } from './components/favourites/favourites.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { CreationStatusComponent } from './components/create-user/creation-status.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';

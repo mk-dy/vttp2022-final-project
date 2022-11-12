@@ -107,7 +107,7 @@ export class BagComponent implements OnInit, OnDestroy {
   // this.totalPrice = (data.quantity * this.totalPrice) // TEMPORARILY OFF
     // console.info(">>> END check total price: ", this.totalPrice)
     data['price'] = this.totalPrice // unit price currently
-
+    data['userId'] = this.userId
 
     if (data.upsize === 'yes') {
       this.totalPrice += 15.00 

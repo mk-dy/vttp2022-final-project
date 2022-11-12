@@ -83,7 +83,7 @@ SELECT * FROM fabric;
 -- FINAL PRODUCT , DO I PUT BOTH PROPERTIES OF CHALK BAG AND CHALK BUCKET HERE? --
 CREATE TABLE final_product (
 	id INT NOT NULL AUTO_INCREMENT,
-    prod_id VARCHAR(9) NOT NULL,
+    prod_id VARCHAR(64) NOT NULL,
     user_id VARCHAR(8),
     
     -- CHALK BAG START --
@@ -121,6 +121,13 @@ CREATE TABLE final_product (
 
 SELECT * FROM final_product;
 
+SELECT * FROM final_product where user_id = '12345678';
+
+UPDATE final_product SET user_id = '12345678' WHERE id = 14;
+UPDATE final_product SET remarks = '' WHERE id = 14;
+UPDATE final_product SET imgLink = 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Buclet%20%28Main%20page%29.jpg' WHERE user_id = '12345678';
+
+DELETE FROM final_product where id = 6;
 
 -- CART -- 
 CREATE TABLE cart (
@@ -128,36 +135,56 @@ CREATE TABLE cart (
     final_prod_id INT NOT NULL,
     user_id VARCHAR(8) NOT NULL,
 
-    PRIMARY KEY (fav_id),
-    FOREIGN KEY (final_prod_id) REFERENCES user (user_id),
+    PRIMARY KEY (id),
+    FOREIGN KEY (final_prod_id) REFERENCES final_product (id),
     FOREIGN KEY (user_id) REFERENCES user (user_id)
 
 );
+
+SELECT * FROM cart;
 
 -- FAVOURITES --
 CREATE TABLE favourites (
-    fav_id INT NOT NULL AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     final_prod_id INT NOT NULL,
     user_id VARCHAR(8) NOT NULL,
 
-    PRIMARY KEY (fav_id),
+    PRIMARY KEY (id),
     FOREIGN KEY (final_prod_id) REFERENCES user (user_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id)
 
 );
 
+-- ADDRESS --
+CREATE TABLE address (
+  id INT NOT NULL AUTO_INCREMENT,
+  street VARCHAR(255),
+  postal_code VARCHAR(6),
+  
+  PRIMARY KEY (id)
+  );
+  
+  
 -- ORDER --
 -- still needs address, payment(?) --
-CREATE TABLE cust_order (
-    order_id INT NOT NULL AUTO_INCREMENT,
-    user_id VARCHAR(8),
+CREATE TABLE user_orders (
+    id INT NOT NULL AUTO_INCREMENT,
+    order_tracking_number VARCHAR(255),
     prod_id VARCHAR(8),
     prod_name VARCHAR(128),
     quantity INT,
-    price DECIMAL(10,2),
-
-    PRIMARY KEY (order_id)
-
+    total_price DECIMAL(10,2),
+    status VARCHAR(128),
+    date_created VARCHAR(6),
+    user_id VARCHAR(8),
+	billing_address_id INT,
+    shipping_address_id INT,
+    
+    PRIMARY KEY (id),
+	FOREIGN KEY (user_id) REFERENCES user (user_id),
+	FOREIGN KEY (billing_address_id) REFERENCES address (id),
+	FOREIGN KEY (shipping_address_id) REFERENCES address (id)
+    
 );
 
 

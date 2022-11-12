@@ -53,6 +53,12 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", mobile=" + mobile + ", password=" + password + "]";
+    }
+
     public String[] getAuthorities() {
         return authorities;
     }
@@ -71,5 +77,7 @@ public class User {
     public void setNotLocked(boolean isNotLocked) {
         this.isNotLocked = isNotLocked;
     }
+
+    
     
 }

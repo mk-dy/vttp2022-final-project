@@ -3,7 +3,10 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } fro
 import { MatAccordion } from '@angular/material/expansion';
 import { Subscription } from 'rxjs';
 import { PaymentInfo } from 'src/app/common/payment-info';
-import { FinalProduct, Order } from 'src/app/models';
+import { Purchase } from 'src/app/common/purchase';
+import { FinalProduct, Order, OrderItem, User } from 'src/app/models';
+import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -28,23 +31,35 @@ export class CheckoutComponent implements OnInit {
   creditCardYears: number[] = []
   creditCardMonths: number[] = []
   cartItems!: FinalProduct[]
+  isDisabled: boolean = false
+  email!: string
+
+  userDetails!: User
 
   storage: Storage = sessionStorage;
 
   // initialise stripe api
-  stripe = Stripe(environment.stripePublishableKey);
+  stripe = Stripe(environment.stripePubKey);
 
   paymentInfo: PaymentInfo = new PaymentInfo();
   cardElement: any;
   displayError: any = "";
   
-  constructor(private fb: FormBuilder, private paymentSvc: PaymentService, private productSvc: ProductService, private checkoutSvc: CheckoutService) { }
+  constructor(private fb: FormBuilder, 
+    private paymentSvc: PaymentService, 
+    private productSvc: ProductService, 
+    private checkoutSvc: CheckoutService,
+    private cartSvc: CartService,
+    private authSvc: AuthService) { }
 
   ngOnInit(): void {
+    this.reviewCartDetails()
     this.checkoutForm = this.createForm()
     this.sub$ = this.productSvc.onGetCartItems.subscribe(data => {
       this.cartItems = data
     })
+    this.email = JSON.parse(sessionStorage.getItem('auth-user')!)
+    // this.userDetails = this.authSvc.getUserFromEmail(this.email)
   }
 
   createForm() {
@@ -130,8 +145,8 @@ export class CheckoutComponent implements OnInit {
 
   //   console.log("Handling the submit button");
 
-  //   if (this.checkoutFormGroup.invalid) {
-  //     this.checkoutFormGroup.markAllAsTouched();
+  //   if (this.checkoutForm.invalid) {
+  //     this.checkoutForm.markAllAsTouched();
   //     return;
   //   }
 
@@ -141,48 +156,36 @@ export class CheckoutComponent implements OnInit {
   //   order.totalQuantity = this.totalQuantity;
 
   //   // get cart items
-  //   // we have this.cartItems
+  //   const cartItems = this.cartSvc.cartItems;
+  //   let orderItems: OrderItem[] = [];
+  //   for (let i=0; i < cartItems.length; i++) {
+  //     orderItems[i] = new OrderItem(cartItems[i]);
+  //   }
 
 
-  //   // set up purchase
   //   let purchase = new Purchase();
-    
   //   // populate purchase - customer
-  //   purchase.customer = this.checkoutFormGroup.controls['customer'].value;
-    
+  //   purchase.user = this.checkoutForm.controls['customer'].value; // TO AMEND, CALL METHOD TO GET USER DETAILS FROM DATABASE
   //   // populate purchase - shipping address
-  //   purchase.shippingAddress = this.checkoutFormGroup.controls['shippingAddress'].value;
-  //   const shippingState: State = JSON.parse(JSON.stringify(purchase.shippingAddress.state));
-  //   const shippingCountry: Country = JSON.parse(JSON.stringify(purchase.shippingAddress.country));
-  //   purchase.shippingAddress.state = shippingState.name;
-  //   purchase.shippingAddress.country = shippingCountry.name;
-
+  //   purchase.shippingAddress = this.checkoutForm.controls['shippingAddress'].value;
   //   // populate purchase - billing address
-  //   purchase.billingAddress = this.checkoutFormGroup.controls['billingAddress'].value;
-  //   const billingState: State = JSON.parse(JSON.stringify(purchase.billingAddress.state));
-  //   const billingCountry: Country = JSON.parse(JSON.stringify(purchase.billingAddress.country));
-  //   purchase.billingAddress.state = billingState.name;
-  //   purchase.billingAddress.country = billingCountry.name;
-  
+  //   purchase.billingAddress = this.checkoutForm.controls['billingAddress'].value;
   //   // populate purchase - order and orderItems
   //   purchase.order = order;
   //   purchase.orderItems = orderItems;
 
   //   // compute payment info
-  //   this.paymentInfo.amount = Math.round(this.totalPrice * 100);
-  //   this.paymentInfo.currency = "USD"; 
-  //   this.paymentInfo.receiptEmail = purchase.customer.email;
+  //   this.paymentInfo.amount = Math.round(this.totalPrice * 100); // because stripe looks at cents
+  //   this.paymentInfo.currency = "SGD"; 
+  //   this.paymentInfo.receiptEmail = purchase.user.email;
 
   //   // if valid form then
   //   // - create payment intent
   //   // - confirm card payment
   //   // - place order
 
-  //   if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
-
+  //   if (!this.checkoutForm.invalid && this.displayError.textContent === '') {
   //     this.isDisabled = true;
-
-
 
   //     this.checkoutSvc.createPaymentIntent(this.paymentInfo).subscribe(
   //       (paymentIntentResponse) => {
@@ -191,14 +194,14 @@ export class CheckoutComponent implements OnInit {
   //             payment_method: {
   //               card: this.cardElement,
   //               billing_details: {
-  //                 email: purchase.customer.email,
-  //                 name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
+  //                 email: purchase.user.email,
+  //                 name: `${purchase.user.firstName} ${purchase.user.lastName}`,
   //                 address: {
   //                   line1: purchase.billingAddress.street,
-  //                   city: purchase.billingAddress.city,
-  //                   state: purchase.billingAddress.state,
-  //                   postal_code: purchase.billingAddress.zipCode,
-  //                   country: this.billingAddressCountry.value.code
+  //                   // city: purchase.billingAddress.city,
+  //                   // state: purchase.billingAddress.state,
+  //                   postal_code: purchase.billingAddress.postalCode,
+  //                   // country: this.billingAddressCountry.value.code
   //                 }
   //               }
   //             }
@@ -206,7 +209,7 @@ export class CheckoutComponent implements OnInit {
   //         .then(function(result: any) {
   //           if (result.error) {
   //             // inform the customer there was an error
-  //             alert(`There was an error: ${result.error.message}`);
+  //             alert(`There was an error: ${result.error.message}`)
   //             this.isDisabled = false;
   //           } else {
   //             // call REST API via the CheckoutService
@@ -228,14 +231,26 @@ export class CheckoutComponent implements OnInit {
   //       }
   //     );
   //   } else {
-  //     this.checkoutFormGroup.markAllAsTouched();
+  //     this.checkoutForm.markAllAsTouched();
   //     return;
   //   }
 
   // }
 
 
+  reviewCartDetails() {
 
+    // get total quantity
+    this.cartSvc.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+
+    // get total price
+    this.cartSvc.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
+
+  }
 
   noWhitespace(control: FormControl) : ValidationErrors {
         

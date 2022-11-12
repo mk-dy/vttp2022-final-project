@@ -53,7 +53,7 @@ export interface FinalProduct {
     imgLink: string
 }
 
-export class CartItem implements FinalProduct {
+export class CartItem {
     id: string
     prodId: string
     userId: string
@@ -107,12 +107,11 @@ export class CartItem implements FinalProduct {
         this.remarks = product.remarks;
         this.price = product.price;
         this.imgLink = product.imgLink;
-        
 
-        
     }
     
 }
+
 
 
 export interface Fabric {
@@ -154,6 +153,29 @@ export class Order {
     totalQuantity!: number
     totalPrice!: number;
 }
+
+export class OrderItem {
+    imageUrl: string;
+    unitPrice: number;
+    quantity: number;
+    productId: string;
+
+    constructor(cartItem: CartItem) {
+        this.imageUrl = cartItem.imgLink;
+        this.quantity = cartItem.quantity;
+        this.unitPrice = cartItem.price;
+        this.productId = cartItem.prodId;
+    }
+}
+
+
+// export class Purchase {
+//     user: User;
+//     shippingAddress: Address;
+//     billingAddress: Address;
+//     order: Order;
+//     orderItems: OrderItem[]; 
+// }
 
 /*
 

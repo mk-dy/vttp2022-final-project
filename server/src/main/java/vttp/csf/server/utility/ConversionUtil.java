@@ -9,6 +9,7 @@ import jakarta.json.JsonObject;
 import vttp.csf.server.models.Fabric;
 import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.models.Product;
+import vttp.csf.server.models.User;
 
 public class ConversionUtil {
     
@@ -101,6 +102,20 @@ public class ConversionUtil {
                     .build();
         return jsonObj;
     }
+
+    public static JsonObject userToJson(User user) {
+        JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("id",user.getId())
+                    .add("firstName",user.getFirstName())
+                    .add("lastName",user.getLastName())
+                    .add("email", user.getEmail())
+                    .add("mobile", user.getMobile())
+                    .build();
+        return jsonObj;
+    }
+
+
+
 
     // public static FinalProduct replaceNull(FinalProduct product) {
     //     // if product properties contain null, replace with ""

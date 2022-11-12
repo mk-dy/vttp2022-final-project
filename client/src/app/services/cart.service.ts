@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import { FinalProduct, CartItem } from '../models';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,41 @@ export class CartService {
     
     
     cartItems: CartItem[] = [];
+    cartItemsById: CartItem[] = [];
 
     totalPrice: Subject<number> = new BehaviorSubject<number>(0);
     totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
+    userId!: string
     // storage: Storage = localStorage;
 
-    constructor() { 
+    constructor(private tokenStorageSvc: TokenStorageService) { 
 
         // read data from storage
-        let data = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        const data = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        this.userId = this.tokenStorageSvc.getUser().id // TEST
 
-        if (data != null) {
-            this.cartItems = data;
+        if (data !== null) {
+            this.cartItems = data
+            // TEST
+            // console.info('>>>CHECK USER ID FIRST',this.userId)
+
+            // WHY DOES THIS CLEAR EMPTY THE DATA IN cartItems? where cartItems = []
+            // for (let item of this.cartItems) {
+            //     if (this.userId === item.userId) {
+            //         console.info('>>>ITEMZ',item)
+            //         console.info('>>>CHECK USER ID IN IF LOOP',this.userId)
+            //         this.cartItemsById.push(item)
+            //     }
+            // }
+
+            // this.cartItems = this.cartItemsById
+            // console.info('>>>CHECK USER ID',this.userId)
+            // console.info('>>>CHECK NEW CART ITEM',this.cartItems)
+
+
+
+
             
             // compute totals based on the data that is read from storage
 
@@ -40,30 +63,35 @@ export class CartService {
         let existingCartItem: CartItem = undefined!;
 
         if (this.cartItems.length > 0) {
-        // find the item in the cart based on item id
-
-        existingCartItem = this.cartItems.find( tempCartItem => 
-            tempCartItem.prodId === theCartItem.prodId )!; // TO LOOK AT AGAIN
-
-        // check if we found it
-        alreadyExistsInCart = (existingCartItem != undefined);
+            // find the item in the cart based on item id
+            existingCartItem = this.cartItems.find( tempCartItem => 
+                tempCartItem.prodId === theCartItem.prodId )!; // TO LOOK AT AGAIN
+            // check if we found it
+            alreadyExistsInCart = (existingCartItem != undefined);
         }
 
         if (alreadyExistsInCart) {
-        // increment the quantity
-        // existingCartItem.quantity++;
-        existingCartItem.quantity = existingCartItem.quantity + theCartItem.quantity;
+            existingCartItem.quantity = existingCartItem.quantity + theCartItem.quantity;
         }
         else {
-        // just add the item to the array
-        this.cartItems.push(theCartItem);
+            // just add the item to the array
+            this.cartItems.push(theCartItem);
         }
 
         // compute cart total price and total quantity
         this.computeCartTotals();
     }
 
-    computeCartTotals() {
+    computeCartTotals(userId?: string) {
+        // TEST
+        this.userId = this.tokenStorageSvc.getUser().id
+        for (let item of this.cartItems) {
+            if (this.userId === item.userId) {
+                this.cartItemsById.push(item)
+            }
+        }
+        console.info('>>>> current cartItemsById: ' + this.cartItemsById )
+        
 
         let totalPriceValue: number = 0;
         let totalQuantityValue: number = 0;
@@ -73,6 +101,13 @@ export class CartService {
             totalQuantityValue += currentCartItem.quantity;
         }
 
+
+        // // TEST
+        // for (let currentCartItem of this.cartItemsById) {
+        //     totalPriceValue += currentCartItem.quantity * currentCartItem.price;
+        //     totalQuantityValue += currentCartItem.quantity;
+        // }
+
         // publish the new values ... all subscribers will receive the new data
         this.totalPrice.next(totalPriceValue);
         this.totalQuantity.next(totalQuantityValue);
@@ -81,7 +116,7 @@ export class CartService {
         this.logCartData(totalPriceValue, totalQuantityValue);
 
         // persist cart data
-        this.persistCartItems();
+        this.persistCartItems();    
     }
 
     persistCartItems() {
@@ -128,6 +163,10 @@ export class CartService {
             this.cartItems.splice(itemIndex, 1);
             this.computeCartTotals();
         }
+    }
+
+    getCartItemsById(userId: string) {
+
     }
 
 }

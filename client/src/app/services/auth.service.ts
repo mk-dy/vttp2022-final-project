@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, Subject } from 'rxjs';
 import { User } from '../models';
 
 const AUTH_API = '/api/auth';
@@ -13,6 +13,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
+  UserDetails = new Subject<User>()
+
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
@@ -32,5 +35,14 @@ export class AuthService {
 
   isLoggedIn() {
     return !!sessionStorage.getItem('auth-token')
+  }
+
+  getUserFromEmail(email: string) {
+    return firstValueFrom(
+      this.http.get(`/getUser/${email}`)
+    ).then(result => {
+      this.UserDetails.next(result as User)
+
+    })
   }
 }

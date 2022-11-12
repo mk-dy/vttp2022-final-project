@@ -27,8 +27,11 @@ public class UserRepository {
             User user = new User();
             user.setId(result.getString("user_id"));
             user.setFirstName(result.getString("user_first_name"));
+            user.setLastName(result.getString("user_last_name"));
             user.setEmail(email);
+            user.setMobile(result.getString("user_mobile"));
             user.setPassword(result.getString("user_password"));
+            System.out.println(user.getFirstName());
             return Optional.of(user);
         }
     }

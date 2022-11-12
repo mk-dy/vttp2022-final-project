@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
-import { UserService } from './services/user.service';
 import { MainComponent } from './components/main/main.component';
 import { SearchService } from './services/search.service';
 import { HttpClientModule } from '@angular/common/http';

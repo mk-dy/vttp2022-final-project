@@ -53,6 +53,67 @@ export interface FinalProduct {
     imgLink: string
 }
 
+export class CartItem implements FinalProduct {
+    id: string
+    prodId: string
+    userId: string
+    baseBagDesign: string
+    bootDesign: string
+    exteriorDesign: string
+    withBoot: string
+    hoopStraps: string
+    keychainHolders: string
+    keychainNum: string
+    upsize: string
+    baseType: string
+    frontSideClosure: string
+    magneticClosure: string
+    dRingWebbing: string
+    frontPocketDesign: string
+    frontPocketBackDesign: string
+    backDesign: string
+    baseBucketDesign: string
+    quantity: number
+    remarks: string
+    price: number
+    imgLink: string
+
+    constructor(product: FinalProduct) {
+        this.id = product.id;
+        this.prodId = product.prodId;
+        this.userId = product.userId;
+
+        // chalk bag
+        this.baseBagDesign = product.baseBagDesign;
+        this.bootDesign = product.bootDesign;
+        this.exteriorDesign = product.exteriorDesign;
+        this.withBoot = product.withBoot;
+        this.hoopStraps = product.hoopStraps;
+        this.keychainHolders = product.keychainHolders;
+        this.keychainNum = product.keychainNum;
+        this.upsize = product.upsize;
+        // chalk bucket
+        this.baseType = product.baseType;
+        this.frontSideClosure = product.frontSideClosure;
+        this.magneticClosure = product.magneticClosure;
+        this.dRingWebbing = product.dRingWebbing;
+        this.frontPocketDesign = product.frontPocketDesign;
+        this.frontPocketBackDesign = product.frontPocketBackDesign;
+        this.backDesign = product.backDesign;
+        this.baseBucketDesign = product.baseBucketDesign;
+
+        this.quantity = product.quantity;
+        // this.quantity = 1;
+        this.remarks = product.remarks;
+        this.price = product.price;
+        this.imgLink = product.imgLink;
+        
+
+        
+    }
+    
+}
+
 
 export interface Fabric {
     id: string

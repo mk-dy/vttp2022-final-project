@@ -79,4 +79,7 @@ public class ProductRepository {
         }
         return productList;
     }
+
+
+    // after creating a final product, also add that final product into cart
 }

@@ -67,12 +67,17 @@ export class ProductService {
 
     }
 
-    getCart() {
+    // getCart() {
+
+    //     return firstValueFrom(
+    //         this.http.get('/cart')
+    //     )
+    // }
+    getCart(userId: string) {
+
         return firstValueFrom(
-            this.http.get('/cart')
-        ).then(result => {
-            this.onGetCartItems.next(result as FinalProduct[])
-        })
+            this.http.get(`/cart/${userId}`)
+        )
     }
 
 

@@ -22,10 +22,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
-import { UserService } from './services/user.service';
 import { MainComponent } from './components/main/main.component';
 import { SearchService } from './services/search.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +47,8 @@ import { CheckoutService } from './services/checkout.service';
 import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { authInterceptorProviders } from './auth.interceptor';
+import { CartService } from './services/cart.service';
+
 
 
 
@@ -96,18 +98,18 @@ import { authInterceptorProviders } from './auth.interceptor';
     MatExpansionModule,
     MatGridListModule,
     MatExpansionModule,
-    MatListModule
-    
+    MatListModule,
+    MatTabsModule
   ],
   providers: [
-    UserService, 
     SearchService, 
     ProductService, 
     PaymentService, 
     CheckoutService, 
     AuthService,
     TokenStorageService,
-    authInterceptorProviders // our interceptor
+    authInterceptorProviders, // our interceptor
+    CartService
   ],
   bootstrap: [AppComponent]
 })

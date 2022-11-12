@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { distinctUntilChanged, Subscription } from 'rxjs';
-import { Fabric, Product } from '../../models';
+import { CartService } from 'src/app/services/cart.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { CartItem, Fabric, Product } from '../../models';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -16,12 +18,17 @@ export class BagComponent implements OnInit, OnDestroy {
   chalkbag!: Product
   fabricList!: Fabric[]
   totalPrice!: number
+
+  userId!: string
   
   // if 
 
-  constructor(private fb: FormBuilder, private productSvc: ProductService) { }
+  constructor(private fb: FormBuilder, private productSvc: ProductService, private tokenStorageSvc: TokenStorageService,
+    private cartSvc: CartService) { }
 
   ngOnInit(): void {
+    this.userId = this.tokenStorageSvc.getUser().id
+    console.info("userid check",this.userId)
     // this.productSvc.getFabricTest()
     console.info('>>>> fabric test check ends here')
     this.callGetChalkbag()
@@ -92,11 +99,16 @@ export class BagComponent implements OnInit, OnDestroy {
     }
     formDirective.resetForm();
     this.productForm = this.createForm()
-    data['prodId'] = 'CHLKBAG01'
+    // data['prodId'] = 'CHLKBAG01'
     data['imgLink'] = this.chalkbag.imgLink
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $
+  // this.totalPrice = (data.quantity * this.totalPrice) // TEMPORARILY OFF
+    // console.info(">>> END check total price: ", this.totalPrice)
+    data['price'] = this.totalPrice // unit price currently
+
+
     if (data.upsize === 'yes') {
       this.totalPrice += 15.00 
     }
@@ -106,11 +118,62 @@ export class BagComponent implements OnInit, OnDestroy {
     if (data.keychainHolders === 'yes') {
       this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
     }
-    this.totalPrice = (data.quantity * this.totalPrice) 
-    console.info(">>> END check total price: ", this.totalPrice)
-    data['price'] = this.totalPrice
+    // create prod id here
+    let prodId = ''
+    if (data.withBoot === 'yes') {
+      prodId = prodId.concat('Byes')
+    } else {
+      prodId = prodId.concat('Bno') 
+    }
+    if (data.upsize === 'yes') {
+      prodId = prodId.concat('Uyes')
+    } else {
+      prodId = prodId.concat('Uno')
+    }
+    if (data.hoopStraps === 'yes') {
+      prodId = prodId.concat('Hyes')
+    } else {
+      prodId = prodId.concat('Hno')
+    }
+    if (data.keychainHolders === 'yes') {
+      prodId = prodId.concat('Kyes')
+    } else {
+      prodId = prodId.concat('Kno')
+    }
+    if (data.keychainNum > 0) {
+      prodId = prodId.concat('K',data.keychainNum)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.exteriorDesign !== '') {
+      prodId = prodId.concat(data.exteriorDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.baseBagDesign !== '') {
+      prodId = prodId.concat(data.baseBagDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.bootDesign !== '') {
+      prodId = prodId.concat(data.bootDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    console.info('ridiculous prodId but if it works, it works: ', prodId)
+    data['prodId'] = prodId
 
-    this.productSvc.addToCart(data)
+
+    
+    // trying to store into local storage
+
+    const theCartItem = new CartItem(data);
+    this.cartSvc.addToCart(theCartItem);
+
+
+    // temporarily stop this method first, testing local storage
+    // this.productSvc.addToCart(data)
+    
 
     // need to reset totalPrice after processForm()
     this.callGetChalkbag()

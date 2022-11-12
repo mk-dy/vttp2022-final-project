@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Product, Fabric } from 'src/app/models';
+import { Product, Fabric, CartItem } from 'src/app/models';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-bucket',
@@ -16,10 +18,13 @@ export class BucketComponent implements OnInit {
   chalkbucket!: Product
   fabricList!: Fabric[]
   totalPrice!: number
+  userId!: string
 
-  constructor(private fb: FormBuilder, private productSvc: ProductService) { }
+  constructor(private fb: FormBuilder, private productSvc: ProductService, private tokenStorageSvc: TokenStorageService, private cartSvc: CartService) { }
 
   ngOnInit(): void {
+    this.userId = this.tokenStorageSvc.getUser().id
+    console.info("userid check",this.userId)
     // this.productSvc.getFabricTest()
     console.info('>>>> fabric test check ends here')
     this.callGetChalkbucket()
@@ -65,6 +70,7 @@ export class BucketComponent implements OnInit {
     this.productForm = this.createForm()
     data['prodId'] = 'CHLKBKT02'
     data['imgLink'] = this.chalkbucket.imgLink
+    data['userId'] = this.userId
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
     // if criteria met, add $
@@ -77,11 +83,63 @@ export class BucketComponent implements OnInit {
     if (data.dRingWebbing === 'yes') {
       this.totalPrice += 4.00 
     }
-    this.totalPrice = (data.quantity * this.totalPrice) 
+    // this.totalPrice = (data.quantity * this.totalPrice) 
     console.info(">>> END check total price: ", this.totalPrice)
     data['price'] = this.totalPrice
 
-    this.productSvc.addToCart(data)
+    // create prod id here
+    let prodId = ''
+    if (data.baseType === 'whole') {
+      prodId = prodId.concat('Bwhole')
+    } else {
+      prodId = prodId.concat('Bhalf') 
+    }
+    if (data.frontSideClosure === 'front') {
+      prodId = prodId.concat('Fc')
+    } else {
+      prodId = prodId.concat('Sc')
+    }
+    if (data.magneticClosure === 'yes') {
+      prodId = prodId.concat('Myes')
+    } else {
+      prodId = prodId.concat('Mno')
+    }
+    if (data.dRingWebbing === 'yes') {
+      prodId = prodId.concat('Dyes')
+    } else {
+      prodId = prodId.concat('Dno')
+    }
+    if (data.frontPocketDesign !== '') {
+      prodId = prodId.concat(data.frontPocketDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.frontPocketBackDesign !== '') {
+      prodId = prodId.concat(data.frontPocketBackDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.backDesign !== '') {
+      prodId = prodId.concat(data.backDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    if (data.baseBucketDesign !== '') {
+      prodId = prodId.concat(data.baseBucketDesign)
+    } else {
+      prodId = prodId.concat('')
+    }
+    console.info('ridiculous prodId but if it works, it works: ', prodId)
+    data['prodId'] = prodId
+
+    
+    const theCartItem = new CartItem(data);
+    this.cartSvc.addToCart(theCartItem);
+
+
+
+
+    // this.productSvc.addToCart(data)
     
     // need to reset totalPrice after processForm()
     this.callGetChalkbucket()

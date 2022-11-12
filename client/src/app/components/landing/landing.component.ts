@@ -15,7 +15,7 @@ export class LandingComponent implements OnInit {
   constructor(private router: Router, private tokenStorageSvc: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.token = this.getToken()
+    this.token = this.tokenStorageSvc.getToken()
     console.info(this.token)
   }
 
@@ -28,10 +28,6 @@ export class LandingComponent implements OnInit {
     }
 
     // this.router.navigate(['/login'])
-  }
-
-  getToken(): string | null {
-    return window.sessionStorage.getItem("auth-token");
   }
 
   onCheckout() {

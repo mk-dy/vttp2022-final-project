@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,7 @@ public class CartRESTController {
         ConversionUtil.replaceNull(payload);
         System.out.println(">>>> payload: " + payload.toString());
 
+        // to create final product and add to final_product table
         String message = productSvc.createFinalProduct(payload);
         System.out.println(">>>>> message: " + message);
         
@@ -44,11 +46,32 @@ public class CartRESTController {
         }     
     }
 
-    @GetMapping(path="/cart")
-    public ResponseEntity<String> showCart() {
+    // @GetMapping(path="/cart")
+    // public ResponseEntity<String> showCart() {
+        
+    //     /// for now use test's user id
+    //     String userId = "12345678";
+    //     List<FinalProduct> productList = new LinkedList<>();
+    //     productList = this.productSvc.getFinalProductByUserId(userId);
+    //     System.out.println(productList.get(0).getProdId());
+
+        
+    //     JsonArray jsonArr = ConversionUtil.finalProdtoJsonArr(productList);
+        
+    //     // ConversionUtil.replaceNull(payload);
+    //     // System.out.println(">>>> payload: " + payload.toString());
+
+    //     // String message = productSvc.createFinalProduct(payload);
+    //     System.out.println(">>>>> the jsonarray: " + jsonArr.toString());
+        
+    //     return ResponseEntity.status(HttpStatus.OK).body(jsonArr.toString()); 
+    // }
+
+    @GetMapping(path="/cart/{userId}")
+    public ResponseEntity<String> showCart(@PathVariable String userId) {
         
         /// for now use test's user id
-        String userId = "12345678";
+        // String userId = "12345678";
         List<FinalProduct> productList = new LinkedList<>();
         productList = this.productSvc.getFinalProductByUserId(userId);
         System.out.println(productList.get(0).getProdId());

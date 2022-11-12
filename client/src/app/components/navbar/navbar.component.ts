@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,20 +11,16 @@ export class NavbarComponent implements OnInit {
   
   token!: string | null
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private tokenStorageSvc: TokenStorageService) { }
 
+  
   ngOnInit(): void {
-    this.token = this.getToken()
+    this.token = this.tokenStorageSvc.getToken()
     console.info('token in nav',this.token)
   }
 
   onIcon() {
-    if (this.token !== null) {
-      this.route.navigate(['/shop']);
-    } 
-    if (this.token === null) {
-      this.route.navigate(['/']);
-    } 
+    this.iconNavigate()
   }
 
   onUser() {
@@ -56,8 +53,19 @@ export class NavbarComponent implements OnInit {
     window.location.reload()
   }
 
-  getToken(): string | null {
-    return window.sessionStorage.getItem("auth-token");
+  noToken() {
+    if (this.token === null) {
+      return true
+    } else {
+      return false
+    }
   }
-
+  
+  iconNavigate() {
+    if (this.token !== null) {
+      this.route.navigate(['/shop']);
+    } else {
+      this.route.navigate(['/']);
+    } 
+  }
 }

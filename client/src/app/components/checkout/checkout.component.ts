@@ -58,6 +58,7 @@ export class CheckoutComponent implements OnInit {
     this.sub$ = this.productSvc.onGetCartItems.subscribe(data => {
       this.cartItems = data
     })
+    this.setupStripePaymentForm()
     this.email = JSON.parse(sessionStorage.getItem('auth-user')!)
     // this.userDetails = this.authSvc.getUserFromEmail(this.email)
   }
@@ -115,7 +116,7 @@ export class CheckoutComponent implements OnInit {
     // Create a card element ... and hide the zip-code field
     this.cardElement = elements.create('card', { hidePostalCode: true });
 
-    // Add an instance of card UI component into the 'card-element' div
+    // Stripe's UI will be 'mounted' or added into our form, so we do not have to create an input of our own
     this.cardElement.mount('#card-element');
 
     // Add event binding for the 'change' event on the card element
@@ -135,107 +136,137 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  // onSubmit() {
+  onSubmit() {
+
+    // AFTER STRIPE
+    // ============
+
+    console.log("Handling the submit button");
+
+    if (this.checkoutForm.invalid) {
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
+
+    // set up order
+    let order = new Order();
+    order.totalPrice = this.totalPrice;
+    order.totalQuantity = this.totalQuantity;
+
+    // get cart items
+    const cartItems = this.cartSvc.cartItems;
+    let orderItems: OrderItem[] = [];
+    for (let i=0; i < cartItems.length; i++) {
+      orderItems[i] = new OrderItem(cartItems[i]);
+    }
 
 
+    let purchase = new Purchase();
+    // populate purchase - customer
+    let userDetails = JSON.parse(sessionStorage.getItem('userDetails')!)
+    purchase.user.id = userDetails.id // ERROR Cannot set properties of undefined
+    console.info('>>>>> check purchase userDetails', purchase.user.id)
+    purchase.user.firstName = userDetails.firstName // ERROR Cannot set properties of undefined
+    console.info('>>>>> check purchase userDetails', purchase.user.firstName)
+    purchase.user.lastName = userDetails.lastName
+    console.info('>>>>> check purchase userDetails', purchase.user.lastName)
+    purchase.user.email = userDetails.email
+    console.info('>>>>> check purchase userDetails', purchase.user.email)
+    purchase.user.mobile = userDetails.mobile
+    console.info('>>>>> check purchase userDetails', purchase.user.mobile)
+
+    // populate purchase - shipping address
+    purchase.shippingAddress = this.checkoutForm.controls['shippingAddress'].value;
+    console.info('>>>>> check purchase shippingAddress', purchase.shippingAddress)
+    // populate purchase - billing address
+    purchase.billingAddress = this.checkoutForm.controls['billingAddress'].value;
+    console.info('>>>>> check purchase billingAddress', purchase.billingAddress)
+    // populate purchase - order and orderItems
+    purchase.order = order;
+    console.info('>>>>> check purchase order', purchase.order)
+    purchase.orderItems = orderItems;
+    console.info('>>>>> check purchase orderItems', purchase.orderItems)
+
+    // compute payment info
+    this.paymentInfo.amount = Math.round(this.totalPrice * 100); // because stripe looks at cents
+    this.paymentInfo.currency = "SGD"; 
+    this.paymentInfo.receiptEmail = purchase.user.email;
+
+    console.info('>>>>> check paymentInfo amount', this.paymentInfo.amount)
+    console.info('>>>>> check paymentInfo currency',  this.paymentInfo.currency )
+    console.info('>>>>> check paymentInfo receiptEmail', this.paymentInfo.receiptEmail )
 
 
-  //   // AFTER STRIPE
-  //   // ============
+    // if valid form then
+    // - create payment intent
+    // - confirm card payment
+    // - place order
 
-  //   console.log("Handling the submit button");
+    if (!this.checkoutForm.invalid && this.displayError.textContent === '') {
+      this.isDisabled = true;
 
-  //   if (this.checkoutForm.invalid) {
-  //     this.checkoutForm.markAllAsTouched();
-  //     return;
-  //   }
+      this.checkoutSvc.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+            {
+              payment_method: {
+                card: this.cardElement,
+                billing_details: {
+                  email: purchase.user.email,
+                  name: `${purchase.user.firstName} ${purchase.user.lastName}`,
+                  address: {
+                    line1: purchase.billingAddress.street,
+                    // city: purchase.billingAddress.city,
+                    // state: purchase.billingAddress.state,
+                    postal_code: purchase.billingAddress.postalCode,
+                    // country: this.billingAddressCountry.value.code
+                  }
+                }
+              }
+            }, { handleActions: false })
+          .then((result: any) => {
+            if (result.error) {
+              // alert if there's an error
+              alert(`There was an error: ${result.error.message}`)
+              this.isDisabled = false;
+            } else {
+              // place order if no error
+              this.checkoutSvc.placeOrder(purchase).subscribe({
+                next: response => {
+                  alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
 
-  //   // set up order
-  //   let order = new Order();
-  //   order.totalPrice = this.totalPrice;
-  //   order.totalQuantity = this.totalQuantity;
+                  // reset cart
+                  this.resetCart();
+                  this.isDisabled = false;
+                },
+                error: err => {
+                  alert(`There was an error: ${err.message}`);
+                  this.isDisabled = false;
+                }
+              })
+            }            
+          }
+          // .bind(this)
+          );
+        }
+      );
+    } else {
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
 
-  //   // get cart items
-  //   const cartItems = this.cartSvc.cartItems;
-  //   let orderItems: OrderItem[] = [];
-  //   for (let i=0; i < cartItems.length; i++) {
-  //     orderItems[i] = new OrderItem(cartItems[i]);
-  //   }
+  }
 
+  resetCart() {
+    // reset cart data
+    this.cartSvc.cartItems = [];
+    this.cartSvc.totalPrice.next(0);
+    this.cartSvc.totalQuantity.next(0);
+    this.cartSvc.persistCartItems();
+    // reset the form
+    this.checkoutForm.reset();
 
-  //   let purchase = new Purchase();
-  //   // populate purchase - customer
-  //   purchase.user = this.checkoutForm.controls['customer'].value; // TO AMEND, CALL METHOD TO GET USER DETAILS FROM DATABASE
-  //   // populate purchase - shipping address
-  //   purchase.shippingAddress = this.checkoutForm.controls['shippingAddress'].value;
-  //   // populate purchase - billing address
-  //   purchase.billingAddress = this.checkoutForm.controls['billingAddress'].value;
-  //   // populate purchase - order and orderItems
-  //   purchase.order = order;
-  //   purchase.orderItems = orderItems;
-
-  //   // compute payment info
-  //   this.paymentInfo.amount = Math.round(this.totalPrice * 100); // because stripe looks at cents
-  //   this.paymentInfo.currency = "SGD"; 
-  //   this.paymentInfo.receiptEmail = purchase.user.email;
-
-  //   // if valid form then
-  //   // - create payment intent
-  //   // - confirm card payment
-  //   // - place order
-
-  //   if (!this.checkoutForm.invalid && this.displayError.textContent === '') {
-  //     this.isDisabled = true;
-
-  //     this.checkoutSvc.createPaymentIntent(this.paymentInfo).subscribe(
-  //       (paymentIntentResponse) => {
-  //         this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
-  //           {
-  //             payment_method: {
-  //               card: this.cardElement,
-  //               billing_details: {
-  //                 email: purchase.user.email,
-  //                 name: `${purchase.user.firstName} ${purchase.user.lastName}`,
-  //                 address: {
-  //                   line1: purchase.billingAddress.street,
-  //                   // city: purchase.billingAddress.city,
-  //                   // state: purchase.billingAddress.state,
-  //                   postal_code: purchase.billingAddress.postalCode,
-  //                   // country: this.billingAddressCountry.value.code
-  //                 }
-  //               }
-  //             }
-  //           }, { handleActions: false })
-  //         .then(function(result: any) {
-  //           if (result.error) {
-  //             // inform the customer there was an error
-  //             alert(`There was an error: ${result.error.message}`)
-  //             this.isDisabled = false;
-  //           } else {
-  //             // call REST API via the CheckoutService
-  //             this.checkoutSvc.placeOrder(purchase).subscribe({
-  //               next: response => {
-  //                 alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
-
-  //                 // reset cart
-  //                 this.resetCart();
-  //                 this.isDisabled = false;
-  //               },
-  //               error: err => {
-  //                 alert(`There was an error: ${err.message}`);
-  //                 this.isDisabled = false;
-  //               }
-  //             })
-  //           }            
-  //         }.bind(this));
-  //       }
-  //     );
-  //   } else {
-  //     this.checkoutForm.markAllAsTouched();
-  //     return;
-  //   }
-
-  // }
+  }
 
 
   reviewCartDetails() {

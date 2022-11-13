@@ -101,11 +101,12 @@ public class AuthController {
         System.out.println(">>> email: " + email);
         User user = new User();
         
-        Optional<User> optUser = userRepo.getUserByEmail(user.getEmail());
-        if (optUser.isEmpty()) {
-            System.out.println("EMPTYYY");
-        }
-        user = optUser.get();
+        // Optional<User> optUser = userRepo.getUserByEmail(user.getEmail());
+        // if (optUser.isEmpty()) {
+        //     System.out.println("EMPTYYY");
+        // }
+        // user = optUser.get();
+        user = userRepo.getUser(email);
 
         System.out.println(user.toString());
         JsonObject jObject = ConversionUtil.userToJson(user);

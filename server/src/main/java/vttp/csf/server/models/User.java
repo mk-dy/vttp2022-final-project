@@ -1,5 +1,8 @@
 package vttp.csf.server.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
     
     private String id;
@@ -59,6 +62,8 @@ public class User {
                 + ", mobile=" + mobile + ", password=" + password + "]";
     }
 
+    private Set<Order> orders = new HashSet<>();
+
     public String[] getAuthorities() {
         return authorities;
     }
@@ -78,6 +83,17 @@ public class User {
         this.isNotLocked = isNotLocked;
     }
 
-    
+    public void add(Order order) {
+
+        if (order != null) {
+
+            if (orders == null) {
+                orders = new HashSet<>();
+            }
+
+            orders.add(order);
+            order.setUser(this);
+        }
+    }
     
 }

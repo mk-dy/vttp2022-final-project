@@ -24,6 +24,10 @@ public class PaymentInfo {
     public void setReceiptEmail(String receiptEmail) {
         this.receiptEmail = receiptEmail;
     }
+    @Override
+    public String toString() {
+        return "PaymentInfo [amount=" + amount + ", currency=" + currency + ", receiptEmail=" + receiptEmail + "]";
+    }
 
     
     

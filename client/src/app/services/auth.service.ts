@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
-import { User } from '../models';
+import { User, UserResponse } from '../models';
 
 const AUTH_API = '/api/auth';
 
@@ -38,11 +38,6 @@ export class AuthService {
   }
 
   getUserFromEmail(email: string) {
-    return firstValueFrom(
-      this.http.get(`/getUser/${email}`)
-    ).then(result => {
-      this.UserDetails.next(result as User)
-
-    })
+    return this.http.get(`${AUTH_API}/getUser/${email}`)
   }
 }

@@ -3,13 +3,21 @@ export interface UserLogin {
     password: string
 }
 
-export interface User {
+export class User {
     id?: string
+    firstName!: string
+    lastName!: string
+    email!: string
+    mobile!: string
+    password!: string
+}
+
+export interface UserResponse {
+    id: string
     firstName: string
     lastName: string
     email: string
     mobile: string
-    password: string
 }
 
 // this will be used on the main page, also create this table in mysql

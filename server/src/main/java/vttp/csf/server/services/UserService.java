@@ -13,9 +13,6 @@ import vttp.csf.server.repository.UserRepository;
 @Service
 public class UserService {
     
-    // @Autowired
-    // private BCryptPasswordEncoder passwordEncoder;
-
     @Autowired
     private PasswordEncoder encoder;
 
@@ -33,11 +30,9 @@ public class UserService {
         if (optUser.isPresent()) {
             throw new UserException("There is already a user registered with the email: %s.".formatted(user.getEmail()));
         }
-        
         // encrypt password here
         user.setPassword(encoder.encode(user.getPassword()));
         
-
         if (!userRepo.createUser(user)) {
             throw new UserException("Unable to create user, please try again later.");
         }

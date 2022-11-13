@@ -36,4 +36,19 @@ public interface Queries {
 
     public static final String SQL_INSERT_USER = 
     "INSERT INTO user (user_id, user_first_name, user_last_name, user_email, user_mobile, user_password) VALUES (?,?,?,?,?,?)"; 
+    
+    public static final String SQL_INSERT_ADDRESS = 
+    "INSERT INTO address (street, postal_code) VALUES (?,?)"; 
+
+    public static final String SQL_GET_ADDRESS_ID = 
+    "SELECT id FROM address ORDER BY id DESC LIMIT 1";
+
+    public static final String SQL_INSERT_ORDER = 
+    "INSERT INTO user_orders (order_tracking_number, quantity, total_price, date_created, user_id, shipping_address_id) VALUES (?,?,?,?,?,?)"; 
+
+    public static final String SQL_GET_ORDER_ID = 
+    "SELECT id FROM user_orders ORDER BY id DESC LIMIT 1";
+
+    public static final String SQL_INSERT_ORDER_ITEM = 
+    "INSERT INTO order_item (img_link, quantity, unit_price, prod_id, order_id) VALUES (?,?,?,?,?)"; 
 }

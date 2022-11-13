@@ -8,7 +8,7 @@ public class Purchase {
     private Address shippingAddress;
     private Address billingAddress;
     private Order order;
-    private Set<FinalProduct> orderItems;
+    private Set<OrderItem> orderItems;
     
     public User getUser() {
         return user;
@@ -34,11 +34,17 @@ public class Purchase {
     public void setOrder(Order order) {
         this.order = order;
     }
-    public Set<FinalProduct> getOrderItems() {
+    public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
-    public void setOrderItems(Set<FinalProduct> orderItems) {
+    public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+    
+    @Override
+    public String toString() {
+        return "Purchase [user=" + user + ", shippingAddress=" + shippingAddress + ", billingAddress=" + billingAddress
+                + ", order=" + order + ", orderItems=" + orderItems + "]";
     }
 
     

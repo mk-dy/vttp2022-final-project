@@ -34,23 +34,7 @@ public class SearchRESTController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
         }
         List<Product> productList = optList.get();
-        
         System.out.println(">>>>>> check productList: " + productList.get(0).getName());
-
-        // JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
-                
-        // for (Product product: productList) {
-        //     JsonObject jsonObj = Json.createObjectBuilder()
-        //             .add("id",product.getId())
-        //             .add("name",product.getName())
-        //             .add("descr", product.getDescr())
-        //             .add("price", product.getPrice())
-        //             .add("imgLink", product.getImgLink())
-        //             .build();
-
-        //     arrBuilder.add(jsonObj);
-        // }
-        // JsonArray arr = arrBuilder.build();
         JsonArray arr = ConversionUtil.toJsonArr(productList);
         
         return ResponseEntity.status(HttpStatus.OK).body(arr.toString());

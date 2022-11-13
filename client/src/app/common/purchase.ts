@@ -2,7 +2,7 @@ import { Address, Order, OrderItem, User } from "../models";
 
 
 export class Purchase {
-    user!: User;
+    user: User = new User;
     shippingAddress!: Address;
     billingAddress!: Address;
     order!: Order;

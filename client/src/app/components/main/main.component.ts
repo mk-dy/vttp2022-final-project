@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Fabric, Product } from '../../models';
+import { Fabric, Product, User } from '../../models';
 import { ProductService } from '../../services/product.service';
 import { SearchService } from '../../services/search.service';
 
@@ -20,15 +21,25 @@ export class MainComponent implements OnInit {
   searchForm!: FormGroup
   fabricList!: Fabric[]
   token!: string | null
+  userDetails!: User
 
   constructor(private fb: FormBuilder, 
               private searchSvc: SearchService, 
               private productSvc: ProductService, 
               private router: Router,
+              private authSvc: AuthService,
               private tokenStorageSvc: TokenStorageService) { }
 
   ngOnInit(): void {
     this.token = this.tokenStorageSvc.getToken()
+    let user = this.tokenStorageSvc.getUser()
+
+    this.authSvc.getUserFromEmail(user.email).subscribe(
+      data => {
+        window.sessionStorage.setItem('userDetails', JSON.stringify(data));
+      },
+    )
+
     this.productSvc.showProducts()
     this.sub$ = this.productSvc.onShowProducts.subscribe(data => {
       this.productList = data

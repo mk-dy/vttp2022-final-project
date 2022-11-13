@@ -8,22 +8,22 @@ import java.util.Set;
 
 public class Order {
 
-    private Long id;
+    private int id;
     private String orderTrackingNumber;
     private int totalQuantity;
     private BigDecimal totalPrice;
     private String status;
     private Date dateCreated;
     // private Date lastUpdated;
-    private Set<FinalProduct> orderItems = new HashSet<>();
-    private User userId;
+    private Set<OrderItem> orderItems = new HashSet<>();
+    private User user;
     private Address shippingAddress;
     private Address billingAddress;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getOrderTrackingNumber() {
@@ -56,17 +56,17 @@ public class Order {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-    public Set<FinalProduct> getOrderItems() {
+    public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
-    public void setOrderItems(Set<FinalProduct> orderItems) {
+    public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
     public Address getShippingAddress() {
         return shippingAddress;
@@ -81,17 +81,25 @@ public class Order {
         this.billingAddress = billingAddress;
     }
 
-    // public void add(FinalProduct item) {
+    public void add(OrderItem item) {
 
-    //     if (item != null) {
-    //         if (orderItems == null) {
-    //             orderItems = new HashSet<>();
-    //         }
+        if (item != null) {
+            if (orderItems == null) {
+                orderItems = new HashSet<>();
+            }
+            orderItems.add(item);
+            item.setOrder(this);
+        }
+    }
+    @Override
+    public String toString() {
+        return "Order [id=" + id + ", orderTrackingNumber=" + orderTrackingNumber + ", totalQuantity=" + totalQuantity
+                + ", totalPrice=" + totalPrice + ", status=" + status + ", dateCreated=" + dateCreated + ", orderItems="
+                + orderItems + ", user=" + user + ", shippingAddress=" + shippingAddress + ", billingAddress="
+                + billingAddress + "]";
+    }
 
-    //         orderItems.add(item);
-    //         item.setOrder(this);
-    //     }
-    // }
+    
     
     
 }

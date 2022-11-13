@@ -11,9 +11,7 @@ public class JwtResponse {
 	public JwtResponse(String accessToken, String id, String email) {
 		this.token = accessToken;
 		this.id = id;
-		// this.username = username;
 		this.email = email;
-		// this.roles = roles;
 	}
 
 	public String getAccessToken() {
@@ -48,15 +46,4 @@ public class JwtResponse {
 		this.email = email;
 	}
 
-	// public String getUsername() {
-	// 	return username;
-	// }
-
-	// public void setUsername(String username) {
-	// 	this.username = username;
-	// }
-
-	// public List<String> getRoles() {
-	// 	return roles;
-	// }
 }

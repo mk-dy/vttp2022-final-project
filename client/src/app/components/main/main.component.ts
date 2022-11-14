@@ -65,15 +65,6 @@ export class MainComponent implements OnInit {
   }
 
 
-  // in server side, service to pull all the products together with the information intto model,
-  // turn model into json format,
-  // send the json data over to client service
-  // client service uses a GET method
-  // what I want is the 
-  // PRODUCT IMAGE
-  // PRODUCT NAME
-  // PRODUCT PRICE
 
-  // SKU 
 
 }

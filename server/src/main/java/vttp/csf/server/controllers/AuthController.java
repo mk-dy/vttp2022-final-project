@@ -28,8 +28,10 @@ import vttp.csf.server.models.User;
 import vttp.csf.server.models.UserDetailsImpl;
 import vttp.csf.server.payload.response.JwtResponse;
 import vttp.csf.server.repository.UserRepository;
+import vttp.csf.server.services.SendEmailService;
 import vttp.csf.server.services.UserService;
 import vttp.csf.server.utility.ConversionUtil;
+// import vttp.csf.server.utility.EmailUtil;
 import vttp.csf.server.utility.JWTUtils;
 
 @RestController
@@ -44,6 +46,9 @@ public class AuthController {
     
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private SendEmailService sendEmailSvc;
 
     @Autowired
     JWTUtils jwtUtils;
@@ -82,6 +87,10 @@ public class AuthController {
         try {
             userSvc.createUser(user);
             System.out.println(">>>>> user created");
+            // where the email shall be sent
+            // EmailUtil.sendRegisterEmail(user.getEmail(),"Your isaac account has been created");
+            sendEmailSvc.sendRegisterEmail(user.getEmail(),"Your isaac account has been created");
+
             jsonObj = Json.createObjectBuilder().add("message","SUCCESS! The user account has been created!").build();
             return ResponseEntity.status(HttpStatus.CREATED).body(jsonObj.toString());
             // return ResponseEntity.status(HttpStatus.CREATED).body("SUCCESS: The user account has been created!");
@@ -100,14 +109,7 @@ public class AuthController {
     public ResponseEntity<String> getUser(@PathVariable String email) {
         System.out.println(">>> email: " + email);
         User user = new User();
-        
-        // Optional<User> optUser = userRepo.getUserByEmail(user.getEmail());
-        // if (optUser.isEmpty()) {
-        //     System.out.println("EMPTYYY");
-        // }
-        // user = optUser.get();
         user = userRepo.getUser(email);
-
         System.out.println(user.toString());
         JsonObject jObject = ConversionUtil.userToJson(user);
         

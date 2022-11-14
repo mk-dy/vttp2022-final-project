@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
 
   async onSignOut() {
     window.sessionStorage.clear();
+    window.localStorage.removeItem('cartItems')
     await this.route.navigate(['/'])
     this.reloadPage()
   }

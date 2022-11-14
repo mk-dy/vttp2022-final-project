@@ -91,6 +91,7 @@ export class CreateUserComponent implements OnInit {
     setTimeout(() => {
       this.router.navigate(['/shop']);
   }, 5000);
+    // location.reload
   }
 
 

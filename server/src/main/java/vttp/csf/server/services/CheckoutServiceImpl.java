@@ -45,10 +45,8 @@ public class CheckoutServiceImpl implements CheckoutService {
 
         // User
         User user = purchase.getUser();
-
         // Order
         Order order = purchase.getOrder();
-        
         // Address
         Address shipAddress = new Address();
         shipAddress = purchase.getShippingAddress();
@@ -63,8 +61,6 @@ public class CheckoutServiceImpl implements CheckoutService {
         // Store order into database
         String orderTrackingNumber = generateOrderTrackingNumber();
         order.setOrderTrackingNumber(orderTrackingNumber);
-
-
 
         Set<OrderItem> orderItems = purchase.getOrderItems();
         orderItems.forEach(item -> order.add(item));

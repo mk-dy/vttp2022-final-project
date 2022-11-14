@@ -8,6 +8,7 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import vttp.csf.server.models.Fabric;
 import vttp.csf.server.models.FinalProduct;
+import vttp.csf.server.models.OrderResp;
 import vttp.csf.server.models.Product;
 import vttp.csf.server.models.User;
 
@@ -41,6 +42,7 @@ public class ConversionUtil {
         for (FinalProduct product: prodList) {
             JsonObject jsonObj = Json.createObjectBuilder()
                     .add("id",product.getId())
+                    .add("prodName",product.getProdName())
                     .add("prodId",product.getProdId())
                     .add("userId",product.getUserId())
                     .add("baseBagDesign",product.getBaseBagDesign())
@@ -114,8 +116,30 @@ public class ConversionUtil {
         return jsonObj;
     }
 
+    public static JsonArray orderToJson(List<OrderResp> orderList) {
 
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 
+        for (OrderResp order: orderList) {
+            JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("orderTrackingNumber",order.getOrderTrackingNumber())
+                    .add("totalQuantity",order.getTotalQuantity())
+                    .add("totalPrice", order.getTotalPrice())
+                    .add("userId", order.getUserId())
+                    .add("dateCreated", order.getDateCreated().toString())
+                    .add("imageUrl", order.getImageUrl())
+                    .add("unitQuantity", order.getUnitQuantity())
+                    .add("unitPrice", order.getUnitPrice())
+                    .add("prodId", order.getProdId())
+                    .add("prodName", order.getProdName())
+                    .build();
+
+            arrBuilder.add(jsonObj);
+        }
+        JsonArray arr = arrBuilder.build();
+
+        return arr;
+    }
 
     // public static FinalProduct replaceNull(FinalProduct product) {
     //     // if product properties contain null, replace with ""

@@ -19,6 +19,7 @@ public class ProductRepository {
 
     public boolean createFinalProduct(FinalProduct finalProduct) {
         int count = template.update(SQL_INSERT_FINAL_PRODUCT,
+                finalProduct.getProdName(),
                 finalProduct.getProdId(),
                 finalProduct.getUserId(),
                 finalProduct.getWithBoot(),
@@ -52,6 +53,7 @@ public class ProductRepository {
         while (rs.next()) {
             FinalProduct product = new FinalProduct();
             product.setId(rs.getString("id"));
+            product.setId(rs.getString("prod_name"));
             product.setProdId(rs.getString("prod_id"));
             product.setUserId(rs.getString("user_id"));
             product.setWithBoot(rs.getString("with_boot"));

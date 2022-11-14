@@ -32,6 +32,7 @@ export interface Product {
 
 export interface FinalProduct {
     id: string
+    prodName: string
     prodId: string
     userId: string
 
@@ -63,6 +64,7 @@ export interface FinalProduct {
 
 export class CartItem {
     id: string
+    prodName: string
     prodId: string
     userId: string
     baseBagDesign: string
@@ -88,6 +90,7 @@ export class CartItem {
 
     constructor(product: FinalProduct) {
         this.id = product.id;
+        this.prodName = product.prodName;
         this.prodId = product.prodId;
         this.userId = product.userId;
 
@@ -152,38 +155,42 @@ export interface Purchase {
     orderItems: FinalProduct[]; 
 }
 
-// export interface Order {
-//     totalQuantity: number
-//     totalPrice: number
-// }
-
 export class Order {
     totalQuantity!: number
     totalPrice!: number;
 }
 
 export class OrderItem {
-    imageUrl: string;
-    unitPrice: number;
-    quantity: number;
-    productId: string;
+    imageUrl: string
+    unitPrice: number
+    quantity: number
+    prodId: string
+    prodName: string
 
     constructor(cartItem: CartItem) {
         this.imageUrl = cartItem.imgLink;
         this.quantity = cartItem.quantity;
         this.unitPrice = cartItem.price;
-        this.productId = cartItem.prodId;
+        this.prodId = cartItem.prodId;
+        this.prodName = cartItem.prodName;
     }
 }
 
 
-// export class Purchase {
-//     user: User;
-//     shippingAddress: Address;
-//     billingAddress: Address;
-//     order: Order;
-//     orderItems: OrderItem[]; 
-// }
+export interface OrderResponse {
+
+      orderTrackingNumber: string
+      totalQuantity: number
+      totalPrice: number
+      userId: string
+      dateCreated: string
+      imageUrl: string 
+      unitQuantity: number
+      unitPrice: number
+      prodId: string
+      prodName: string
+
+}
 
 /*
 

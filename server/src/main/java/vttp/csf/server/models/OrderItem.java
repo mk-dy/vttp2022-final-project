@@ -9,6 +9,7 @@ public class OrderItem {
     private BigDecimal unitPrice;
     private int quantity;
     private String prodId;
+    private String prodName;
     private Order order;
 
     public int getId() {
@@ -47,11 +48,18 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
+    public String getProdName() {
+        return prodName;
+    }
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
     @Override
     public String toString() {
         return "OrderItem [id=" + id + ", imageUrl=" + imageUrl + ", unitPrice=" + unitPrice + ", quantity=" + quantity
-                + ", prodId=" + prodId + ", order=" + order + "]";
+                + ", prodId=" + prodId + ", prodName=" + prodName + ", order=" + order + "]";
     }
+    
 
     
 

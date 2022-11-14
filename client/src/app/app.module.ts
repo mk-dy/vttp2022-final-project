@@ -47,6 +47,8 @@ import { AuthService } from './services/auth.service';
 import { TokenStorageService } from './services/token-storage.service';
 import { authInterceptorProviders } from './auth.interceptor';
 import { CartService } from './services/cart.service';
+import { OrderService } from './services/order.service';
+import { OrderDetailsComponent } from './components/orders/order-details.component';
 
 
 
@@ -73,7 +75,8 @@ import { CartService } from './services/cart.service';
     FooterComponent,
     CheckoutComponent,
     PaymentCancelComponent,
-    PaymentSuccessComponent
+    PaymentSuccessComponent,
+    OrderDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +110,8 @@ import { CartService } from './services/cart.service';
     AuthService,
     TokenStorageService,
     authInterceptorProviders, // our interceptor
-    CartService
+    CartService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })

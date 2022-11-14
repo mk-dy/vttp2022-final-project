@@ -91,70 +91,20 @@
                   </mat-option>
                 </mat-select>
             </mat-form-field>
-    
-            <!-- <p>Select a design for the EXTERIOR of the chalk bag: </p>
-            <select formControlName="exteriorDesign">
-                <option value="black">Black</option>
-                <option value="natural">Natural</option>
-                <option value="grey">Grey</option>
-                <option value="sky">Sky</option>
-                <option value="navy">Navy</option>
-                <option value="green">Green</option>
-                <option value="olive">Olive</option>
-                <option value="bloom">Bloom</option>
-                <option value="flora">Flora</option>
-                <option value="toile">Toile</option>
-                <option value="outback">Outback</option>
-                <option value="tropical">Tropical</option>
-                <option value="palm">Palm</option>
-                <option value="ornament">Ornament</option>
-                <option value="cabin">Cabin</option>
-                <option value="produce">Produce</option>
-                <option value="monstera">Monstera</option>
-                <option value="barteri">Barteri</option>
-                <option value="organic">Organic</option>
-                <option value="maki">Maki</option>
-                <option value="sushi">Sushi</option>
-                <option value="sail">sail</option>
-                <option value="personalFabric">I am using my personal fabric!</option>
-            </select> -->
-            <!-- <p>Select a design for the BASE of the chalk bag</p>
-            <select formControlName="baseDesign">
-                <option value="black">Black</option>
-                <option value="natural">Natural</option>
-                <option value="grey">Grey</option>
-                <option value="sky">Sky</option>
-                <option value="navy">Navy</option>
-                <option value="green">Green</option>
-                <option value="olive">Olive</option>
-                <option value="bloom">Bloom</option>
-                <option value="flora">Flora</option>
-                <option value="toile">Toile</option>
-                <option value="outback">Outback</option>
-                <option value="tropical">Tropical</option>
-                <option value="palm">Palm</option>
-                <option value="ornament">Ornament</option>
-                <option value="cabin">Cabin</option>
-                <option value="produce">Produce</option>
-                <option value="monstera">Monstera</option>
-                <option value="barteri">Barteri</option>
-                <option value="organic">Organic</option>
-                <option value="maki">Maki</option>
-                <option value="sushi">Sushi</option>
-                <option value="sail">sail</option>
-                <option value="personalFabric">I am using my personal fabric!</option>
-            </select> -->
             
             <p>Quantity</p>
             <input type="number" formControlName="quantity" min="1">
         
             <!-- create an event that updates the price when  -->
             
-            <p>Remarks (Optional)</p>
+            <!-- <p>Remarks (Optional)</p>
             <textarea id="" cols="30" rows="5" formControlName="remarks"></textarea>
-            <br>
+            <br> -->
             <!-- <button type="submit" [disabled]="productForm.invalid">Add to Cart</button> -->
             <button type="submit">Add to Cart</button>
+
+
+            <button type="button" (click)="addFavourite()">Favourite</button>
         
         </form>
     </div>

@@ -13,13 +13,12 @@ export class CheckoutService {
 
     constructor(private http: HttpClient) {}
 
-  placeOrder(purchase: Purchase): Observable<any> {
-    return this.http.post<Purchase>(this.purchaseUrl, purchase);    
-  }
+    placeOrder(purchase: Purchase): Observable<any> {
+      return this.http.post<Purchase>(this.purchaseUrl, purchase);    
+    }
 
-  createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
-    return this.http.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
-  }
+    createPaymentIntent(paymentInfo: PaymentInfo): Observable<any> {
+      return this.http.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
+    }
     
-
 }

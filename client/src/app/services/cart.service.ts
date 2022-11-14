@@ -108,7 +108,6 @@ export class CartService {
         //     totalQuantityValue += currentCartItem.quantity;
         // }
 
-        // publish the new values ... all subscribers will receive the new data
         this.totalPrice.next(totalPriceValue);
         this.totalQuantity.next(totalQuantityValue);
 
@@ -116,10 +115,10 @@ export class CartService {
         this.logCartData(totalPriceValue, totalQuantityValue);
 
         // persist cart data
-        this.persistCartItems();    
+        this.storeCartItems();    
     }
 
-    persistCartItems() {
+    storeCartItems() {
         localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
     }
 

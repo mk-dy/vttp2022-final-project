@@ -5,6 +5,7 @@ import java.math.BigDecimal;
        
 public class FinalProduct {
     private String id;
+    private String prodName;
     private String prodId;
     private String userId;
 
@@ -39,6 +40,9 @@ public class FinalProduct {
     public void setId(String id) {
         this.id = id;
     }
+    
+
+
     public String getProdId() {
         return prodId;
     }
@@ -173,16 +177,24 @@ public class FinalProduct {
         this.imgLink = imgLink;
     }
 
+    public String getProdName() {
+        return prodName;
+    }
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
+    
     @Override
     public String toString() {
-        return "FinalProduct [id=" + id + ", prodId=" + prodId + ", userId=" + userId + ", baseBagDesign="
-                + baseBagDesign + ", bootDesign=" + bootDesign + ", exteriorDesign=" + exteriorDesign + ", withBoot="
-                + withBoot + ", hoopStraps=" + hoopStraps + ", keychainHolders=" + keychainHolders + ", keychainNum="
-                + keychainNum + ", upsize=" + upsize + ", baseType=" + baseType + ", frontSideClosure="
-                + frontSideClosure + ", magneticClosure=" + magneticClosure + ", dRingWebbing=" + dRingWebbing
-                + ", frontPocketDesign=" + frontPocketDesign + ", frontPocketBackDesign=" + frontPocketBackDesign
-                + ", backDesign=" + backDesign + ", baseBucketDesign=" + baseBucketDesign + ", quantity=" + quantity
-                + ", remarks=" + remarks + ", price=" + price + ", imgLink=" + imgLink + "]";
+        return "FinalProduct [id=" + id + ", prodName=" + prodName + ", prodId=" + prodId + ", userId=" + userId
+                + ", baseBagDesign=" + baseBagDesign + ", bootDesign=" + bootDesign + ", exteriorDesign="
+                + exteriorDesign + ", withBoot=" + withBoot + ", hoopStraps=" + hoopStraps + ", keychainHolders="
+                + keychainHolders + ", keychainNum=" + keychainNum + ", upsize=" + upsize + ", baseType=" + baseType
+                + ", frontSideClosure=" + frontSideClosure + ", magneticClosure=" + magneticClosure + ", dRingWebbing="
+                + dRingWebbing + ", frontPocketDesign=" + frontPocketDesign + ", frontPocketBackDesign="
+                + frontPocketBackDesign + ", backDesign=" + backDesign + ", baseBucketDesign=" + baseBucketDesign
+                + ", quantity=" + quantity + ", remarks=" + remarks + ", price=" + price + ", imgLink=" + imgLink + "]";
     }
 
+    
 }

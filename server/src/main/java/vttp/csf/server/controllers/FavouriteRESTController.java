@@ -22,12 +22,12 @@ import vttp.csf.server.services.ProductService;
 import vttp.csf.server.utility.ConversionUtil;
 
 @RestController
-public class CartRESTController {
+public class FavouriteRESTController {
     
     @Autowired
     private ProductService productSvc;
 
-    @PostMapping(path="/cart")
+    @PostMapping(path="/favourites")
     public ResponseEntity<String> addToCart(@RequestBody FinalProduct payload) {
         
         ConversionUtil.replaceNull(payload);
@@ -67,7 +67,7 @@ public class CartRESTController {
     //     return ResponseEntity.status(HttpStatus.OK).body(jsonArr.toString()); 
     // }
 
-    @GetMapping(path="/cart/{userId}")
+    @GetMapping(path="/favourites/{userId}")
     public ResponseEntity<String> showCart(@PathVariable String userId) {
         
         /// for now use test's user id

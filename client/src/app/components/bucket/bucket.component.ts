@@ -90,49 +90,49 @@ export class BucketComponent implements OnInit {
     // create prod id here
     let prodId = ''
     if (data.baseType === 'whole') {
-      prodId = prodId.concat('Bwhole')
+      prodId = prodId.concat('Base:whole-')
     } else {
-      prodId = prodId.concat('Bhalf') 
+      prodId = prodId.concat('Base:half-') 
     }
     if (data.frontSideClosure === 'front') {
-      prodId = prodId.concat('Fc')
+      prodId = prodId.concat('Close:front-')
     } else {
-      prodId = prodId.concat('Sc')
+      prodId = prodId.concat('Close:side-')
     }
     if (data.magneticClosure === 'yes') {
-      prodId = prodId.concat('Myes')
+      prodId = prodId.concat('Magnet:yes-')
     } else {
-      prodId = prodId.concat('Mno')
+      prodId = prodId.concat('Magnet:no-')
     }
     if (data.dRingWebbing === 'yes') {
-      prodId = prodId.concat('Dyes')
+      prodId = prodId.concat('DRing:yes-')
     } else {
-      prodId = prodId.concat('Dno')
+      prodId = prodId.concat('DRing:no-')
     }
     if (data.frontPocketDesign !== '') {
-      prodId = prodId.concat(data.frontPocketDesign)
+      prodId = prodId.concat('FrontPock:',data.frontPocketDesign,'-')
     } else {
-      prodId = prodId.concat('')
+      prodId = prodId.concat('FrontPock:','')
     }
     if (data.frontPocketBackDesign !== '') {
-      prodId = prodId.concat(data.frontPocketBackDesign)
+      prodId = prodId.concat('FrontPockBack:',data.frontPocketBackDesign,'-')
     } else {
-      prodId = prodId.concat('')
+      prodId = prodId.concat('FrontPockBack:')
     }
     if (data.backDesign !== '') {
-      prodId = prodId.concat(data.backDesign)
+      prodId = prodId.concat('Back:',data.backDesign,'-')
     } else {
-      prodId = prodId.concat('')
+      prodId = prodId.concat('Back:-')
     }
     if (data.baseBucketDesign !== '') {
-      prodId = prodId.concat(data.baseBucketDesign)
+      prodId = prodId.concat('Base:',data.baseBucketDesign,'-')
     } else {
-      prodId = prodId.concat('')
+      prodId = prodId.concat('Base:-')
     }
     console.info('ridiculous prodId but if it works, it works: ', prodId)
     data['prodId'] = prodId
+    data['prodName'] = 'Chalk Bucket'
 
-    
     const theCartItem = new CartItem(data);
     this.cartSvc.addToCart(theCartItem);
 

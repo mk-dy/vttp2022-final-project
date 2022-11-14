@@ -55,14 +55,14 @@ export class ProductService {
             console.info('>>>> check fabrictest: ', result))
     }
 
-    addToCart(data: any) {
+    addToFavourites(data: any) {
 
         const headers = new HttpHeaders()
             .set('Content-Type', 'application/json')
             .set('Accept', 'application/json')
         
         return firstValueFrom(
-            this.http.post('/cart', data, { headers })
+            this.http.post('/favourites', data, { headers })
         )
 
     }
@@ -73,10 +73,10 @@ export class ProductService {
     //         this.http.get('/cart')
     //     )
     // }
-    getCart(userId: string) {
+    getFavourites(userId: string) {
 
         return firstValueFrom(
-            this.http.get(`/cart/${userId}`)
+            this.http.get(`/favourites/${userId}`)
         )
     }
 

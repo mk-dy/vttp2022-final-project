@@ -71,41 +71,24 @@ export class BagComponent implements OnInit, OnDestroy {
         remarks: this.fb.control<string>('')
       })
     
-    
-    
-
     return myFormGroup
 
-    // return this.fb.group({
-    //   bootType: this.fb.control<string>('', Validators.required), // yes or no
-    //   upsize: this.fb.control<string>('', Validators.required), // yes or no
-    //   hoopStraps: this.fb.control<string>('', Validators.required), // yes or no
-    //   keychainHolders: this.fb.control<string>('', Validators.required), 
-    //   // keychainNum shows up when keychainHolders is yes
-    //   keychainNum: this.fb.control<number | null>(1),
-    //   exteriorDesign: this.fb.control<string>('', Validators.required),
-    //   baseDesign: this.fb.control<string>('', Validators.required), // for no boot
-    //   bootDesign: this.fb.control<string>('', Validators.required), // for with boot
-    //   quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
-    //   remarks: this.fb.control<string>('')
-    // })
   }
 
   processForm(formDirective: FormGroupDirective) {
     const data = this.productForm.value
+    formDirective.resetForm();
+    this.productForm = this.createForm()
+
     console.info('>>>> check data: ', data)
     if (data.keychainHolders === 'no' || data.keychainNum === null) {
       data.keychainNum = 0
     }
-    formDirective.resetForm();
-    this.productForm = this.createForm()
-    // data['prodId'] = 'CHLKBAG01'
+
+
     data['imgLink'] = this.chalkbag.imgLink
     console.info('>>>> check data again: ', data)
     console.info(">>> START check total price: ", this.totalPrice)
-    // if criteria met, add $
-  // this.totalPrice = (data.quantity * this.totalPrice) // TEMPORARILY OFF
-    // console.info(">>> END check total price: ", this.totalPrice)
     data['price'] = this.totalPrice // unit price currently
     data['userId'] = this.userId
 
@@ -118,66 +101,101 @@ export class BagComponent implements OnInit, OnDestroy {
     if (data.keychainHolders === 'yes') {
       this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
     }
-    // create prod id here
-    let prodId = ''
-    if (data.withBoot === 'yes') {
-      prodId = prodId.concat('Byes')
-    } else {
-      prodId = prodId.concat('Bno') 
-    }
-    if (data.upsize === 'yes') {
-      prodId = prodId.concat('Uyes')
-    } else {
-      prodId = prodId.concat('Uno')
-    }
-    if (data.hoopStraps === 'yes') {
-      prodId = prodId.concat('Hyes')
-    } else {
-      prodId = prodId.concat('Hno')
-    }
-    if (data.keychainHolders === 'yes') {
-      prodId = prodId.concat('Kyes')
-    } else {
-      prodId = prodId.concat('Kno')
-    }
-    if (data.keychainNum > 0) {
-      prodId = prodId.concat('K',data.keychainNum)
-    } else {
-      prodId = prodId.concat('')
-    }
-    if (data.exteriorDesign !== '') {
-      prodId = prodId.concat(data.exteriorDesign)
-    } else {
-      prodId = prodId.concat('')
-    }
-    if (data.baseBagDesign !== '') {
-      prodId = prodId.concat(data.baseBagDesign)
-    } else {
-      prodId = prodId.concat('')
-    }
-    if (data.bootDesign !== '') {
-      prodId = prodId.concat(data.bootDesign)
-    } else {
-      prodId = prodId.concat('')
-    }
-    console.info('ridiculous prodId but if it works, it works: ', prodId)
-    data['prodId'] = prodId
-
-
+    data['prodId'] = this.changeProdId(data)
+    console.info('ridiculous prodId but if it works, it works: ', data['prodId'])
+    data['prodName'] = 'Chalk Bag'
     
-    // trying to store into local storage
 
     const theCartItem = new CartItem(data);
     this.cartSvc.addToCart(theCartItem);
 
-
-    // temporarily stop this method first, testing local storage
-    // this.productSvc.addToCart(data)
-    
-
     // need to reset totalPrice after processForm()
     this.callGetChalkbag()
   }
+
+  addFavourite() {
+    const data = this.productForm.value
+    // formDirective.resetForm();
+    // this.productForm = this.createForm()
+
+    console.info('>>>> check data: ', data)
+    if (data.keychainHolders === 'no' || data.keychainNum === null) {
+      data.keychainNum = 0
+    }
+
+    data['imgLink'] = this.chalkbag.imgLink
+    console.info('>>>> check data again: ', data)
+    console.info(">>> START check total price: ", this.totalPrice)
+    data['price'] = this.totalPrice // unit price currently
+    data['userId'] = this.userId
+
+    if (data.upsize === 'yes') {
+      this.totalPrice += 15.00 
+    }
+    if (data.hoopStraps === 'yes') {
+      this.totalPrice += 3.50 
+    }
+    if (data.keychainHolders === 'yes') {
+      this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
+    }
+    data['prodId'] = this.changeProdId(data)
+    console.info('ridiculous prodId but if it works, it works: ', data['prodId'])
+    data['prodName'] = 'Chalk Bag'
+    
+    console.info('>>> favourites: ' + data)
+
+    // need to reset totalPrice after processForm()
+    // this.callGetChalkbag()
+  }
+
+  changeProdId(data: any) {
+    let prodId = ''
+    if (data.withBoot === 'yes') {
+      prodId = prodId.concat('Boot:yes-')
+    } else {
+      prodId = prodId.concat('Boot:no-') 
+    }
+    if (data.upsize === 'yes') {
+      prodId = prodId.concat('Up:yes-')
+    } else {
+      prodId = prodId.concat('Up:no-')
+    }
+    if (data.hoopStraps === 'yes') {
+      prodId = prodId.concat('Hoop:yes-')
+    } else {
+      prodId = prodId.concat('Hoop:no-')
+    }
+    if (data.keychainHolders === 'yes') {
+      prodId = prodId.concat('Key:yes-')
+    } else {
+      prodId = prodId.concat('Key:no-')
+    }
+    if (data.keychainNum > 0) {
+      prodId = prodId.concat('KNum:',data.keychainNum,'-')
+    } else {
+      prodId = prodId.concat('KNum:-')
+    }
+    if (data.exteriorDesign !== '') {
+      prodId = prodId.concat('ExtD:',data.exteriorDesign,'-')
+    } else {
+      prodId = prodId.concat('ExtD:','-')
+    }
+    if (data.baseBagDesign !== '') {
+      prodId = prodId.concat('BaseD:',data.baseBagDesign,'-')
+    } else {
+      prodId = prodId.concat('BaseD:','-')
+    }
+    if (data.bootDesign !== '') {
+      prodId = prodId.concat('BootD:',data.bootDesign,'-')
+    } else {
+      prodId = prodId.concat('BootD:','-')
+    }
+    
+    return prodId;
+  }
+
+
+
 
   callGetChalkbag() {
     this.productSvc.getChalkbag()

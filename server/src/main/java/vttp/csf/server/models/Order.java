@@ -14,7 +14,6 @@ public class Order {
     private BigDecimal totalPrice;
     private String status;
     private Date dateCreated;
-    // private Date lastUpdated;
     private Set<OrderItem> orderItems = new HashSet<>();
     private User user;
     private Address shippingAddress;

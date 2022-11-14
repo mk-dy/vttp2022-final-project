@@ -122,6 +122,7 @@ public class CheckoutRepository {
                                     item.getQuantity(),
                                     item.getUnitPrice(),
                                     item.getProdId(),
+                                    item.getProdName(),
                                     item.getOrder().getId());
         return 1 == count;
     }

@@ -22,6 +22,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductComponent } from './components/product/product.component';
 import { AuthenticationGuard } from './auth.guard';
+import { OrderDetailsComponent } from './components/orders/order-details.component';
 
 const appRoutes: Routes = [
     { path: '', component: LandingComponent },
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
     { path: 'search', component: SearchResultComponent },
     { path: 'cart', component: CartComponent},
     { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
+    { path: 'orders/:id', component: OrderDetailsComponent}, // to add parameterized routes to show different orders
     { path: 'product', component: ProductComponent},
     { path: 'product/chalk-bag', component: BagComponent},
     { path: 'product/chalk-bucket', component: BucketComponent},

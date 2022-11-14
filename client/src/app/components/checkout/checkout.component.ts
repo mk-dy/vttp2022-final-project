@@ -186,6 +186,7 @@ export class CheckoutComponent implements OnInit {
     console.info('>>>>> check purchase order', purchase.order)
     purchase.orderItems = orderItems;
     console.info('>>>>> check purchase orderItems', purchase.orderItems)
+    // prodId exists here though
 
     // compute payment info
     this.paymentInfo.amount = Math.round(this.totalPrice * 100); // because stripe looks at cents
@@ -246,7 +247,6 @@ export class CheckoutComponent implements OnInit {
               })
             }            
           }
-          // .bind(this)
           );
         }
       );
@@ -262,7 +262,7 @@ export class CheckoutComponent implements OnInit {
     this.cartSvc.cartItems = [];
     this.cartSvc.totalPrice.next(0);
     this.cartSvc.totalQuantity.next(0);
-    this.cartSvc.persistCartItems();
+    this.cartSvc.storeCartItems();
     // reset the form
     this.checkoutForm.reset();
 

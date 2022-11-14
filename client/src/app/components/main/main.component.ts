@@ -44,6 +44,8 @@ export class MainComponent implements OnInit {
     this.sub$ = this.productSvc.onShowProducts.subscribe(data => {
       this.productList = data
     })
+
+    console.info('product check',this.productList)
     this.searchForm = this.createForm()
   }
 

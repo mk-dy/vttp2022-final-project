@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
 
   
   ngOnInit(): void {
+    // this.token = window.sessionStorage.getItem('auth-token');
     this.token = this.tokenStorageSvc.getToken()
     console.info('token in nav',this.token)
   }
@@ -63,10 +64,20 @@ export class NavbarComponent implements OnInit {
   }
   
   iconNavigate() {
-    if (this.token !== null) {
-      this.route.navigate(['/shop']);
+    if (this.noToken()) {
+      this.route.navigate(['/'])
     } else {
-      this.route.navigate(['/']);
+      this.route.navigate(['/shop'])
     } 
+  }
+
+  toLanding() {
+    this.route.navigate(['/'])
+  }
+
+  toMain() {
+    location.reload()
+    this.route.navigate(['/shop'])
+    
   }
 }

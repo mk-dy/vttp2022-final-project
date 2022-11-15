@@ -17,7 +17,7 @@ export class BucketComponent implements OnInit {
   sub$!: Subscription
   chalkbucket!: Product
   fabricList!: Fabric[]
-  totalPrice!: number
+  unitPrice!: number
   userId!: string
 
   constructor(private fb: FormBuilder, private productSvc: ProductService, private tokenStorageSvc: TokenStorageService, private cartSvc: CartService) { }
@@ -44,15 +44,13 @@ export class BucketComponent implements OnInit {
     return this.fb.group({
       baseType: this.fb.control<string>('', Validators.required), // half or whole
       frontSideClosure: this.fb.control<string>('', Validators.required), // front or side
-      // numOfBrushHolder: this.fb.control<number>(1, [ Validators.min(1), Validators.max(3) ]), // minimum one 
-      // brushHolderLocation: this.fb.control<string>('', Validators.required),
       magneticClosure: this.fb.control<string>('', Validators.required), // yes or no
       dRingWebbing: this.fb.control<string>('', Validators.required), // yes or no
       frontPocketDesign: this.fb.control<string>('', Validators.required),
       frontPocketBackDesign: this.fb.control<string>('', Validators.required),
       backDesign: this.fb.control<string>('', Validators.required),
       quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
-      remarks: this.fb.control<string>(''),
+      // remarks: this.fb.control<string>(''),
       // ONLY FOR FULL BASE
       baseBucketDesign: this.fb.control<string>('', Validators.required), // custom validator for this
       
@@ -61,33 +59,52 @@ export class BucketComponent implements OnInit {
 
   processForm(formDirective: FormGroupDirective) {
     const data = this.productForm.value
-    console.info('>>>> check data: ', data)
-    if (data.keychainHolders === 'no' || data.keychainNum === null) {
-      data.keychainNum = 0
-    }
     formDirective.resetForm();
-    // this.productForm.reset()
     this.productForm = this.createForm()
-    data['prodId'] = 'CHLKBKT02'
+
+    console.info('>>>> check data: ', data)
+
     data['imgLink'] = this.chalkbucket.imgLink
     data['userId'] = this.userId
     console.info('>>>> check data again: ', data)
-    console.info(">>> START check total price: ", this.totalPrice)
+    console.info(">>> START check total price: ", this.unitPrice)
     // if criteria met, add $
     if (data.frontOrSideClosure === 'side') {
-      this.totalPrice += 2.00 
+      this.unitPrice += 2.00 
     }
     if (data.magneticClosure === 'yes') {
-      this.totalPrice += 5.00 
+      this.unitPrice += 5.00 
     }
     if (data.dRingWebbing === 'yes') {
-      this.totalPrice += 4.00 
+      this.unitPrice += 4.00 
     }
-    // this.totalPrice = (data.quantity * this.totalPrice) 
-    console.info(">>> END check total price: ", this.totalPrice)
-    data['price'] = this.totalPrice
 
-    // create prod id here
+    console.info(">>> END check total price: ", this.unitPrice)
+    data['price'] = this.unitPrice
+    data['prodId'] = this.changeProdId(data)
+    console.info('ridiculous prodId but if it works, it works: ', data['prodId'])
+    data['prodName'] = 'Chalk Bucket'
+
+    const theCartItem = new CartItem(data);
+    this.cartSvc.addToCart(theCartItem);
+
+    // need to reset totalPrice after processForm()
+    this.callGetChalkbucket()
+  }
+
+  addFavourite() {
+    const data = this.productForm.value
+    data['imgLink'] = this.chalkbucket.imgLink
+    data['prodName'] = 'Chalk Bucket'
+    data['price'] = this.unitPrice
+    data['userId'] = this.userId
+    console.info('>>> favourites: ' + data)
+    this.productSvc.addToFavourites(data).then(result => {
+      console.log(result)
+    })
+  }
+
+  changeProdId(data: any) {
     let prodId = ''
     if (data.baseType === 'whole') {
       prodId = prodId.concat('Base:whole-')
@@ -129,27 +146,15 @@ export class BucketComponent implements OnInit {
     } else {
       prodId = prodId.concat('Base:-')
     }
-    console.info('ridiculous prodId but if it works, it works: ', prodId)
-    data['prodId'] = prodId
-    data['prodName'] = 'Chalk Bucket'
-
-    const theCartItem = new CartItem(data);
-    this.cartSvc.addToCart(theCartItem);
-
-
-
-
-    // this.productSvc.addToCart(data)
     
-    // need to reset totalPrice after processForm()
-    this.callGetChalkbucket()
+    return prodId;
   }
 
   callGetChalkbucket() {
     this.productSvc.getChalkbucket()
     this.sub$ = this.productSvc.onShowChalkbucket.subscribe( data => {
       this.chalkbucket = data
-      this.totalPrice = this.chalkbucket.price
+      this.unitPrice = this.chalkbucket.price
     })
   }
 

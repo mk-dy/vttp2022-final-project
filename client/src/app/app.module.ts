@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { CartComponent } from './components/cart/cart.component';
-import { ProductComponent } from './components/product/product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +22,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
 
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
@@ -49,6 +49,7 @@ import { authInterceptorProviders } from './auth.interceptor';
 import { CartService } from './services/cart.service';
 import { OrderService } from './services/order.service';
 import { OrderDetailsComponent } from './components/orders/order-details.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -62,7 +63,6 @@ import { OrderDetailsComponent } from './components/orders/order-details.compone
     AppComponent,
     LandingComponent,
     CartComponent,
-    ProductComponent,
     CreateUserComponent,
     MainComponent,
     SearchResultComponent,
@@ -100,7 +100,9 @@ import { OrderDetailsComponent } from './components/orders/order-details.compone
     MatGridListModule,
     MatExpansionModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule,
+    FontAwesomeModule
   ],
   providers: [
     SearchService, 

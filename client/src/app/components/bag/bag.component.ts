@@ -17,7 +17,7 @@ export class BagComponent implements OnInit, OnDestroy {
   sub$!: Subscription
   chalkbag!: Product
   fabricList!: Fabric[]
-  totalPrice!: number
+  unitPrice!: number
 
   userId!: string
   
@@ -67,8 +67,8 @@ export class BagComponent implements OnInit, OnDestroy {
         exteriorDesign: this.fb.control<string>('', Validators.required),
         baseBagDesign: this.fb.control<string>('', Validators.required), // if WITHOUT BOOT // issue with validity here
         bootDesign: this.fb.control<string>('', Validators.required), // if WITH BOOT // issue with validity here
-        quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)]),
-        remarks: this.fb.control<string>('')
+        quantity: this.fb.control<number>(1, [ Validators.required, Validators.min(1)])
+        // remarks: this.fb.control<string>('')
       })
     
     return myFormGroup
@@ -84,23 +84,22 @@ export class BagComponent implements OnInit, OnDestroy {
     if (data.keychainHolders === 'no' || data.keychainNum === null) {
       data.keychainNum = 0
     }
-
-
     data['imgLink'] = this.chalkbag.imgLink
     console.info('>>>> check data again: ', data)
-    console.info(">>> START check total price: ", this.totalPrice)
-    data['price'] = this.totalPrice // unit price currently
+    console.info(">>> START check total price: ", this.unitPrice)
+    
     data['userId'] = this.userId
 
     if (data.upsize === 'yes') {
-      this.totalPrice += 15.00 
+      this.unitPrice += 15.00 
     }
     if (data.hoopStraps === 'yes') {
-      this.totalPrice += 3.50 
+      this.unitPrice += 3.50 
     }
     if (data.keychainHolders === 'yes') {
-      this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
+      this.unitPrice = this.unitPrice + (data.keychainNum * 1.00)
     }
+    data['price'] = this.unitPrice // unit price currently
     data['prodId'] = this.changeProdId(data)
     console.info('ridiculous prodId but if it works, it works: ', data['prodId'])
     data['prodName'] = 'Chalk Bag'
@@ -115,42 +114,14 @@ export class BagComponent implements OnInit, OnDestroy {
 
   addFavourite() {
     const data = this.productForm.value
-    // formDirective.resetForm();
-    // this.productForm = this.createForm()
-
-    console.info('>>>> check data: ', data)
-    if (data.keychainHolders === 'no' || data.keychainNum === null) {
-      data.keychainNum = 0
-    }
-
     data['imgLink'] = this.chalkbag.imgLink
-    console.info('>>>> check data again: ', data)
-    console.info(">>> START check total price: ", this.totalPrice)
-    data['price'] = this.totalPrice // unit price currently
-    data['userId'] = this.userId
-
-    if (data.upsize === 'yes') {
-      this.totalPrice += 15.00 
-    }
-    if (data.hoopStraps === 'yes') {
-      this.totalPrice += 3.50 
-    }
-    if (data.keychainHolders === 'yes') {
-      this.totalPrice = this.totalPrice + (data.keychainNum * 1.00)
-    }
-    data['prodId'] = this.changeProdId(data)
-    console.info('ridiculous prodId but if it works, it works: ', data['prodId'])
     data['prodName'] = 'Chalk Bag'
-    
+    data['price'] = this.unitPrice // unit price currently
+    data['userId'] = this.userId
     console.info('>>> favourites: ' + data)
-    
-    
-    
     this.productSvc.addToFavourites(data).then(result => {
       console.log(result)
     })
-    // need to reset totalPrice after processForm()
-    // this.callGetChalkbag()
   }
 
   changeProdId(data: any) {
@@ -206,7 +177,7 @@ export class BagComponent implements OnInit, OnDestroy {
     this.productSvc.getChalkbag()
     this.sub$ = this.productSvc.onShowChalkbag.subscribe( data => {
       this.chalkbag = data
-      this.totalPrice = this.chalkbag.price
+      this.unitPrice = this.chalkbag.price
     })
   }
 

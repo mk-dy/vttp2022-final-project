@@ -20,7 +20,6 @@ import { PaymentCancelComponent } from './components/payment-cancel/payment-canc
 import { PaymentSuccessComponent } from './components/payment-success/payment-success.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { CartComponent } from './components/cart/cart.component';
-import { ProductComponent } from './components/product/product.component';
 import { AuthenticationGuard } from './auth.guard';
 import { OrderDetailsComponent } from './components/orders/order-details.component';
 
@@ -28,18 +27,15 @@ const appRoutes: Routes = [
     { path: '', component: LandingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: CreateUserComponent},
-    { path: 'shop', component: MainComponent, canActivate:[AuthenticationGuard] },
+    { path: 'shop', component: MainComponent},
     { path: 'search', component: SearchResultComponent },
     { path: 'cart', component: CartComponent, canActivate:[AuthenticationGuard]},
-    { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
+    { path: 'orders', component: OrdersComponent},
     { path: 'orders/:id', component: OrderDetailsComponent}, // to add parameterized routes to show different orders
-    { path: 'product', component: ProductComponent},
     { path: 'product/chalk-bag', component: BagComponent},
     { path: 'product/chalk-bucket', component: BucketComponent},
     { path: 'favourites', component: FavouritesComponent, canActivate:[AuthenticationGuard]},
     { path: 'checkout', component: CheckoutComponent, canActivate:[AuthenticationGuard]},
-    { path: 'payment-cancel', component: PaymentCancelComponent },
-    { path: 'payment-success', component: PaymentSuccessComponent },
     { path: '**', redirectTo: '/', pathMatch : 'full'}
   ]
 

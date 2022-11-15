@@ -1,14 +1,15 @@
 <div fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="example-card">
     <form [formGroup]="loginForm">
-      <mat-card-title style="font-family: sans-serif; font-weight: 700; letter-spacing: 2px; margin-bottom: 40px;">Sign In</mat-card-title>
-
+      <mat-card-title style="font-family: sans-serif; font-weight: 700; letter-spacing: 2px;">SIGN IN</mat-card-title>
+      <hr>
       <mat-card-content>
         
-          <p>Email</p>
+          <p>Email: </p>
           <input type="email" formControlName="email">
-          
-          <p>Password</p>
+          <br>
+          <br>
+          <p >Password: </p>
           <input type="password" formControlName="password">
       
           
@@ -19,8 +20,7 @@
   
       <mat-card-actions>
         <button mat-button type="submit" (click)="processForm()" [disabled]="loginForm.invalid">Login</button>
-        <br>
-          <a [routerLink]="['/signup']">No account yet? Sign up here</a>
+        
 
 
       </mat-card-actions>
@@ -29,3 +29,8 @@
   </mat-card>
   </div>
 
+
+  <div style="text-align:center;">
+    <a  style="color:blue" [routerLink]="['/signup']">No account yet? Sign up here to get started!</a>
+  </div>
+          

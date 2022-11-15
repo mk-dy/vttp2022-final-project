@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Fabric, Product, User } from '../../models';
 import { ProductService } from '../../services/product.service';
 import { SearchService } from '../../services/search.service';
+
 
 @Component({
   selector: 'app-main',
@@ -28,7 +31,8 @@ export class MainComponent implements OnInit {
               private productSvc: ProductService, 
               private router: Router,
               private authSvc: AuthService,
-              private tokenStorageSvc: TokenStorageService) { }
+              private tokenStorageSvc: TokenStorageService,
+              library: FaIconLibrary) {library.addIcons(faMagnifyingGlass); }
 
   ngOnInit(): void {
     this.token = this.tokenStorageSvc.getToken()

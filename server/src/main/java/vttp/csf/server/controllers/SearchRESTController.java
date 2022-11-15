@@ -30,8 +30,8 @@ public class SearchRESTController {
     public ResponseEntity<String> searchProduct(@RequestParam String query) {
 
         Optional<List<Product>> optList = searchSvc.searchProduct(query);
-        if (optList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
+        if (optList.isEmpty() || query.equals("") )  {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sorry, we could not find any results.");
         }
         List<Product> productList = optList.get();
         System.out.println(">>>>>> check productList: " + productList.get(0).getName());

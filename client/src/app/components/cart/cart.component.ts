@@ -88,6 +88,7 @@ export class CartComponent implements OnInit {
 
   remove(theCartItem: CartItem) {
     this.cartSvc.remove(theCartItem);
+    location.reload();
   }
 
 }

@@ -3,7 +3,26 @@ mat-card {
     margin: 2em auto;
     text-align: center;
   }
+
+mat-card-title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}  
   
 mat-form-field {
     display: block;
   }
+
+mat-card-content {
+    margin-top: 80px;
+}
+
+.example-card {
+    width: 400px;
+    height: 400px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 50px;
+    outline: none;
+    border: none;
+}

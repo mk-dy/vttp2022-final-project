@@ -12,8 +12,9 @@
             <td>{{ p.name }}</td>
             <td>{{ p.price | currency : 'SGD' }}</td>
             <td>{{ p.descr }}</td>
-            <td><img src="{{ p.imgLink }}">
-                </td>
+            <td>
+                <a [routerLink]="['/product', p.access]"><img src="{{ p.imgLink }}"></a>
+            </td>
             <!-- <td><button type="button" (click)="deleteContact(c.id)">X</button></td> -->
         </tr>
     </tbody>

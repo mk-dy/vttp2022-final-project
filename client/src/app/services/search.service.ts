@@ -19,6 +19,8 @@ export class SearchService {
             this.http.get('/search', { params })
         ).then(result => {
             this.onSearchResult.next(result as Product[])
+        }).catch(err => {
+            console.log(err.error)
         })
     }
     

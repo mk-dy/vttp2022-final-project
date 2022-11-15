@@ -16,7 +16,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import vttp.csf.server.models.Order;
 import vttp.csf.server.models.OrderItem;
-import vttp.csf.server.models.OrderResp;
+// import vttp.csf.server.models.OrderResp;
 import vttp.csf.server.services.OrderService;
 import vttp.csf.server.utility.ConversionUtil;
 
@@ -26,23 +26,7 @@ public class OrderRESTController {
     @Autowired
     private OrderService orderSvc;
 
-    @GetMapping(path="/my-orders/{userId}")
-    public ResponseEntity<String> getUser(@PathVariable String userId) {
-        System.out.println(">>> userId: " + userId);
-        
-        // get orders by userId
-        Optional<List<OrderResp>> orderListOpt = orderSvc.getOrderById(userId);
-        
-        if (orderListOpt.isEmpty()) {
-            JsonObject jsonObj = Json.createObjectBuilder().add("message","You have no orders currently.").build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObj.toString());
-        }
-
-        List<OrderResp> orderList = orderListOpt.get();
-        JsonArray array = ConversionUtil.orderToJson(orderList);
-        
-         return ResponseEntity.status(HttpStatus.OK).body(array.toString());
-    }
+    
 
     @GetMapping(path="/orders/{userId}")
     public ResponseEntity<String> getOrder(@PathVariable String userId) {
@@ -80,4 +64,22 @@ public class OrderRESTController {
         
          return ResponseEntity.status(HttpStatus.OK).body(array.toString());
     }
+
+    // @GetMapping(path="/my-orders/{userId}")
+    // public ResponseEntity<String> getUser(@PathVariable String userId) {
+    //     System.out.println(">>> userId: " + userId);
+        
+    //     // get orders by userId
+    //     Optional<List<OrderResp>> orderListOpt = orderSvc.getOrderById(userId);
+        
+    //     if (orderListOpt.isEmpty()) {
+    //         JsonObject jsonObj = Json.createObjectBuilder().add("message","You have no orders currently.").build();
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonObj.toString());
+    //     }
+
+    //     List<OrderResp> orderList = orderListOpt.get();
+    //     JsonArray array = ConversionUtil.orderToJson(orderList);
+        
+    //      return ResponseEntity.status(HttpStatus.OK).body(array.toString());
+    // }
 }

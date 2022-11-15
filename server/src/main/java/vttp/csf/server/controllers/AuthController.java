@@ -78,7 +78,7 @@ public class AuthController {
     public ResponseEntity<String> createUser(@RequestBody User user) {
         
         String uuid = UUID.randomUUID().toString().substring(0,8);
-        System.out.println(">>> check before encoded password: " + user.getPassword());
+        // System.out.println(">>> check before encoded password: " + user.getPassword());
         user.setId(uuid);
 
         System.out.println(">>>> payload check: " + user.getFirstName() + user.getLastName() + user.getEmail() + user.getMobile() + user.getPassword());

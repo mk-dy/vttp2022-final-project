@@ -10,18 +10,13 @@ CREATE TABLE user (
     user_first_name VARCHAR(128) NOT NULL,
     user_last_name VARCHAR(128) NOT NULL,
     user_email VARCHAR(128) NOT NULL,
-    user_mobile VARCHAR(8) NOT NULL,
+    user_mobile VARCHAR(64) NOT NULL,
     user_password VARCHAR(256) NOT NULL,
 
     PRIMARY KEY(user_id)
 );
 
-INSERT INTO user (user_id, user_first_name, user_last_name, user_email, user_mobile, user_password)
-VALUES 
-	('12345678','test','test','test@gmail.com','12345678','123123');
-
 SELECT * FROM user;
-
 
 -- PRODUCT --
 CREATE TABLE product (
@@ -38,11 +33,8 @@ CREATE TABLE product (
 INSERT INTO product (prod_id, prod_access, prod_name, prod_desc, prod_price, prod_img_link) 
 VALUES 
 ('CHLKBAG01', 'chalk-bag', 'Chalk Bag', 'Each standard chalk bag comes with one brush holder and one keychain holder ($60). You may choose between the chalk bag that comes with or without the boot.', 60.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bag/Chalk%20Bag%20%28Main%20Page%29.jpg'),
-('CHLKBKT02', 'chalk-bucket', 'Chalk Bucket', 'Each standard chalk bucket (half base) comes with a velcro-closure top, front-buckle closure, one brush holder and one front pocket ($65). You may choose between the chalk bag that comes with the half-base or whole base.', 65.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Buclet%20%28Main%20page%29.jpg');
-    
-SELECT * FROM product WHERE prod_name LIKE CONCAT('%','Chalk Bag','%');
-SELECT * FROM product WHERE prod_id = 'CHLKBAG01';
-    
+('CHLKBKT02', 'chalk-bucket', 'Chalk Bucket', 'Each standard chalk bucket (half base) comes with a velcro-closure top, front-buckle closure, one brush holder and one front pocket ($65). You may choose between the chalk bag that comes with the half-base or whole base.', 65.00, 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Bucket%20%28Main%20page%29.jpg');
+
 -- FABRIC --
 CREATE TABLE fabric (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -80,80 +72,19 @@ VALUES
 
 SELECT * FROM fabric;
 
--- FINAL PRODUCT , DO I PUT BOTH PROPERTIES OF CHALK BAG AND CHALK BUCKET HERE? --
-CREATE TABLE final_product (
-	id INT NOT NULL AUTO_INCREMENT,
-    prod_id VARCHAR(64) NOT NULL,
-    user_id VARCHAR(8),
-    
-    -- CHALK BAG START --
-    with_boot VARCHAR(3),
-    upsize VARCHAR(3),
-    hoop_waist_strap VARCHAR(3),
-    keychain_holders VARCHAR(3),
-    keychain_num INT,
-    ext_design VARCHAR(32),
-    base_bag_design VARCHAR(32),
-    boot_design VARCHAR(32),
-    -- CHALK BAG END -- 
-    
-    -- CHALK BUCKET START --
-    base_type VARCHAR(8),
-    front_side_closure VARCHAR(8),
-    magnetic_closure VARCHAR(3),
-    d_ring_webbing VARCHAR(3), 
-    front_pocket_design VARCHAR(32),
-	front_pocket_back_design VARCHAR(32),
-    back_design VARCHAR(32),
-    base_bucket_design VARCHAR(32),
-    -- CHALK BUCKET END --
-    
-    quantity INT NOT NULL,
-    remarks VARCHAR(512),
-    price DECIMAL(10,2) NOT NULL,
-    imgLink VARCHAR(512),
-    
-    PRIMARY KEY (id),
-    FOREIGN KEY (prod_id) REFERENCES product (prod_id),
-    FOREIGN KEY (user_id) REFERENCES user (user_id)
-
-);
-
-SELECT * FROM final_product;
-
-SELECT * FROM final_product where user_id = '12345678';
-
-UPDATE final_product SET user_id = '12345678' WHERE id = 14;
-UPDATE final_product SET remarks = '' WHERE id = 14;
-UPDATE final_product SET imgLink = 'https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Buclet%20%28Main%20page%29.jpg' WHERE user_id = '12345678';
-
-DELETE FROM final_product where id = 6;
-
--- CART -- 
-CREATE TABLE cart (
-    id INT NOT NULL AUTO_INCREMENT,
-    final_prod_id INT NOT NULL,
-    user_id VARCHAR(8) NOT NULL,
-
-    PRIMARY KEY (id),
-    FOREIGN KEY (final_prod_id) REFERENCES final_product (id),
-    FOREIGN KEY (user_id) REFERENCES user (user_id)
-
-);
-
-SELECT * FROM cart;
-
 -- FAVOURITES --
 CREATE TABLE favourites (
     id INT NOT NULL AUTO_INCREMENT,
-    final_prod_id INT NOT NULL,
+    img_link VARCHAR(255),
+    prod_name VARCHAR(255),
+    prod_price DECIMAL(10,2),
     user_id VARCHAR(8) NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (final_prod_id) REFERENCES user (user_id),
     FOREIGN KEY (user_id) REFERENCES user (user_id)
-
 );
+
+SELECT * FROM favourites;
 
 -- ADDRESS --
 CREATE TABLE address (
@@ -163,28 +94,43 @@ CREATE TABLE address (
   
   PRIMARY KEY (id)
   );
-  
-  
--- ORDER --
--- still needs address, payment(?) --
+
+SELECT * FROM address;
+
+-- ORDER  --
 CREATE TABLE user_orders (
     id INT NOT NULL AUTO_INCREMENT,
     order_tracking_number VARCHAR(255),
-    prod_id VARCHAR(8),
-    prod_name VARCHAR(128),
-    quantity INT,
+	total_quantity INT,
     total_price DECIMAL(10,2),
-    status VARCHAR(128),
-    date_created VARCHAR(6),
-    user_id VARCHAR(8),
-	billing_address_id INT,
+	status VARCHAR(128),
+	date_created DATE,
+	user_id VARCHAR(8),
+	-- billing_address_id INT, --
     shipping_address_id INT,
+	-- prod_name VARCHAR(128), --
     
     PRIMARY KEY (id),
 	FOREIGN KEY (user_id) REFERENCES user (user_id),
-	FOREIGN KEY (billing_address_id) REFERENCES address (id),
 	FOREIGN KEY (shipping_address_id) REFERENCES address (id)
     
 );
 
+SELECT * FROM user_orders;
 
+SELECT id FROM address ORDER BY id DESC LIMIT 1;
+SELECT id FROM user_orders ORDER BY id DESC LIMIT 1;
+
+-- ORDER ITEM --
+CREATE TABLE order_item (
+    id INT NOT NULL AUTO_INCREMENT,
+    img_link VARCHAR(255),
+	quantity INT,
+    unit_price DECIMAL(10,2),
+    prod_id VARCHAR(255),
+    prod_name VARCHAR(255),
+    order_id INT,
+    
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES user_orders (id)
+);

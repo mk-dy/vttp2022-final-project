@@ -11,7 +11,7 @@ import vttp.csf.server.models.Favourite;
 import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.models.Order;
 import vttp.csf.server.models.OrderItem;
-import vttp.csf.server.models.OrderResp;
+// import vttp.csf.server.models.OrderResp;
 import vttp.csf.server.models.Product;
 import vttp.csf.server.models.User;
 
@@ -140,30 +140,30 @@ public class ConversionUtil {
         return jsonObj;
     }
 
-    public static JsonArray orderToJson(List<OrderResp> orderList) {
+    // public static JsonArray orderToJson(List<OrderResp> orderList) {
 
-        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+    //     JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 
-        for (OrderResp order: orderList) {
-            JsonObject jsonObj = Json.createObjectBuilder()
-                    .add("orderTrackingNumber",order.getOrderTrackingNumber())
-                    .add("totalQuantity",order.getTotalQuantity())
-                    .add("totalPrice", order.getTotalPrice())
-                    .add("userId", order.getUserId())
-                    .add("dateCreated", order.getDateCreated().toString())
-                    .add("imageUrl", order.getImageUrl())
-                    .add("unitQuantity", order.getUnitQuantity())
-                    .add("unitPrice", order.getUnitPrice())
-                    .add("prodId", order.getProdId())
-                    .add("prodName", order.getProdName())
-                    .build();
+    //     for (OrderResp order: orderList) {
+    //         JsonObject jsonObj = Json.createObjectBuilder()
+    //                 .add("orderTrackingNumber",order.getOrderTrackingNumber())
+    //                 .add("totalQuantity",order.getTotalQuantity())
+    //                 .add("totalPrice", order.getTotalPrice())
+    //                 .add("userId", order.getUserId())
+    //                 .add("dateCreated", order.getDateCreated().toString())
+    //                 .add("imageUrl", order.getImageUrl())
+    //                 .add("unitQuantity", order.getUnitQuantity())
+    //                 .add("unitPrice", order.getUnitPrice())
+    //                 .add("prodId", order.getProdId())
+    //                 .add("prodName", order.getProdName())
+    //                 .build();
 
-            arrBuilder.add(jsonObj);
-        }
-        JsonArray arr = arrBuilder.build();
+    //         arrBuilder.add(jsonObj);
+    //     }
+    //     JsonArray arr = arrBuilder.build();
 
-        return arr;
-    }
+    //     return arr;
+    // }
 
     public static JsonArray ordToJson(List<Order> orderList) {
 

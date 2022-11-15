@@ -13,7 +13,7 @@ import static vttp.csf.server.repository.Queries.*;
 
 import vttp.csf.server.models.Order;
 import vttp.csf.server.models.OrderItem;
-import vttp.csf.server.models.OrderResp;
+// import vttp.csf.server.models.OrderResp;
 
 @Repository
 public class OrderRepository {
@@ -21,34 +21,34 @@ public class OrderRepository {
     @Autowired
     private JdbcTemplate template;
 
-    public Optional<List<OrderResp>> getByUserId(String userId) {
-        SqlRowSet result = template.queryForRowSet(SQL_GET_ORDER_BY_USERID, userId);
+    // public Optional<List<OrderResp>> getByUserId(String userId) {
+    //     SqlRowSet result = template.queryForRowSet(SQL_GET_ORDER_BY_USERID, userId);
 
-        if (!result.next()) {
-            return Optional.empty();
+    //     if (!result.next()) {
+    //         return Optional.empty();
 
-        } else {
-            List<OrderResp> orderList = new LinkedList<>();
-            result.beforeFirst();
-            while(result.next()) {
-                OrderResp order = new OrderResp();
-                order.setOrderTrackingNumber(result.getString("order_tracking_number"));
-                order.setTotalQuantity(result.getInt("total_quantity"));
-                order.setTotalPrice(result.getBigDecimal("total_price"));
-                order.setUserId(result.getString("user_id"));
-                order.setDateCreated(result.getDate("date_created"));
-                order.setImageUrl(result.getString("img_Link"));
-                order.setUnitQuantity(result.getInt("quantity"));
-                order.setUnitPrice(result.getBigDecimal("unit_price"));
-                order.setProdId(result.getString("prod_id"));
-                order.setProdName(result.getString("prod_name"));
+    //     } else {
+    //         List<OrderResp> orderList = new LinkedList<>();
+    //         result.beforeFirst();
+    //         while(result.next()) {
+    //             OrderResp order = new OrderResp();
+    //             order.setOrderTrackingNumber(result.getString("order_tracking_number"));
+    //             order.setTotalQuantity(result.getInt("total_quantity"));
+    //             order.setTotalPrice(result.getBigDecimal("total_price"));
+    //             order.setUserId(result.getString("user_id"));
+    //             order.setDateCreated(result.getDate("date_created"));
+    //             order.setImageUrl(result.getString("img_Link"));
+    //             order.setUnitQuantity(result.getInt("quantity"));
+    //             order.setUnitPrice(result.getBigDecimal("unit_price"));
+    //             order.setProdId(result.getString("prod_id"));
+    //             order.setProdName(result.getString("prod_name"));
 
-                orderList.add(order);
-            }
+    //             orderList.add(order);
+    //         }
 
-            return Optional.of(orderList);
-        }
-    }
+    //         return Optional.of(orderList);
+    //     }
+    // }
 
     public Optional<List<Order>> getOrder(String userId) {
         SqlRowSet result = template.queryForRowSet(SQL_GET_ORDER, userId);

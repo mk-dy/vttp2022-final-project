@@ -27,6 +27,10 @@
            | 
           <a [routerLink]="['/signup']">Register</a>
         </div> -->
+        <div style="text-align:center" *ngIf="token !== null">
+          Hi {{name}}!
+          <hr>
+        </div>
         
         <button mat-menu-item (click)="onLogin()" *ngIf=noToken()>
           <mat-icon>login</mat-icon>

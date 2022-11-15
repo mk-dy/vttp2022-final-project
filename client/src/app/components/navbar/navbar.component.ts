@@ -10,7 +10,7 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
 export class NavbarComponent implements OnInit {
   
   token!: string | null
-
+  name!: string
   constructor(private route: Router, private tokenStorageSvc: TokenStorageService) { }
 
   
@@ -18,6 +18,10 @@ export class NavbarComponent implements OnInit {
     // this.token = window.sessionStorage.getItem('auth-token');
     this.token = this.tokenStorageSvc.getToken()
     console.info('token in nav',this.token)
+    const user = JSON.parse(window.sessionStorage.getItem('userDetails')!).firstName;
+    this.name = user
+
+
   }
 
   onIcon() {

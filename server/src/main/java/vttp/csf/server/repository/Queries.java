@@ -57,6 +57,15 @@ public interface Queries {
     public static final String SQL_GET_ORDER_BY_USERID = 
     "SELECT * FROM (SELECT user_orders.order_tracking_number, user_orders.total_quantity, user_orders.total_price, user_orders.user_id, user_orders.date_created, order_item.img_Link, order_item.quantity, order_item.unit_price, order_item.prod_id, order_item.prod_name FROM user_orders INNER JOIN order_item ON user_orders.id = order_item.order_id) AS sub WHERE user_id = ?";
 
+    public static final String SQL_GET_ORDER = 
+    "SELECT id, order_tracking_number, total_quantity, total_price, date_created FROM user_orders WHERE user_id = ?";
+
+    public static final String SQL_GET_ORDER_ITEM = 
+    "SELECT id, img_link, quantity, unit_price, prod_id, prod_name FROM order_item WHERE order_id = ?";
+
+
+
+    // FAVOURITE 
     public static final String SQL_ADD_FAVOURITE = 
     "INSERT INTO favourites (img_link, prod_name, prod_price, user_id) VALUES (?,?,?,?)"; 
 
@@ -65,5 +74,4 @@ public interface Queries {
 
     public static final String SQL_DELETE_FAVOURITE = 
     "DELETE FROM favourites WHERE id = ?";
-
 }

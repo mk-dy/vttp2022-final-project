@@ -179,18 +179,25 @@ export class OrderItem {
 
 export interface OrderResponse {
 
-      orderTrackingNumber: string
-      totalQuantity: number
-      totalPrice: number
-      userId: string
-      dateCreated: string
-      imageUrl: string 
-      unitQuantity: number
-      unitPrice: number
-      prodId: string
-      prodName: string
+    id: number
+    orderTrackingNumber: string
+    totalQuantity: number
+    totalPrice: number
+    dateCreated: string
 
 }
+
+export interface OrderItemResponse {
+
+    id: number
+    imageUrl: string
+    quantity: number
+    unitPrice: number
+    prodId: string
+    prodName: string
+
+}
+
 
 export interface Favourite {
 
@@ -199,6 +206,6 @@ export interface Favourite {
     prodName: string
     price: number
     userId: string
-    
+
 }
 

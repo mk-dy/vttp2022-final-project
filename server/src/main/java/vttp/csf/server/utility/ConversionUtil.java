@@ -9,6 +9,8 @@ import jakarta.json.JsonObject;
 import vttp.csf.server.models.Fabric;
 import vttp.csf.server.models.Favourite;
 import vttp.csf.server.models.FinalProduct;
+import vttp.csf.server.models.Order;
+import vttp.csf.server.models.OrderItem;
 import vttp.csf.server.models.OrderResp;
 import vttp.csf.server.models.Product;
 import vttp.csf.server.models.User;
@@ -151,6 +153,47 @@ public class ConversionUtil {
                     .add("dateCreated", order.getDateCreated().toString())
                     .add("imageUrl", order.getImageUrl())
                     .add("unitQuantity", order.getUnitQuantity())
+                    .add("unitPrice", order.getUnitPrice())
+                    .add("prodId", order.getProdId())
+                    .add("prodName", order.getProdName())
+                    .build();
+
+            arrBuilder.add(jsonObj);
+        }
+        JsonArray arr = arrBuilder.build();
+
+        return arr;
+    }
+
+    public static JsonArray ordToJson(List<Order> orderList) {
+
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        for (Order order: orderList) {
+            JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("id",order.getId())
+                    .add("orderTrackingNumber",order.getOrderTrackingNumber())
+                    .add("totalQuantity",order.getTotalQuantity())
+                    .add("totalPrice", order.getTotalPrice())
+                    .add("dateCreated", order.getDateCreated().toString())
+                    .build();
+
+            arrBuilder.add(jsonObj);
+        }
+        JsonArray arr = arrBuilder.build();
+
+        return arr;
+    }
+
+    public static JsonArray orderItemToJson(List<OrderItem> orderList) {
+
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        for (OrderItem order: orderList) {
+            JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("id",order.getId())
+                    .add("imageUrl",order.getImageUrl())
+                    .add("quantity",order.getQuantity())
                     .add("unitPrice", order.getUnitPrice())
                     .add("prodId", order.getProdId())
                     .add("prodName", order.getProdName())

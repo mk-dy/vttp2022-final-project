@@ -26,4 +26,18 @@ export class OrderService {
         
     }
 
+    getOrderList(userId: string) {
+
+        return firstValueFrom(
+            this.http.get(`orders/${userId}`))
+        
+    }
+
+    getOrderItems(orderId: string) {
+
+        return firstValueFrom(
+            this.http.get(`orders/order-item/${orderId}`))
+        
+    }
+
 }

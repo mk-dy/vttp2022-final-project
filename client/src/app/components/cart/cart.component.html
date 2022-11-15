@@ -143,7 +143,7 @@
 
 
 <div *ngIf="cartItems.length === 0" class="container">
-    Your shopping cart is empty. 
+    <h2>Your shopping cart is empty. </h2>
 </div>
 
 <div class="container" *ngIf="cartItems.length !== 0">
@@ -185,7 +185,8 @@
         <div class="col col-4"></div>
         <div class="col col-5"><strong>Total Quantity:</strong> {{ totalQuantity }}</div>
         <div class="col col-6"><strong>Total Price:</strong> {{ totalPrice | currency: 'SGD' }}</div>
-        <div class="col col-7"></div>
+        <div class="col col-7" style="text-align: end;"><a style="color:blue" [routerLink]="['/checkout']">Checkout</a></div>
       </li>
     </ul>
+    
 </div>

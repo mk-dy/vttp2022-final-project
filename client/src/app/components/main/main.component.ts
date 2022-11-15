@@ -35,6 +35,7 @@ export class MainComponent implements OnInit {
               library: FaIconLibrary) {library.addIcons(faMagnifyingGlass); }
 
   ngOnInit(): void {
+    
     this.token = this.tokenStorageSvc.getToken()
     let user = this.tokenStorageSvc.getUser()
 

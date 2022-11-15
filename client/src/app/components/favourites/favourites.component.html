@@ -1,17 +1,24 @@
-
 <div *ngIf="favList.length === 0">
-    You do not have any favourites yet
+    <h2>You do not have any favourites yet</h2>
 </div>
-<div *ngIf="favList.length !== 0">
-    <div *ngFor="let item of favList; let i = index">
-        <div>{{item.prodName}}</div>
-        <div><img style="width: 120px;" src="{{item.imgLink}}" alt=""></div>
-        <div>{{item.price | currency: 'SGD'}}</div>
-        <div>
-            <button type="button" (click)="deleteFav(item.id)">Remove</button>
-        </div>
+
+<div class="container" *ngIf="favList.length !== 0">
+    <h2>My Favourites</h2>
+    <div *ngFor="let item of favList; let i = index" class="child">
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar style="border-color:black" class="example-header-image"></div>
+              <mat-card-title>{{item.prodName}}</mat-card-title>
+              <mat-card-subtitle>{{item.price | currency: 'SGD'}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{item.imgLink}}" >
+            <mat-card-content>
+                <p></p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button>REMOVE</button>
+            </mat-card-actions>
+          </mat-card>
     </div>
+    
 </div>
-
-<!--  -->
-

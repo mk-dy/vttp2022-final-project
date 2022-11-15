@@ -1,0 +1,34 @@
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/isaac-logo-2-test.png');
+    background-size: cover;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  h2 small {
+    font-size: 0.5em;
+  }
+  
+  .child {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: inline-flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }

@@ -23,7 +23,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
-
+import {MatStepperModule} from '@angular/material/stepper';
 
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { MainComponent } from './components/main/main.component';
@@ -102,6 +102,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatListModule,
     MatTabsModule,
     MatTableModule,
+    MatStepperModule,
     FontAwesomeModule
   ],
   providers: [

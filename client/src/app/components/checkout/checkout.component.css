@@ -1,10 +1,12 @@
+
+
 .example-action-buttons {
     padding-bottom: 20px;
   }
   
   .example-headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
-    align-items: center;
+    align-items:flex-end;
   }
   
   .example-headers-align .mat-form-field + .mat-form-field {
@@ -21,3 +23,38 @@
   .example-radio-button {
     margin: 5px;
   }
+
+  mat-panel-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  mat-form-field {
+    width:100%
+  }
+
+  #example-radio-group-label {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  warning {
+    color:red;
+  }
+
+  #card-errors {
+    color:red;
+  }
+
+  #card-element {
+    /* border-color: black; */
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    padding: 10px;   
+  }
+

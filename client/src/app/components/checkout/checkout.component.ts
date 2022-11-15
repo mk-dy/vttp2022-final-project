@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import { Subscription } from 'rxjs';
@@ -15,12 +16,23 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.css'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {showError: true},
+    },
+  ],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatAccordion)
   accordion!: MatAccordion;
+
+  @ViewChild('delivery')
+  delivery!: ElementRef;
+
+  // @ViewChild("delivery", { static: false }) myValue!: ElementRef;
 
   sub$!: Subscription
 
@@ -51,6 +63,17 @@ export class CheckoutComponent implements OnInit {
     private checkoutSvc: CheckoutService,
     private cartSvc: CartService,
     private authSvc: AuthService) { }
+  
+  ngAfterViewInit(): void {
+    // console.log('Values on ngAfterViewInit():');
+    // console.log("delivery:", this.delivery.nativeElement.value);
+    // // console.log("deliveryMail:", this.deliveryMail.nativeElement);
+    // // console.log("deliveryCollect:", this.deliveryCollect.nativeElement);
+    // // console.log("Hello ", this.myValue.nativeElement);
+    // if (this.delivery.nativeElement.value === 'mail') {
+    //   this.totalPrice += 2
+    // }
+  }
 
   ngOnInit(): void {
     this.reviewCartDetails()

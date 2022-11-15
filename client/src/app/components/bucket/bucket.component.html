@@ -1,49 +1,65 @@
-<div style="display: flex; align-items: flex-start; justify-content: space-between;margin-top: 10vh;">
-    <div class="left-container">
-        <img src="{{ chalkbucket.imgLink }}" style="width:30vw" >
+<div class="container">
+
+    <div class="left-half">
+        <div class="inner-grid">
+            <div>
+                <img src="https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Front-buckle%20closure.png" style="width:20vw; ">
+            </div>
+            <div>
+                <img src="{{ chalkbucket.imgLink }}" style="width:20vw" >
+            </div>
+            <div>
+                <img src="https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/D%20ring%20webbing.png" style="width:20vw">
+            </div>
+            <div>
+                <img src="https://mattstorage.sgp1.digitaloceanspaces.com/vttp-final-project/Chalk_Bucket/Chalk%20Bucket%20Product%20Page%202.jpg" style="width:20vw">
+            </div>
+
+        </div>
     </div>
-    <div class="right-container w-f">
+
+    <div class="right-half">
         <div>
-            <h1>
+            <h1 style="text-transform:uppercase;font-weight:bold;letter-spacing: 5px;">
                 {{ chalkbucket.name }}
             </h1>
             
             <p>
                 {{ unitPrice | currency: 'SGD'}}
             </p>
-            
         </div>
+
         <form [formGroup]="productForm" #formDirective="ngForm" (ngSubmit)="processForm(formDirective)">
-    
-            <p>Do you want your chalk bucket to be of HALF-BASE or WHOLE-BASE?</p>
-            <mat-radio-group formControlName="baseType">
-                <mat-radio-button value="half">Half-Base</mat-radio-button>
-                <mat-radio-button value="whole">Whole-Base</mat-radio-button>
-            </mat-radio-group>
             
-            <p>Do you wish to have a FRONT-BUCKLE CLOSURE or a SIDE-BUCKLE CLOSURE? (+$2)</p>
+            <div class="radio-child">
+                <p>Do you want your chalk bucket to be of HALF-BASE or WHOLE-BASE?</p>
+                <mat-radio-group formControlName="baseType">
+                    <mat-radio-button value="half">Half-Base</mat-radio-button>
+                    <mat-radio-button value="whole">Whole-Base</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="radio-child">
+                <p>Do you wish to have a FRONT-BUCKLE CLOSURE or a SIDE-BUCKLE CLOSURE? (+$2)</p>
             <mat-radio-group formControlName="frontSideClosure">
                 <mat-radio-button value="front">Front-Buckle Closure</mat-radio-button>
                 <mat-radio-button value="side">Side-Buckle Closure</mat-radio-button>
             </mat-radio-group>
-            
-            <!-- brush holder and location -->
+            </div>
 
-            <p>Do you wish to add MAGNETIC CLOSURE (+$5)?</p>
-            <mat-radio-group formControlName="magneticClosure">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-            <!-- <select>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select> -->
-
-            <p>Do you wish to add D-rings and webbing? (+$4)</p>
-            <mat-radio-group formControlName="dRingWebbing">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
+            <div class="radio-child">
+                <p>Do you wish to add MAGNETIC CLOSURE (+$5)?</p>
+                <mat-radio-group formControlName="magneticClosure">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="radio-child">
+                <p>Do you wish to add D-rings and webbing? (+$4)</p>
+                <mat-radio-group formControlName="dRingWebbing">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
             <!-- <select>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -60,62 +76,66 @@
         `       <p>If you have selected "Yes" for the addition of keychain holders, how many would you like to have?</p>
                 <input type="number" formControlName="keychainNumber">
             </div> -->
+            <div class="radio-child">
+                <mat-form-field style="width:30vw">
+                    <mat-label>Select a design for the FRONT POCKET of the chalk bucket: </mat-label>
+                    <mat-select formControlName="frontPocketDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+           
+            <div class="radio-child">
+                <mat-form-field style="width:30vw">
+                    <mat-label>Select a design for the BACK OF THE FRONT POCKET of the chalk bucket: </mat-label>
+                    <mat-select formControlName="frontPocketBackDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="radio-child">
+                <mat-form-field style="width:30vw">
+                    <mat-label>Select a design for the BACK of the chalk bucket: </mat-label>
+                    <mat-select formControlName="backDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="radio-child">
+                <mat-form-field *ngIf="productForm.controls['baseType'].value==='whole'" style="width:30vw">
+                    <mat-label>Select a design for the BASE of the chalk bucket: </mat-label>
+                    <mat-select formControlName="baseBucketDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             
-            <p></p>
-            <mat-form-field style="width:30vw">
-                <mat-label>Select a design for the FRONT POCKET of the chalk bucket: </mat-label>
-                <mat-select formControlName="frontPocketDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <p></p>
-            <mat-form-field style="width:30vw">
-                <mat-label>Select a design for the BACK OF THE FRONT POCKET of the chalk bucket: </mat-label>
-                <mat-select formControlName="frontPocketBackDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <p></p>
-            <mat-form-field style="width:30vw">
-                <mat-label>Select a design for the BACK of the chalk bucket: </mat-label>
-                <mat-select formControlName="backDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <p></p>
-            <mat-form-field *ngIf="productForm.controls['baseType'].value==='whole'" style="width:30vw">
-                <mat-label>Select a design for the BASE of the chalk bucket: </mat-label>
-                <mat-select formControlName="baseBucketDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <p>Quantity</p>
-            <input type="number" formControlName="quantity" min="1">
-        
-            <!-- create an event that updates the price when  -->
+            <div class="radio-child">
+                <mat-form-field>
+                    <mat-label>Quantity: </mat-label>
+                    <input type="number" matInput formControlName="quantity" min="1">
+                </mat-form-field>
+            </div>
             
-            <!-- <p>Remarks (Optional)</p>
-            <textarea id="" cols="30" rows="5" formControlName="remarks"></textarea>
-            <br> -->
-            <!-- <button type="submit" [disabled]="productForm.invalid">Add to Cart</button> -->
-            <button type="submit">Add to Cart</button>
-            <button type="button" (click)="addFavourite()">Favourite</button>
+            <br>
+            <button type="submit" class="button-50">
+                Add to Cart
+            </button>
+            <button type="button" class="button-50" style="margin-left: 15px; background-color: rgb(220, 8, 8);" (click)="addFavourite()" [disabled]="favMessage === 'Added'">
+                Favourite
+            </button>
         </form>
     </div>
     

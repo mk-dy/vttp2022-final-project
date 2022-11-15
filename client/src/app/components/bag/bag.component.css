@@ -34,6 +34,16 @@
     
 }
 
+.inner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
+}
+.inner-grid > div {
+    /* background: salmon; */
+    padding: 8px;
+  }
+
 /* CSS */
 .button-50 {
     appearance: button;

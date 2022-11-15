@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Product, Fabric, CartItem } from 'src/app/models';
+import { Product, Fabric, CartItem, FavMsg } from 'src/app/models';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -19,6 +19,7 @@ export class BucketComponent implements OnInit {
   fabricList!: Fabric[]
   unitPrice!: number
   userId!: string
+  favMessage!: string
 
   constructor(private fb: FormBuilder, private productSvc: ProductService, private tokenStorageSvc: TokenStorageService, private cartSvc: CartService) { }
 
@@ -99,8 +100,9 @@ export class BucketComponent implements OnInit {
     data['price'] = this.unitPrice
     data['userId'] = this.userId
     console.info('>>> favourites: ' + data)
-    this.productSvc.addToFavourites(data).then(result => {
-      console.log(result)
+    this.productSvc.addToFavourites(data).then(result=> {
+      this.favMessage = (result as FavMsg).message
+      console.log(this.favMessage)
     })
   }
 

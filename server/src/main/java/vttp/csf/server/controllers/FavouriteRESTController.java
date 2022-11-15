@@ -16,6 +16,7 @@ import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
+import vttp.csf.server.models.Favourite;
 import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.repository.SearchRepository;
 import vttp.csf.server.services.ProductService;
@@ -28,13 +29,12 @@ public class FavouriteRESTController {
     private ProductService productSvc;
 
     @PostMapping(path="/favourites")
-    public ResponseEntity<String> addToCart(@RequestBody FinalProduct payload) {
+    public ResponseEntity<String> addToFav(@RequestBody Favourite fav) {
         
-        ConversionUtil.replaceNull(payload);
-        System.out.println(">>>> payload: " + payload.toString());
+        System.out.println(">>>> payload: " + fav.toString());
 
         // to create final product and add to final_product table
-        String message = productSvc.createFinalProduct(payload);
+        String message = productSvc.addFav(fav);
         System.out.println(">>>>> message: " + message);
         
         if (message.contains("Success")) {
@@ -46,43 +46,33 @@ public class FavouriteRESTController {
         }     
     }
 
-    // @GetMapping(path="/cart")
-    // public ResponseEntity<String> showCart() {
+    @PostMapping(path="/delete-favourite")
+    public ResponseEntity<String> removeFav(@RequestBody String id) {
         
-    //     /// for now use test's user id
-    //     String userId = "12345678";
-    //     List<FinalProduct> productList = new LinkedList<>();
-    //     productList = this.productSvc.getFinalProductByUserId(userId);
-    //     System.out.println(productList.get(0).getProdId());
+        System.out.println(">>>> payload: " + id);
 
+        // to create final product and add to final_product table
+        String message = productSvc.deleteFav(id);
+        System.out.println(">>>>> message: " + message);
         
-    //     JsonArray jsonArr = ConversionUtil.finalProdtoJsonArr(productList);
-        
-    //     // ConversionUtil.replaceNull(payload);
-    //     // System.out.println(">>>> payload: " + payload.toString());
+        if (message.contains("Success")) {
+            JsonObject jsonObj = Json.createObjectBuilder().add("message",message).build();
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObj.toString());
+        } else {
+            JsonObject jsonObj = Json.createObjectBuilder().add("message",message).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObj.toString());
+        }     
+    }
 
-    //     // String message = productSvc.createFinalProduct(payload);
-    //     System.out.println(">>>>> the jsonarray: " + jsonArr.toString());
-        
-    //     return ResponseEntity.status(HttpStatus.OK).body(jsonArr.toString()); 
-    // }
 
     @GetMapping(path="/favourites/{userId}")
-    public ResponseEntity<String> showCart(@PathVariable String userId) {
+    public ResponseEntity<String> showFav(@PathVariable String userId) {
         
-        /// for now use test's user id
-        // String userId = "12345678";
-        List<FinalProduct> productList = new LinkedList<>();
-        productList = this.productSvc.getFinalProductByUserId(userId);
-        System.out.println(productList.get(0).getProdId());
-
+        List<Favourite> favList = new LinkedList<>();
+        favList = this.productSvc.getFav(userId);
+        System.out.println(favList.get(0).getId());
         
-        JsonArray jsonArr = ConversionUtil.finalProdtoJsonArr(productList);
-        
-        // ConversionUtil.replaceNull(payload);
-        // System.out.println(">>>> payload: " + payload.toString());
-
-        // String message = productSvc.createFinalProduct(payload);
+        JsonArray jsonArr = ConversionUtil.favListToJsonArr(favList);
         System.out.println(">>>>> the jsonarray: " + jsonArr.toString());
         
         return ResponseEntity.status(HttpStatus.OK).body(jsonArr.toString()); 

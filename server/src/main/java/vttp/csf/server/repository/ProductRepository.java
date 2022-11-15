@@ -9,6 +9,7 @@ import static vttp.csf.server.repository.Queries.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import vttp.csf.server.models.Favourite;
 import vttp.csf.server.models.FinalProduct;
 
 @Repository
@@ -83,5 +84,39 @@ public class ProductRepository {
     }
 
 
-    // after creating a final product, also add that final product into cart
+    public boolean addFav(Favourite fav) {
+        int count = template.update(SQL_ADD_FAVOURITE,
+                fav.getImgLink(),
+                fav.getProdName(),
+                fav.getPrice(),
+                fav.getUserId());
+
+        return count == 1;
+    }
+
+    public List<Favourite> getFav(String userId) {
+        List<Favourite> favList = new LinkedList<>();
+        final SqlRowSet rs = template.queryForRowSet(SQL_GET_FAV_BY_USER_ID, userId);
+
+        while (rs.next()) {
+            Favourite fav = new Favourite();
+            fav.setId(rs.getString("id"));
+            fav.setImgLink(rs.getString("img_link"));
+            fav.setProdName(rs.getString("prod_name"));
+            fav.setPrice(rs.getBigDecimal("prod_price"));
+            fav.setUserId(rs.getString("user_id"));
+            
+            favList.add(fav);
+        }
+        return favList;
+    }
+
+    public boolean deleteFav(String id) {
+
+        int count = template.update(SQL_DELETE_FAVOURITE, id);
+        return count == 1;
+    }
+
+
+
 }

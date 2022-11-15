@@ -67,17 +67,19 @@ export class ProductService {
 
     }
 
-    // getCart() {
-
-    //     return firstValueFrom(
-    //         this.http.get('/cart')
-    //     )
-    // }
     getFavourites(userId: string) {
 
         return firstValueFrom(
             this.http.get(`/favourites/${userId}`)
         )
+    }
+
+    deleteFavourite(id: string) {
+
+        return firstValueFrom(
+            this.http.post('/delete-favourite',id)
+        )
+
     }
 
 

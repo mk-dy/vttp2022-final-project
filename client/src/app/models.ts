@@ -192,18 +192,13 @@ export interface OrderResponse {
 
 }
 
-/*
+export interface Favourite {
 
-FAVOURITES?
-============
-include delete button
+    id: string
+    imgLink: number
+    prodName: string
+    price: number
+    userId: string
+    
+}
 
-CART
-=======
-promo code
-payment options
-name
-delivery address
-billing address (form array, if checkbox is ticked for "If billing address differs from delivery address")
-
-*/

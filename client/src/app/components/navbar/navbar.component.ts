@@ -23,8 +23,8 @@ export class NavbarComponent implements OnInit {
     this.iconNavigate()
   }
 
-  onUser() {
-    
+  onRegister() {
+    this.route.navigate(['/signup'])
   }
 
   onFavourites() {

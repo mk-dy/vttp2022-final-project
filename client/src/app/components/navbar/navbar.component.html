@@ -18,22 +18,25 @@
     </button>
     <mat-menu #menu="matMenu" >
       <span>
-        <div style="text-align:center">
+        <!-- <div style="text-align:center" *ngIf="{{token}} !== null">
           <a [routerLink]="['/login']">Sign In</a>
            | 
           <a [routerLink]="['/signup']">Register</a>
-        </div>
+        </div> -->
         
-        <!-- <button mat-menu-item (click)="onLogin()">
+        <button mat-menu-item (click)="onLogin()" *ngIf=noToken()>
           <mat-icon>login</mat-icon>
           <span>Sign In</span>
-        </button> -->
-        
-        <button mat-menu-item (click)="onOrders()">
+        </button>
+        <button mat-menu-item (click)="onRegister()" *ngIf=noToken()>
+          <mat-icon>app_registration</mat-icon>
+          <span>Register</span>
+        </button>
+        <button mat-menu-item (click)="onOrders()" *ngIf=!noToken()>
           <mat-icon>inventory_2</mat-icon>
           <span>My Orders</span>
         </button>
-        <button mat-menu-item (click)="onSignOut()" [disabled]=noToken()>
+        <button mat-menu-item (click)="onSignOut()" *ngIf=!noToken()>
           <mat-icon>logout</mat-icon>
           <span>Sign Out</span>
         </button>

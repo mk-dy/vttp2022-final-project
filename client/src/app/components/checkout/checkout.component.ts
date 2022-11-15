@@ -110,7 +110,6 @@ export class CheckoutComponent implements OnInit {
 
   setupStripePaymentForm() {
 
-    // get a handle to stripe elements
     var elements = this.stripe.elements();
 
     // Create a card element ... and hide the zip-code field

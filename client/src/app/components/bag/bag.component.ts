@@ -143,7 +143,12 @@ export class BagComponent implements OnInit, OnDestroy {
     data['prodName'] = 'Chalk Bag'
     
     console.info('>>> favourites: ' + data)
-
+    
+    
+    
+    this.productSvc.addToFavourites(data).then(result => {
+      console.log(result)
+    })
     // need to reset totalPrice after processForm()
     // this.callGetChalkbag()
   }

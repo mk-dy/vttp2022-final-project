@@ -60,7 +60,10 @@ public interface Queries {
     public static final String SQL_ADD_FAVOURITE = 
     "INSERT INTO favourites (img_link, prod_name, prod_price, user_id) VALUES (?,?,?,?)"; 
 
+    public static final String SQL_GET_FAV_BY_USER_ID = 
+    "SELECT * FROM favourites WHERE user_id = ?";
+
     public static final String SQL_DELETE_FAVOURITE = 
-    "delete from likes where recipeid = ?";
+    "DELETE FROM favourites WHERE id = ?";
 
 }

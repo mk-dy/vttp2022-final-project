@@ -30,14 +30,14 @@ const appRoutes: Routes = [
     { path: 'signup', component: CreateUserComponent},
     { path: 'shop', component: MainComponent, canActivate:[AuthenticationGuard] },
     { path: 'search', component: SearchResultComponent },
-    { path: 'cart', component: CartComponent},
+    { path: 'cart', component: CartComponent, canActivate:[AuthenticationGuard]},
     { path: 'orders', component: OrdersComponent}, // to add parameterized routes to show different orders
     { path: 'orders/:id', component: OrderDetailsComponent}, // to add parameterized routes to show different orders
     { path: 'product', component: ProductComponent},
     { path: 'product/chalk-bag', component: BagComponent},
     { path: 'product/chalk-bucket', component: BucketComponent},
-    { path: 'favourites', component: FavouritesComponent},
-    { path: 'checkout', component: CheckoutComponent},
+    { path: 'favourites', component: FavouritesComponent, canActivate:[AuthenticationGuard]},
+    { path: 'checkout', component: CheckoutComponent, canActivate:[AuthenticationGuard]},
     { path: 'payment-cancel', component: PaymentCancelComponent },
     { path: 'payment-success', component: PaymentSuccessComponent },
     { path: '**', redirectTo: '/', pathMatch : 'full'}

@@ -7,6 +7,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import vttp.csf.server.models.Fabric;
+import vttp.csf.server.models.Favourite;
 import vttp.csf.server.models.FinalProduct;
 import vttp.csf.server.models.OrderResp;
 import vttp.csf.server.models.Product;
@@ -74,6 +75,27 @@ public class ConversionUtil {
 
         return arr;
     }
+
+    public static JsonArray favListToJsonArr(List<Favourite> favList) {
+        
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+
+        for (Favourite fav: favList) {
+            JsonObject jsonObj = Json.createObjectBuilder()
+                    .add("id",fav.getId())
+                    .add("imgLink",fav.getImgLink())
+                    .add("prodName",fav.getProdName())
+                    .add("price", fav.getPrice())
+                    .add("userId", fav.getUserId())
+                    .build();
+
+            arrBuilder.add(jsonObj);
+        }
+        JsonArray arr = arrBuilder.build();
+
+        return arr;
+    }
+
     
     public static JsonArray fabListToJsonArr(List<Fabric> fabricList) {
         

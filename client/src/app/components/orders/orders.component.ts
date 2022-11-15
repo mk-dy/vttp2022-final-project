@@ -15,6 +15,9 @@ export class OrdersComponent implements OnInit {
 
   userId!: string
   orderList: OrderResponse[] = []
+  // uniqueOrder: OrderResponse[] = []
+
+
 
   ngOnInit(): void {
     this.userId = this.tokenSvc.getUser().id
@@ -30,6 +33,7 @@ export class OrdersComponent implements OnInit {
       // let ord = result as OrderResponse[]
       // console.log(ord)
       this.orderList = result as OrderResponse[]
+      // this.uniqueOrder = [...new Set(result as OrderResponse[])]
     })
 
     console.info('>>>> in orders',this.orderList)

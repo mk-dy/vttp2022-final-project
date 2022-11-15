@@ -16,7 +16,7 @@
 }
 
 img {
-  width: 50vw;
+  width: 40vw;
   height: auto;
 }
 
@@ -83,4 +83,29 @@ img {
   .button-50 {
     padding: 12px 50px;
   }
+}
+
+.container {
+  margin-top: 10vh;
+  display: grid;
+  place-items:  center;
+}
+
+.left-half {
+  /* background: #ff9e2c; */
+  grid-column: 1;
+}
+
+.right-half {
+  /* background: #b6701e; */
+  grid-column: 2;
+  /* place-items:  center; */
+}
+
+.child {
+  display:flexbox;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  text-align: left;
+  justify-content: center;
 }

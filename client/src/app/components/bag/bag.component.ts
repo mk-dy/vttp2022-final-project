@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular
 import { distinctUntilChanged, Subscription } from 'rxjs';
 import { CartService } from 'src/app/services/cart.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { CartItem, Fabric, Product } from '../../models';
+import { CartItem, Fabric, FavMsg, Product } from '../../models';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -18,6 +18,8 @@ export class BagComponent implements OnInit, OnDestroy {
   chalkbag!: Product
   fabricList!: Fabric[]
   unitPrice!: number
+
+  favMessage!: string
 
   userId!: string
   
@@ -119,8 +121,9 @@ export class BagComponent implements OnInit, OnDestroy {
     data['price'] = this.unitPrice // unit price currently
     data['userId'] = this.userId
     console.info('>>> favourites: ' + data)
-    this.productSvc.addToFavourites(data).then(result => {
-      console.log(result)
+    this.productSvc.addToFavourites(data).then(result=> {
+      this.favMessage = (result as FavMsg).message
+      console.log(this.favMessage)
     })
   }
 

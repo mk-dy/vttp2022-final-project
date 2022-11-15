@@ -1,14 +1,4 @@
-<!-- <div *ngIf="orderList.length !== 0">
-    hi
-
-</div>-->
-<div *ngIf="orderList.length === 0">
-    Empty
-
-</div> 
-
-
-
+<!-- 
 
 <ng-container *ngIf="orderList.length !== 0">
     <div class="container">
@@ -45,4 +35,24 @@
             </div>
         </div>
     </div>
-</ng-container>
+</ng-container> -->
+
+<div class="container" *ngIf="orderList.length !== 0">
+    <h2>ORDER ITEMS</h2>
+    <ul class="responsive-table">
+      <li class="table-header">
+        <div class="col col-1">No.</div>
+        <div class="col col-2"></div>
+        <div class="col col-3">Name</div>
+        <div class="col col-4">Unit Price</div>
+        <div class="col col-5">Unit Quantity</div>
+      </li>
+      <li class="table-row" *ngFor="let item of orderList; let i = index">
+        <div class="col col-1"><strong>#{{i+1}}</strong></div>
+        <div class="col col-2"><img style="width: 120px;" src="{{item.imageUrl}}" alt=""></div>
+        <div class="col col-3"><strong>{{item.prodName}}</strong></div>
+        <div class="col col-4">{{item.unitPrice | currency: 'SGD'}}</div>
+        <div class="col col-5">{{item.quantity}}</div>
+      </li>
+    </ul>
+</div>

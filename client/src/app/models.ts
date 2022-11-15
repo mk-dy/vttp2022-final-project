@@ -200,12 +200,14 @@ export interface OrderItemResponse {
 
 
 export interface Favourite {
-
     id: string
     imgLink: number
     prodName: string
     price: number
     userId: string
+}
 
+export interface FavMsg {
+    message: string
 }
 

@@ -1,8 +1,8 @@
-<div style="display: flex; align-items: flex-start; justify-content: space-between;margin-top: 10vh;">
-    <div class="left-container">
+<div class="container">
+    <div class="left-half">
         <img src="{{ chalkbag.imgLink }}" style="width:30vw">
     </div>
-    <div class="right-container w-f">
+    <div class="right-half">
         <div>
             <h1>
                 {{ chalkbag.name }}
@@ -15,96 +15,100 @@
         </div>
         <form [formGroup]="productForm" #formDirective="ngForm" (ngSubmit)="processForm(formDirective)">
     
-            <p>Do you want your chalk bag to have a boot?</p>
-            <mat-radio-group formControlName="withBoot">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
+            <div class="radio-child">
+                <p>Do you want your chalk bag to have a boot?</p>
+                <mat-radio-group formControlName="withBoot">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
             
-            <p>Do you wish to size it up to XL? (+$15)</p>
-            <mat-radio-group formControlName="upsize">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-        
-            <p>Do you wish to add 2 hoops and 1 waist strap (+$3.50)?</p>
-            <mat-radio-group formControlName="hoopStraps">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-            <!-- <select>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select> -->
+            <div class="radio-child">
+                <p>Do you wish to size it up to XL? (+$15)</p>
+                <mat-radio-group formControlName="upsize">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="radio-child">
+                <p>Do you wish to add 2 hoops and 1 waist strap (+$3.50)?</p>
+                <mat-radio-group formControlName="hoopStraps">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="radio-child">
+                <p>Do you wish to add keychain holders? (+$1 each)</p>
+                <mat-radio-group formControlName="keychainHolders">
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="no">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
             
-            <p>Do you wish to add keychain holders? (+$1 each)</p>
-            <mat-radio-group formControlName="keychainHolders">
-                <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
-            </mat-radio-group>
-            <!-- <select>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select> -->
+            <div class="radio-child">
+                <mat-form-field *ngIf="productForm.controls['keychainHolders'].value==='yes'" style="width:30vw">
+                    <br>
+                    <p>How many additional keychain holders would you like to have?</p>
+                    <input type="number" formControlName="keychainNum" matInput min="1">
+                </mat-form-field>
+            </div>
+            <div class="radio-child">
+                <mat-form-field style="width:30vw">
+                    <mat-label>Select a design for the EXTERIOR of the chalk bag: </mat-label>
+                    <mat-select formControlName="exteriorDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             
-            <p></p>
-            <mat-form-field *ngIf="productForm.controls['keychainHolders'].value==='yes'" style="width:30vw">
-                <br>
-                <p>How many additional keychain holders would you like to have?</p>
-                <input type="number" formControlName="keychainNum" matInput min="1">
-            </mat-form-field>
-        
-            <!-- <div *ngIf="productForm.controls['keychainHolders'].value==='yes'">
-        `       <p>If you have selected "Yes" for the addition of keychain holders, how many would you like to have?</p>
-                <input type="number" formControlName="keychainNumber">
+            <div class="radio-child">
+                <mat-form-field *ngIf="productForm.controls['withBoot'].value==='no'" style="width:30vw">
+                    <mat-label>Select a design for the BASE of the chalk bag: </mat-label>
+                    <mat-select formControlName="baseBagDesign">
+                    <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="radio-child">
+                <mat-form-field *ngIf="productForm.controls['withBoot'].value==='yes'" style="width:30vw">
+                    <mat-label>Select a design for the BOOT of the chalk bag: </mat-label>
+                    <mat-select formControlName="bootDesign">
+                      <mat-option *ngFor="let f of fabricList" [value]="f.name">
+                        <img width="20" height="20" [src]="f.imgLink">
+                        {{f.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+            <!-- <div class="radio-child">
+                <p>Quantity</p>
+                <input type="number" formControlName="quantity" min="1">
             </div> -->
-            
-            <p></p>
-            <mat-form-field style="width:30vw">
-                <mat-label>Select a design for the EXTERIOR of the chalk bag: </mat-label>
-                <mat-select formControlName="exteriorDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <p></p>
-            <mat-form-field *ngIf="productForm.controls['withBoot'].value==='no'" style="width:30vw">
-                <mat-label>Select a design for the BASE of the chalk bag: </mat-label>
-                <mat-select formControlName="baseBagDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <p></p>
-            <mat-form-field *ngIf="productForm.controls['withBoot'].value==='yes'" style="width:30vw">
-                <mat-label>Select a design for the BOOT of the chalk bag: </mat-label>
-                <mat-select formControlName="bootDesign">
-                  <mat-option *ngFor="let f of fabricList" [value]="f.name">
-                    <img width="20" height="20" [src]="f.imgLink">
-                    {{f.name}}
-                  </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <p>Quantity</p>
-            <input type="number" formControlName="quantity" min="1">
-        
-            <!-- create an event that updates the price when  -->
-            
-            <!-- <p>Remarks (Optional)</p>
-            <textarea id="" cols="30" rows="5" formControlName="remarks"></textarea>
-            <br> -->
-            <!-- <button type="submit" [disabled]="productForm.invalid">Add to Cart</button> -->
-            <button type="submit">Add to Cart</button>
 
+            <div class="radio-child">
+                <mat-form-field>
+                    <mat-label>Quantity: </mat-label>
+                    <input type="number" matInput formControlName="quantity" min="1">
+                </mat-form-field>
+            </div>
 
-            <button type="button" (click)="addFavourite()">Favourite</button>
+            <br>
+            <button type="submit" class="button-50">
+                Add to Cart
+            </button>
+            <button type="button" class="button-50" style="margin-left: 15px; background-color: rgb(220, 8, 8);" (click)="addFavourite()" [disabled]="favMessage === 'Added'">
+                Favourite
+            </button>
         
         </form>
     </div>
